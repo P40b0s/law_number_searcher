@@ -1,7 +1,8 @@
 <template lang="pug">
-.switch
-	input#switch.switch__input(name="switch" type="checkbox" v-model="checked")
-	label.switch__label(for="switch") asdasdasdas
+label.switcher
+	input(type="checkbox" v-model="checked")
+	.switcher__indicator
+	.tooltip.small.left Выбор светлой или темной темы
 </template>
 
 <script setup lang="ts">
@@ -10,19 +11,20 @@ import { ref, watch } from 'vue';
 //false - light
 const checked = ref(false);
 const theme = localStorage.getItem("theme");
+const theme_name = ref("");
 const set_dark = () =>
 {
     const body = document.body;
     body.setAttribute("class", "dark");
+	  theme_name.value = "темная"
     localStorage.setItem('theme', "dark");
-    console.log("dark mode on")
 }
 const set_light = () =>
 {
     const body = document.body;
     body.setAttribute("class", "light");
+	  theme_name.value = "светлая"
     localStorage.setItem('theme', "light");
-    console.log("dark mode on")
 }
 if(theme)
 {
@@ -43,7 +45,6 @@ else
 
 watch(checked, (n, o) =>
 {
-    console.log(n)
     if(n)
     {
 
@@ -56,66 +57,135 @@ watch(checked, (n, o) =>
 })
 
 </script>
-<style>
-.switch {
-		position: relative;
-		&__input {
-			position: absolute;
-			top: 0;
-			right: 0;
-			left: 0;
-			bottom: 0;
-			width: 100%;
-			height: 100%;
-			margin: 0;
-			opacity: 0;
-			z-index: 1;
-		}
+<style scoped>
+.text
+{
+  color: var(--background);
+  -webkit-filter: invert(100%);
+  filter: invert(100%);
+  margin-top: 6px;
+}
+.switcher {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  cursor: pointer;
+  width: 80px;
+  height: 30px;
+  line-height: 20px;
+  /* margin: 5px; */
+  font-size: 16px;
+  text-align: right;
+  user-select: none;
+  opacity: 1;
+  input {
+    display: none;
+  }
+}
 
-		&__label {
-			display: block;
-			position: relative;
-			width: 100px;
-			height: 50px;
-			background-color: var(--background-color);
-			border-radius: 25px;
-			transition: 0.4s;
+.switcher__indicator { 
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background-color: black;
+    border-radius: 50%;
+    transition: all .3s ease;
+    animation-name: pulsein;
+    animation-duration: .3s;
+    content: url('../images/sun.svg');
+  }
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 0;
+    width: 60px;
+    height: 12px;
+    background-color: var(--background);
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+    border-radius: 10px;
+    transition: all .3s ease;
+  }
+  input:checked {
+   
+    content: url('../images/moon.svg');
+  }
+  
+  input:checked + &::after {
+    /* -webkit-filter: invert(100%);
+    filter: invert(100%); */
+    transform: translateX(40px);
+    animation-name: pulseout;
+    animation-duration: .3s;
+    content: url('../images/moon.svg');
+  }
+  
+  input:checked + &::before {
+    background-color: var(--background);
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+  }
+  
+  input:disabled + &::after,
+  input:disabled + &::before {
+    background-color: var(--background);
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+    content: url('../images/moon.svg');
+  }
+}
 
-			&::before {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				position: absolute;
-				top: 0;
-				right: auto;
-				left: 0;
-				bottom: 0;
-				width: 50px;
-				height: 50px;
-				border-radius: 100%;
-				border: 2px var(--primary-color) solid;
-				background-color: var(--background-color);
-				color: var(--primary-color);
-				transition: 0.4s;
-				content: "\f185";
-				font-family: "Font Awesome 5 Free";
-				font-size: 30px;
-				font-weight: 900;
-				box-sizing: border-box;
-			}
-		}
+/* @keyframes pulsein {
+  0%, 100% {
+    top: 0px;
+	opacity: 1;
+    height: 30px;
+    width: 30px;
+  }
+  50% {
+	opacity: 0;
+    top: -10px;
+    height: 38px;
+    width: 42px;
+  }
+}
 
-		&__input:checked + .switch__label {
-			background-color: var(--background-color);
+@keyframes pulseout {
+  0%, 100% {
+    top: 0px;
+	opacity: 1;
+    height: 30px;
+    width: 30px;
+  }
+  50% {
+    top: 0px;
+	opacity: 0;
+    height: 38px;
+    width: 42px;
+  }
+} */
+@keyframes pulsein {
+  0%, 100% {
+	opacity: 1;
+  }
+  50% {
+	opacity: 0.8;
+  }
+}
 
-			&::before {
-				left: calc(100% - 50px);
-				border-color: var(--primary-color);
-				background-color: var(--background-color);
-				color: var(--primary-color);
-				content: "\f186";
-			}
-		}
-	}
-
+@keyframes pulseout {
+  0%, 100% {
+	opacity: 1;
+  }
+  50% {
+	opacity: 0.8;
+  }
+}
 </style>

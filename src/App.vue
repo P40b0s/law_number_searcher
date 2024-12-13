@@ -13,83 +13,55 @@ async function greet() {
 
 <template lang="pug">
   main.container
-    header
-    theme-manager
+    .header
+      .header-left asasasas
+      .header-right
+        theme-manager
+    .main-content main
+    .footer footer
 </template>
 
-<style scoped>
-.logo.vite:hover {
-  filter: drop-shadow(0 0 2em #747bff);
-}
-
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #249b73);
-}
-
-</style>
 <style>
-
-.container {
+/* .container 
+{
   margin: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  justify-items: center;
   text-align: center;
+} */
+.container {
+  display: grid; 
+  grid-template-columns: 5px 1fr auto; 
+  grid-template-rows: minmax(30px 50px) 1fr min-content; 
+  gap: 0px 0px; 
+  grid-template-areas: 
+    "header header header"
+    ". main-content right-content"
+    ". footer footer"; 
 }
-
-.logo.tauri:hover {
-  filter: drop-shadow(0 0 2em #24c8db);
-}
-
-.row {
+.header 
+{
+  grid-area: header;
+  background-color: var(--surface-container-high);
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
 }
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+.header-left
+{
+  flex-grow: 3;
+  width: 100%;
 }
-
-a:hover {
-  color: #535bf2;
+.header-right
+{
+  height: 40px;
 }
-
-h1 {
-  text-align: center;
-}
-
-input,
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  color: #0f0f0f;
-  background-color: #ffffff;
-  transition: border-color 0.25s;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
-}
-
-button {
-  cursor: pointer;
-}
-
-button:hover {
-  border-color: #396cd8;
-}
-button:active {
-  border-color: #396cd8;
-  background-color: #e8e8e8;
-}
-
-input,
-button {
-  outline: none;
-}
+.footer { grid-area: footer; }
+.right-content { grid-area: right-content; }
+.main-content { grid-area: main-content; }
 
 #greet-input {
   margin-right: 5px;

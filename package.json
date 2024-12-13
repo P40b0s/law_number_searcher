@@ -13,10 +13,11 @@
   "dependencies": {
     "@tauri-apps/api": "2.1.1",
     "@tauri-apps/plugin-shell": "2.2.0",
+    "naive-ui": "2.40.3",
     "vue": "3.5.13"
   },
   "devDependencies": {
-    "@rsbuild/core": "1.1.9",
+    "@rsbuild/core": "1.1.10",
     "@rsbuild/plugin-pug": "1.0.2",
     "@rsbuild/plugin-vue": "1.0.5",
     "@tauri-apps/cli": "2.1.0",
@@ -24,8 +25,7 @@
     "@vue/language-plugin-pug": "2.1.10",
     "pug": "^3.0.3",
     "pug-plain-loader": "^1.1.0",
-    "typescript": "^5.2.2",
-    "vite": "6.0.3",
+    "typescript": "5.7.2",
     "vue-tsc": "^2.1.10"
   }
 }

@@ -4,10 +4,7 @@ import { pluginPug } from '@rsbuild/plugin-pug';
 
 export default defineConfig({
     plugins: [pluginVue(), pluginPug()],
-    source: {
-        entry: {
-            index: "./src/main.ts"
-        },
+    resolve: {
         alias: { // 路径别名
             '@/*': './src/*',
             '@styles': './src/styles',
@@ -17,6 +14,12 @@ export default defineConfig({
             '@services': './src/services',
             '@tauri': './src/tauri'
           }
+    },
+    source: {
+        entry: {
+            index: "./src/main.ts"
+        },
+        
     },
     server: {
         port: 8080,
