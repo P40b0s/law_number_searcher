@@ -39,7 +39,7 @@ fn create_table<'a>() -> &'a str
     year INTEGER NOT NULL,
     number TEXT NOT NULL,
     note TEXT,
-    status INTEGER DEFAULT 0
+    status INTEGER DEFAULT 0,
     PRIMARY KEY(signatory_authority, type_id, year, number)
     );
     CREATE INDEX IF NOT EXISTS 'numbers_idx' ON numbers (signatory_authority, type_id, year, number, status);

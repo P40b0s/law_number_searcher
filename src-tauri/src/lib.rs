@@ -20,6 +20,7 @@ fn greet(name: &str) -> String {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub async fn run() 
 {
+    let _ = logger::StructLogger::new_default();
     tauri::async_runtime::set(tokio::runtime::Handle::current());
     tauri::Builder::default()
     .setup(move |app| 
