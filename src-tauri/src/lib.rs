@@ -1,12 +1,12 @@
 use std::sync::Arc;
 
-use db::Repository;
+use db::{IRepository, Repository};
 use tauri::Manager;
 use tokio::runtime::Handle;
 
 mod db;
 mod error;
-
+pub use error::Error;
 
 
 
@@ -22,18 +22,21 @@ pub async fn run()
 {
     tauri::async_runtime::set(tokio::runtime::Handle::current());
     tauri::Builder::default()
-    .setup(async move |app| 
+    .setup(move |app| 
     {
-        let repo = Arc::new(db::AppRepository {repository: Repository::new()});
-        let _ = repo.create().await;
-        // tokio::task::block_in_place(||
-        // {
-        //     Handle::current().block_on(async move 
-        //     {
-                
-        //     })
-        // });
-        app.manage(repo);
+        tokio::task::block_in_place(||
+        {
+            Handle::current().block_on(async move 
+            {
+                let repo = Repository::new().await;
+                if let Ok(r) = repo
+                {
+                    let repo = Arc::new(db::AppRepository {repository: r});
+                    app.manage(repo);   
+                }
+            })
+        });
+        //app.manage(repo);
         Ok(())
 
     })

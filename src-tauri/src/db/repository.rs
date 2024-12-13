@@ -1,24 +1,31 @@
 use std::sync::Arc;
 use sqlx::SqlitePool;
 
+use crate::Error;
+
 pub struct Repository
 {
     connection: Arc<SqlitePool>
 }
 impl Repository
 {
-    pub fn new() -> Self
+    pub async fn new() -> Result<Self, Error>
     {
-        
-        Self
+        let pool = Arc::new(super::new_connection("numbers").await?);
+        let r1 = sqlx::query(create_table()).execute(&*pool).await;
+        if r1.is_err()
         {
-            connection: Arc::new(db::new_connection("numbers"))
-        }
+            logger::error!("{}", r1.as_ref().err().unwrap());
+            let _ = r1?;
+        };
+        Ok(Self
+        {
+            connection: pool
+        })
     }
 }
 pub trait IRepository
 {
-    async fn create(&self) -> Result<(), crate::error::Error>;
     async fn add_number(&self);
 }
 
@@ -55,17 +62,7 @@ pub struct NumberDBO
 
 impl IRepository for Repository
 {
-    async fn create(&self) -> Result<(), crate::error::Error>
-    {
-        let pool = Arc::clone(&self.connection);
-        let r1 = sqlx::query(create_table()).execute(&*pool).await;
-        if r1.is_err()
-        {
-            logger::error!("{}", r1.as_ref().err().unwrap());
-            let _ = r1?;
-        };
-        Ok(())
-    }
+   
     async fn add_number(&self) 
     {
         let connection = Arc::clone(&self.connection);
