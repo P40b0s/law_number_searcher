@@ -1,0 +1,12 @@
+[package]
+name = "plugins"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+logger = {git = "https://github.com/P40b0s/logger.git"}
+utilites = {git = "https://github.com/P40b0s/help_utilites.git", package = "utilites"}
+serde = { version = "1.0.216", features = ["derive"] }
+serde_json = "1.0.133"
+uuid= {version="1.11.0", features = ["v7"] }
+thiserror="2.0.7"

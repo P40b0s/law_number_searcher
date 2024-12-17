@@ -8,7 +8,10 @@
     "build": "tsc && rsbuild build",
     "serve": "rsbuild dev",
     "tauri": "tauri dev",
-    "build:client:win": "rsbuild build && tauri build --target x86_64-pc-windows-gnu"
+    "build:client:win": "rsbuild build && tauri build --target x86_64-pc-windows-gnu",
+    "plugins:win": "cargo build -p prezident_plugin  --target x86_64-pc-windows-gnu --release",
+    "plugins": "cargo build -p prezident_plugin --release"
+
   },
   "dependencies": {
     "@tauri-apps/api": "2.1.1",

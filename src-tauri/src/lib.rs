@@ -25,18 +25,27 @@ pub async fn run()
     tauri::Builder::default()
     .setup(move |app| 
     {
-        tokio::task::block_in_place(||
+        Handle::current().block_on(async move 
         {
-            Handle::current().block_on(async move 
+            let repo = Repository::new().await;
+            if let Ok(r) = repo
             {
-                let repo = Repository::new().await;
-                if let Ok(r) = repo
-                {
-                    let repo = Arc::new(db::AppRepository {repository: r});
-                    app.manage(repo);   
-                }
-            })
+                let repo = Arc::new(db::AppRepository {repository: r});
+                app.manage(repo);   
+            }
         });
+        // tokio::task::block_in_place(||
+        // {
+        //     Handle::current().block_on(async move 
+        //     {
+        //         let repo = Repository::new().await;
+        //         if let Ok(r) = repo
+        //         {
+        //             let repo = Arc::new(db::AppRepository {repository: r});
+        //             app.manage(repo);   
+        //         }
+        //     })
+        // });
         //app.manage(repo);
         Ok(())
 
