@@ -7,7 +7,7 @@ pub mod number_extractors;
 
 
 
-pub struct ExtractorManager<'a>
+pub struct ExtractorManager<'a> where Self: Send + Sync 
 {
     extractors: Vec<Box<dyn ExtractorPlugin<'a>>>
 }
@@ -39,7 +39,7 @@ impl<'a> ExtractorManager<'a>
 
 
 
-pub trait ExtractorPlugin<'a>
+pub trait ExtractorPlugin<'a> where Self: Send + Sync
 {
     fn semantic_version(&self) -> &'static str;
     ///наименование органа

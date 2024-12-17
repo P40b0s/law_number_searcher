@@ -2,22 +2,14 @@
 import { Plugin, Result } from "./abstract";
 
 
-// class Settings extends Plugin<'update' | 'get' | 'delete'>
-// {
-//     plugin = "plugin:settings|";
-//     public async save_task(types: Task): Promise<Result<void>>
-//     {
-//         return await this.post<Task, void>('update', types);
-//     }
-//     public async load_settings(): Promise<Result<Task[]>>
-//     {
-//         return await this.get<Task[]>('get');
-//     }
-//     public async delete_task(types: Task): Promise<Result<void>>
-//     {
-//         return await this.post<Task, void>('delete', types);
-//     }
-// }
+class Searcher extends Plugin<'get_signatory_authorites'>
+{
+    plugin = "plugin:searcher|";
+    public async get_signatory_authorites(): Promise<Result<SignatoryAuthority[]>>
+    {
+        return await this.get<SignatoryAuthority[]>('get_signatory_authorites');
+    }
+}
 
 // class Service extends Plugin<'clear_dirs' | 'ws_server_online' | 'rescan_packet' | 'delete_packet'>
 // {
@@ -98,3 +90,5 @@ import { Plugin, Result } from "./abstract";
 // const commands_settings = new Settings();
 // const commands_packets = new Packets();
 // export {commands_settings, commands_service, commands_packets}
+const searcher_commands = new Searcher();
+export {searcher_commands};

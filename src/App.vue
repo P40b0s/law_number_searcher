@@ -1,24 +1,33 @@
 <script setup lang="ts">
 import Header from './components/Header.vue'
 import ThemeManager from './components/ThemeManager.vue';
+import MainView from './views/main.ts';
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
+import { darkTheme, lightTheme, NConfigProvider, NGlobalStyle} from 'naive-ui';
+import { useTheme } from './composables/useTheme.ts';
 const greetMsg = ref("");
 const name = ref("");
-async function greet() {
+const { theme } = useTheme();
+async function greet() 
+{
   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
   greetMsg.value = await invoke("greet", { name: name.value });
 }
-</script>
 
+
+</script>
 <template lang="pug">
+n-config-provider(:theme="theme")
   main.container
     .header
-      .header-left asasasas
+      .header-left
       .header-right
         theme-manager
-    .main-content main
+    .main-content
+      MainView
     .footer footer
+  n-global-style
 </template>
 
 <style>
@@ -44,7 +53,7 @@ async function greet() {
 .header 
 {
   grid-area: header;
-  background-color: var(--surface-container-high);
+  background-color: var(--n-card-color);
   display: flex;
   flex-direction: row;
   width: 100%;

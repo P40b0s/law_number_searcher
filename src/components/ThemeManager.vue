@@ -1,12 +1,17 @@
 <template lang="pug">
-label.switcher
-	input(type="checkbox" v-model="checked")
-	.switcher__indicator
-	.tooltip.small.left Выбор светлой или темной темы
+n-tooltip
+  template(#trigger)
+    label.switcher
+      input(type="checkbox" v-model="checked")
+      .switcher__indicator
+  span Выбор светлой или темной темы
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
+import { useTheme } from '../composables/useTheme';
+import { NTooltip } from 'naive-ui';
+const { light_theme, dark_theme } = useTheme();
 //true - dark
 //false - light
 const checked = ref(false);
@@ -17,6 +22,7 @@ const set_dark = () =>
     const body = document.body;
     body.setAttribute("class", "dark");
 	  theme_name.value = "темная"
+    dark_theme();
     localStorage.setItem('theme', "dark");
 }
 const set_light = () =>
@@ -24,6 +30,7 @@ const set_light = () =>
     const body = document.body;
     body.setAttribute("class", "light");
 	  theme_name.value = "светлая"
+    light_theme();
     localStorage.setItem('theme', "light");
 }
 if(theme)
@@ -58,13 +65,13 @@ watch(checked, (n, o) =>
 
 </script>
 <style scoped>
-.text
+/* .text
 {
   color: var(--background);
   -webkit-filter: invert(100%);
   filter: invert(100%);
   margin-top: 6px;
-}
+} */
 .switcher {
   position: relative;
   display: flex;
@@ -107,9 +114,7 @@ watch(checked, (n, o) =>
     left: 0;
     width: 60px;
     height: 12px;
-    background-color: var(--background);
-    -webkit-filter: invert(100%);
-    filter: invert(100%);
+    background-color: black;
     border-radius: 10px;
     transition: all .3s ease;
   }
@@ -128,16 +133,15 @@ watch(checked, (n, o) =>
   }
   
   input:checked + &::before {
-    background-color: var(--background);
-    -webkit-filter: invert(100%);
     filter: invert(100%);
+    -webkit-filter: invert(100%);
   }
   
   input:disabled + &::after,
   input:disabled + &::before {
-    background-color: var(--background);
-    -webkit-filter: invert(100%);
     filter: invert(100%);
+    -moz-filter: invert(100%);
+    -webkit-filter: invert(100%);
     content: url('../images/moon.svg');
   }
 }

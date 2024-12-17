@@ -1,11 +1,14 @@
 use std::sync::Arc;
 
 use db::{IRepository, Repository};
+use plugins::searcher_plugin;
+use state::AppState;
 use tauri::Manager;
 use tokio::runtime::Handle;
-
+mod plugins;
 mod db;
 mod error;
+mod state;
 pub use error::Error;
 
 
@@ -22,18 +25,15 @@ pub async fn run()
 {
     let _ = logger::StructLogger::new_default();
     tauri::async_runtime::set(tokio::runtime::Handle::current());
+    let repo = Arc::new(db::AppRepository {repository: Repository::new().await.expect("Возникли проблемы с инициализацией базы данных!")} );
+    let app_state = Arc::new(AppState{});
+    let clos_repo = Arc::clone(&repo);
+    let clos_state = Arc::clone(&app_state);
     tauri::Builder::default()
     .setup(move |app| 
     {
-        Handle::current().block_on(async move 
-        {
-            let repo = Repository::new().await;
-            if let Ok(r) = repo
-            {
-                let repo = Arc::new(db::AppRepository {repository: r});
-                app.manage(repo);   
-            }
-        });
+        app.manage(clos_repo);
+        app.manage(clos_state);
         // tokio::task::block_in_place(||
         // {
         //     Handle::current().block_on(async move 
@@ -42,7 +42,8 @@ pub async fn run()
         //         if let Ok(r) = repo
         //         {
         //             let repo = Arc::new(db::AppRepository {repository: r});
-        //             app.manage(repo);   
+        //             app.manage(repo);
+        //             app.manage();
         //         }
         //     })
         // });
@@ -51,6 +52,7 @@ pub async fn run()
 
     })
     .plugin(tauri_plugin_shell::init())
+    .plugin(searcher_plugin(app_state, repo))
     .invoke_handler(tauri::generate_handler![greet])
     .run(tauri::generate_context!())
     .expect("error while running tauri application");

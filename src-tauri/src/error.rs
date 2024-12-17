@@ -10,7 +10,9 @@ pub enum Error
     #[error(transparent)]
     SqlxError(#[from] sqlx::Error),
     #[error("Ошибка, введен неверный ключ регистрации `{0}`")]
-    WrongRegisterKeyError(String)
+    WrongRegisterKeyError(String),
+    #[error(transparent)]
+    SearcherError(#[from] searcher::SearcherError),
 }
 
 impl serde::Serialize for Error 
