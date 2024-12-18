@@ -7,7 +7,9 @@ class Searcher extends Plugin<'get_signatory_authorites'>
     plugin = "plugin:searcher|";
     public async get_signatory_authorites(): Promise<Result<SignatoryAuthority[]>>
     {
-        return await this.get<SignatoryAuthority[]>('get_signatory_authorites');
+        const r = await this.get<SignatoryAuthority[]>('get_signatory_authorites');
+        console.error(r);
+        return r;
     }
 }
 

@@ -13,6 +13,7 @@ use searcher::{SignatoryAuthority, SearcherError};
 pub async fn get_signatory_authorites() -> Result<Vec<SignatoryAuthority>, Error>
 {
     let organs = searcher::Searcher::get_signatory_authorites().await?;
+	logger::debug!("Получено органов: {}", organs.len());
     Ok(organs)
 }
 
