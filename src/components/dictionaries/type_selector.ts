@@ -30,7 +30,7 @@ const comp =  defineComponent({
 props: props,
 emits:
 {
-	'select': (value: Dictionary) => true,
+	'select': (value: Dictionary|null) => true,
 },
 	setup (props, emits)
 	{
@@ -38,20 +38,24 @@ emits:
 			select_element,
 			is_loading,
 			load_options,
-			options,
-			count
-		} = useDictionary(props.placeholder, (d) => emits.emit('select', d));
-		watch(()=> props.selected_organ, async (n, o) =>
+			unselect
+		} = useDictionary(props.placeholder, (d) => emits.emit('select', d), async () => await load(props.selected_organ));
+		const load = async (organ: Dictionary| undefined) =>
 		{
-			if(n != undefined)
+			if(organ != undefined)
 			{
 				is_loading.value = true;
-				let dict = await searcher_commands.get_types(n.id);
-				options.value = load_options(dict, []);
-				count.value = options.value.length;
+				unselect();
+				let dict = await searcher_commands.get_types(organ.id);
+				load_options(dict, []);
 				is_loading.value = false;
 			}
+		}
+		watch(()=> props.selected_organ, async (n, o) =>
+		{
+			await load(n);
 		})
+
 		return select_element
 	},
 	render () 

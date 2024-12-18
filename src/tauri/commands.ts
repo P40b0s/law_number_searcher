@@ -2,7 +2,7 @@
 import { Plugin, Result } from "./abstract";
 
 
-class Searcher extends Plugin<'get_signatory_authorites' | 'get_exists_parsers' | 'get_types'> implements ICommand
+class Searcher extends Plugin<'get_signatory_authorites' | 'get_exists_parsers' | 'get_types' | 'get_exists_numbers'> implements ICommand
 {
     plugin = "plugin:searcher|";
     public async get_signatory_authorites<R extends SignatoryAuthority[]>(): Promise<Result<R>>
@@ -20,7 +20,12 @@ class Searcher extends Plugin<'get_signatory_authorites' | 'get_exists_parsers' 
         const r = await this.get<R>('get_exists_parsers');
         return r;
     }
-    
+    public async get_exists_numbers<R extends string[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>
+    {
+        const r = await this.get<R>('get_exists_parsers', {existsNumbersRequest: {signatory_authority, act_type, year}});
+        return r;
+        
+    }
 }
 
 

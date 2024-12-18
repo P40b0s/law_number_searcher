@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use serde::{Deserialize, Serialize};
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{Manager, Runtime, State};
 
@@ -7,7 +8,13 @@ use crate::db::{AppRepository, Repository};
 use crate::state::AppState;
 use crate::Error;
 use searcher::{DocumentType, SearcherError, SignatoryAuthority};
-
+#[derive(Serialize, Deserialize)]
+pub struct ExistsNumbersRequest<'a>
+{
+    signatory_authority: &'a str,
+    act_type: &'a str,
+    year: u32
+}
 
 #[tauri::command]
 pub async fn get_signatory_authorites() -> Result<Vec<SignatoryAuthority>, Error>
@@ -28,6 +35,15 @@ pub async fn get_types(payload: &str) -> Result<Vec<DocumentType>, Error>
 }
 
 #[tauri::command]
+pub async fn get_exists_numbers<'a>(ExistsNumbersRequest {signatory_authority, act_type, year}: ExistsNumbersRequest<'a>) -> Result<Vec<String>, Error>
+{
+    let mut numbers = searcher::Searcher::get_exists_numbers(signatory_authority, act_type, year).await?;
+    //doc_types.sort_by(|a, b| a.name.cmp(&b.name));
+	logger::debug!("Найдено номеров документов: {}", numbers.len());
+    Ok(numbers)
+}
+
+#[tauri::command]
 pub fn get_exists_parsers<'a>() -> Result<Vec<&'a str>, Error>
 {
     let parsers = searcher::Searcher::get_exists_parsers()?;
@@ -40,7 +56,8 @@ pub fn searcher_plugin<R: Runtime>(app_state: Arc<AppState>, repository: Arc<App
       .invoke_handler(tauri::generate_handler![
         get_signatory_authorites,
         get_exists_parsers,
-        get_types
+        get_types,
+        get_exists_numbers
         ])
         .setup(|app_handle, _| 
         {

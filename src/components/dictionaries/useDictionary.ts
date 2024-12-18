@@ -1,14 +1,14 @@
-import { NHighlight, NIcon, NSelect, NTooltip, useThemeVars, type SelectGroupOption, type SelectOption } from "naive-ui";
+import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, useThemeVars, type SelectGroupOption, type SelectOption } from "naive-ui";
 import { CSSProperties, h, ref, RendererElement, RendererNode, VNode } from "vue";
 import { Result } from "../../tauri/abstract";
 import { SelectBaseOption, type Value } from "naive-ui/es/select/src/interface";
-import { EmergencyRound } from "@vicons/material";
-
+import { EmergencyRound, RefreshOutlined } from "@vicons/material";
+import Loader from '../loaders/Loader1.vue';
 type Node =  VNode<RendererNode, RendererElement, {
     [key: string]: any;
 }>
 type SelectedValue = Dictionary & (SelectOption | SelectGroupOption) & {parser: boolean};
-export const useDictionary = (placeholder: string, update_callback: (dict: Dictionary) => void) =>
+export const useDictionary = (placeholder: string, update_callback: (dict: Dictionary|null) => void, rescan_callback: () => void) =>
 {
     const themeVars = useThemeVars();
     const options = ref<SelectedValue[]>([]);
@@ -16,11 +16,23 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
     const is_loading = ref(false);
     const search_patterns = ref<string[]>();
     const count = ref(0);
-
-    const load_options = (dict: Result<Dictionary[]>, parsers: string[]): SelectedValue[]  =>
+    const unselect = () =>
     {
+        selected.value = null;
+        options.value = [];
+        count.value = 0;
+    };
+    
+    const status = ref<'warning'|'success'|'error'>('success');
+    const load_options = (dict: Result<Dictionary[]>, parsers: string[])  =>
+    {
+        unselect();
+        status.value = 'success';
         if(dict.error)
-            return [];
+        {
+            status.value = 'error';
+            unselect();
+        }
         else
         {
             const dictionary = dict.get_value();
@@ -43,9 +55,12 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                 update_callback(dm[0]);
             }
             else
-                selected.value = null;
-                
-            return dm;
+            {
+                //selected.value = null;
+                update_callback(null);
+            }
+            options.value = dm;
+            count.value = options.value.length;
         }
     }
     const filter = (pattern: string, option: Object): boolean => 
@@ -101,7 +116,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     h(NIcon,
                     {
                         color: '#78e378',
-                        size: '30px',
+                        size: '25px',
                     },
                     {
                         default: () => h(EmergencyRound)
@@ -109,6 +124,24 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                 }) : [],
             ])
     }
+
+    const retry_button = () =>
+    {
+        return h(NButton, 
+            {
+                onClick:() =>
+                {
+                    status.value = 'warning';
+                    rescan_callback()
+                }
+            }, 
+            {
+                default:() => "Повторить запрос",
+                icon:() =>
+                    h(NIcon,{color: '#72cc3e', component: RefreshOutlined})
+            });
+    }
+
     const select_element = () => 
     {
         return  h(
@@ -120,6 +153,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     loading: is_loading.value,
                     placeholder: placeholder,
                     filterable: true,
+                    status: status.value,
                     filter: filter,
                     renderLabel: label,
                     onUpdateValue:(val: string, option: SelectBaseOption|null) =>
@@ -146,9 +180,18 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                 },
                 {
                     action:() => h('div', `Количество: ${search_patterns.value ? count.value /2 : count.value}`),
+                    empty:() => status.value == 'error' ? retry_button() :
+                    h('div', 
+                    {
+                        style:
+                        {
+                            padding: '70px 32px'
+                        } as CSSProperties
+                    }, h(Loader))
+                    
                 }
         )
     }
 
-    return { select_element, is_loading, load_options, options, count };
+    return { select_element, is_loading, load_options, unselect};
 }

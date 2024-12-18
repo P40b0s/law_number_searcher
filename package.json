@@ -9,7 +9,6 @@
     "serve": "rsbuild dev",
     "tauri": "tauri dev",
     "build:client:win": "rsbuild build && tauri build --target x86_64-pc-windows-gnu"
-
   },
   "dependencies": {
     "@tauri-apps/api": "2.1.1",
@@ -20,6 +19,7 @@
   "devDependencies": {
     "@rsbuild/core": "1.1.10",
     "@rsbuild/plugin-pug": "1.0.2",
+    "@rsbuild/plugin-sass": "^1.1.2",
     "@rsbuild/plugin-vue": "1.0.5",
     "@tauri-apps/cli": "2.1.0",
     "@vicons/material": "^0.12.0",

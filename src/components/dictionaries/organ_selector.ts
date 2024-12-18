@@ -22,7 +22,7 @@ const comp =  defineComponent({
 props: props,
 emits:
 {
-	'select': (value: Dictionary) => true,
+	'select': (value: Dictionary|null) => true,
 },
 	setup (props, emits)
 	{
@@ -30,16 +30,13 @@ emits:
 			select_element,
 			is_loading,
 			load_options,
-			options,
-			count
-		} = useDictionary(props.placeholder, (d) => emits.emit('select', d));
+		} = useDictionary(props.placeholder, (d) => emits.emit('select', d), async () => await load());
 		const load = async () =>
 		{
 			is_loading.value = true;
 			let p = (await searcher_commands.get_exists_parsers()).get_value();
 			let dict = await searcher_commands.get_signatory_authorites();
-			options.value = load_options(dict, p);
-			count.value = options.value.length;
+			load_options(dict, p);
 			is_loading.value = false;
 		}
 		onMounted(async ()=>

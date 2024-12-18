@@ -8,7 +8,9 @@ pub enum SearcherError
     #[error(transparent)]
     ExtractorError(#[from] plugins::ExtractorError),
     #[error(transparent)]
-    PublicationApiError(#[from] publication_api::PublicationApiError)
+    PublicationApiError(#[from] publication_api::PublicationApiError),
+    #[error("Ошибка, дата `{0}` имеет неверный формат")]
+    DateFormatError(String)
 }
 
 impl serde::Serialize for SearcherError

@@ -1,9 +1,9 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginVue } from '@rsbuild/plugin-vue';
 import { pluginPug } from '@rsbuild/plugin-pug';
-
+import { pluginSass } from '@rsbuild/plugin-sass';
 export default defineConfig({
-    plugins: [pluginVue(), pluginPug()],
+    plugins: [pluginVue(), pluginPug(), pluginSass()],
     resolve: {
         alias: { // 路径别名
             '@/*': './src/*',
