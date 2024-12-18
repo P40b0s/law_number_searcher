@@ -4,6 +4,8 @@ fn main() {
         .plugin("searcher",
       tauri_build::InlinedPlugin::new().commands(&[
         "get_signatory_authorites",
+        "get_exists_parsers",
+        "get_types"
         ]))
       ).unwrap();
     }

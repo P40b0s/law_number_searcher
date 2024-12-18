@@ -2,16 +2,35 @@
 import { Plugin, Result } from "./abstract";
 
 
-class Searcher extends Plugin<'get_signatory_authorites'>
+class Searcher extends Plugin<'get_signatory_authorites' | 'get_exists_parsers' | 'get_types'> implements ICommand
 {
     plugin = "plugin:searcher|";
-    public async get_signatory_authorites(): Promise<Result<SignatoryAuthority[]>>
+    public async get_signatory_authorites<R extends SignatoryAuthority[]>(): Promise<Result<R>>
     {
-        const r = await this.get<SignatoryAuthority[]>('get_signatory_authorites');
-        console.error(r);
+        const r = await this.get<R>('get_signatory_authorites');
         return r;
     }
+    public async get_types<R extends PublicationDocumentType[]>(sa_id: string): Promise<Result<R>>
+    {
+        const r = await this.get<R>('get_types', {payload: sa_id});
+        return r;
+    }
+    public async get_exists_parsers<R extends string[]>(): Promise<Result<R>>
+    {
+        const r = await this.get<R>('get_exists_parsers');
+        return r;
+    }
+    
 }
+
+
+interface ICommand
+{
+    get_signatory_authorites<R extends SignatoryAuthority[]>(): Promise<Result<R>>;
+    get_types<R extends PublicationDocumentType[]>(sa_id: string): Promise<Result<R>>;
+    get_exists_parsers<R extends string[]>(): Promise<Result<R>>;
+}
+
 
 // class Service extends Plugin<'clear_dirs' | 'ws_server_online' | 'rescan_packet' | 'delete_packet'>
 // {
@@ -92,5 +111,5 @@ class Searcher extends Plugin<'get_signatory_authorites'>
 // const commands_settings = new Settings();
 // const commands_packets = new Packets();
 // export {commands_settings, commands_service, commands_packets}
-const searcher_commands = new Searcher();
+const searcher_commands: ICommand = new Searcher();
 export {searcher_commands};

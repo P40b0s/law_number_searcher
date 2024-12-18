@@ -8,6 +8,7 @@ import
   } from 'vue'
 
 import { NButton, NCard, NSpin, NTabPane, NTabs} from 'naive-ui';
+import Searcher from '../components/Searcher.vue';
 import { searcher_commands } from '../tauri/commands';
 //import Loader2 from './Loader/Loader2.vue';
 
@@ -46,18 +47,7 @@ export default defineComponent({
                 }
             },
             {
-                default:() =>
-                h(NButton, 
-                {
-                    onClick: async () =>
-                    {
-                        const result = await searcher_commands.get_signatory_authorites();
-                    }
-                },
-                {
-                    
-                }
-                )
+                default:() => h(Searcher)
             }
         )
     }

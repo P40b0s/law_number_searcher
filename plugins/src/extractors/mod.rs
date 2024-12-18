@@ -33,6 +33,12 @@ impl<'a> ExtractorManager<'a>
             Err(ExtractorError::PluginNotFound(signatory_authority.to_owned()))
         }
     }
+    ///Получить список всех имплементированых парсерсеров (id органа для которого сделан парсер)
+    pub fn get_exists_parsers(&self) -> Result<Vec<&'a str>, ExtractorError>
+    {
+        Ok(self.extractors.iter().map(|m| m.signatory_authority()).collect())
+        
+    }
 }
 
 

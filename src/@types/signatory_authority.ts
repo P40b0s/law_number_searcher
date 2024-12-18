@@ -1,6 +1,1 @@
-type SignatoryAuthority = 
-{
-    id: string,
-    weight: number,
-    name: string,
-}
+type SignatoryAuthority = Dictionary & {weight: number}; 

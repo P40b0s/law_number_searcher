@@ -45,6 +45,7 @@ n-config-provider(:theme="theme")
   grid-template-columns: 5px 1fr auto; 
   grid-template-rows: minmax(30px 50px) 1fr min-content; 
   gap: 0px 0px; 
+  font-family: 'Source Code Pro';
   grid-template-areas: 
     "header header header"
     ". main-content right-content"

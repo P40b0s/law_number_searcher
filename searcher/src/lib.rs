@@ -1,7 +1,7 @@
 use std::sync::{Arc, LazyLock};
 pub use error::SearcherError;
 use plugins::ExtractorManager;
-pub use publication_api::{SignatoryAuthority, PublicationApiError};
+pub use publication_api::{SignatoryAuthority, PublicationApiError, DocumentType};
 mod error;
 static PLUGINS: LazyLock<Arc<ExtractorManager>> = LazyLock::new(|| Arc::new(ExtractorManager::new()));
 
@@ -12,6 +12,16 @@ impl Searcher
     {
         let organs = publication_api::PublicationApi::get_signatory_authorites().await?;
         Ok(organs)
+    }
+    pub async fn get_types(sa: &str) -> Result<Vec<DocumentType>, SearcherError>
+    {
+        let types = publication_api::PublicationApi::get_documents_types_by_signatory_authority(sa).await?;
+        Ok(types)
+    }
+    pub fn get_exists_parsers<'a>() -> Result<Vec<&'a str>, SearcherError>
+    {
+        let parsers = PLUGINS.get_exists_parsers()?;
+        Ok(parsers)
     }
 }
 

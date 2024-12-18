@@ -6,6 +6,8 @@
   "permissions": [
     "core:default",
     "shell:allow-open",
-    "searcher:allow-get-signatory-authorites"
+    "searcher:allow-get-signatory-authorites",
+    "searcher:allow-get-exists-parsers",
+    "searcher:allow-get-types"
   ]
 }
