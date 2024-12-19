@@ -10,7 +10,11 @@ pub enum SearcherError
     #[error(transparent)]
     PublicationApiError(#[from] publication_api::PublicationApiError),
     #[error("Ошибка, дата `{0}` имеет неверный формат")]
-    DateFormatError(String)
+    DateFormatError(String),
+    #[error("Ошибка извлечения номера из наименования`{0}` в документе EO `{1}`")]
+    /// 1 - наименование из корого производится извлечение
+    /// 2 - номер опубликования
+    ParseNumberError(String, String)
 }
 
 impl serde::Serialize for SearcherError

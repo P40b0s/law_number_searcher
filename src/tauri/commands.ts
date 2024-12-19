@@ -34,6 +34,7 @@ interface ICommand
     get_signatory_authorites<R extends SignatoryAuthority[]>(): Promise<Result<R>>;
     get_types<R extends PublicationDocumentType[]>(sa_id: string): Promise<Result<R>>;
     get_exists_parsers<R extends string[]>(): Promise<Result<R>>;
+    get_exists_numbers<R extends string[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>;
 }
 
 

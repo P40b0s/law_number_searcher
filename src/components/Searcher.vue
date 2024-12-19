@@ -38,9 +38,10 @@ const select_type = (tp: Dictionary|null) =>
     console.log(tp);
     selected_type.value = tp;
 }
-const start_search = () =>
+const start_search = async () =>
 {
-    
+    const n = await searcher_commands.get_exists_numbers(selected_organ.value?.id as string, selected_type.value?.id as string, year.value);
+    numbers.value = n.get_value();
 }
 </script>
 <style>
