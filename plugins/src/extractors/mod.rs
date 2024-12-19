@@ -1,4 +1,5 @@
 use std::{fmt::Display, str::FromStr};
+use hashbrown::HashMap;
 use prezident::PrezidentPlugin;
 use serde::{Deserialize, Serialize};
 use crate::ExtractorError;
@@ -11,22 +12,23 @@ pub mod signatory_authorites;
 
 pub struct ExtractorManager<'a> where Self: Send + Sync 
 {
-    extractors: Vec<Box<dyn ExtractorPlugin<'a>>>
+    extractors: hashbrown::HashMap<String, Box<dyn ExtractorPlugin<'a>>>
 }
 impl<'a> ExtractorManager<'a>
 {
     pub fn new() -> Self
     {
+        let mut hm = HashMap::new();
+        let plugin: Box<dyn ExtractorPlugin> = Box::new(PrezidentPlugin{});
+        hm.insert(plugin.signatory_authority().to_owned(), plugin);
         Self
         {
-            extractors: vec![
-                Box::new(PrezidentPlugin{})
-            ]
+            extractors: hm
         }
     }
     pub fn get_plugin(&self, signatory_authority: &str) -> Result<&Box<dyn ExtractorPlugin<'a>>, ExtractorError>
     {
-        if let Some(plugin) = self.extractors.iter().find(|f| f.signatory_authority() == signatory_authority)
+        if let Some(plugin) = self.extractors.get(signatory_authority)
         {
             Ok(plugin)
         }
@@ -34,12 +36,6 @@ impl<'a> ExtractorManager<'a>
         {
             Err(ExtractorError::PluginNotFound(signatory_authority.to_owned()))
         }
-    }
-    ///Получить список всех имплементированых парсерсеров (id органа для которого сделан парсер)
-    pub fn get_exists_parsers(&self) -> Result<Vec<&'a str>, ExtractorError>
-    {
-        Ok(self.extractors.iter().map(|m| m.signatory_authority()).collect())
-        
     }
 }
 

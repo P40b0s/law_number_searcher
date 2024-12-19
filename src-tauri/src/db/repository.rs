@@ -1,5 +1,6 @@
 use std::sync::Arc;
-use sqlx::SqlitePool;
+use sqlx::{encode::IsNull, error::BoxDynError, sqlite::SqliteRow, Any, Database, Decode, Encode, FromRow, Row, SqlitePool, Value};
+use utilites::Date;
 
 use crate::Error;
 
@@ -27,6 +28,7 @@ impl Repository
 pub trait IRepository
 {
     async fn add_number(&self);
+    async fn get_number(&self, sa: &str, ty: &str, year: u32, number: &str)  -> Result<NumberDBO, Error>;
 }
 
 
@@ -48,14 +50,34 @@ fn create_table<'a>() -> &'a str
 
 pub struct NumberDBO
 {
-    signatory_authority: uuid::Uuid,
-    type_id: uuid::Uuid,
-    year: u32,
-    number: String,
-    note: Option<String>,
-    status: u32
+    pub signatory_authority: uuid::Uuid,
+    pub type_id: uuid::Uuid,
+    pub year: u32,
+    pub number: String,
+    pub note: Option<String>,
+    pub status: u32
 }
-
+impl FromRow<'_, SqliteRow> for NumberDBO
+{
+    fn from_row(row: &SqliteRow) -> sqlx::Result<Self> 
+    {
+        let signatory_authority: &str =  row.try_get("signatory_authority")?;
+        let type_id: &str = row.try_get("type_id")?;
+        let year: u32 = row.try_get("year")?;
+        let number: String = row.try_get("number")?;
+        let note: Option<String> = row.try_get("note")?;
+        let status: u32 = row.try_get("status")?;
+        let obj = NumberDBO {
+            signatory_authority: uuid::Uuid::parse_str(signatory_authority).unwrap(),
+            type_id: uuid::Uuid::parse_str(type_id).unwrap(),
+            year,
+            number,
+            note,
+            status
+        };
+        Ok(obj)
+    }
+}
 
 
 
@@ -66,7 +88,23 @@ impl IRepository for Repository
     async fn add_number(&self) 
     {
         let connection = Arc::clone(&self.connection);
-
+    }
+    async fn get_number(&self, sa: &str, ty: &str, year: u32, number: &str) -> Result<NumberDBO, Error>
+    {
+        let pool = Arc::clone(&self.connection);
+        let sql = "SELECT signatory_authority, type_id, year, number, note, status FROM numbers WHERE signatory_authority = $1 AND type_id = $2 AND year = $3 AND number = $4";
+        let r = sqlx::query_as::<_, NumberDBO>(&sql)
+        .bind(sa)
+        .bind(ty)
+        .bind(year)
+        .bind(number)
+        .fetch_one(&*pool).await;
+        if r.is_err()
+        {
+            logger::error!("{}", r.as_ref().err().unwrap());
+            let _ = r?;
+        }
+        Ok(r.unwrap())
     }
 }
 

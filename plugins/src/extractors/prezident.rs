@@ -66,6 +66,8 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
             ActType::Распоряжение => [number.to_string(), "-рп".to_owned()].concat(),
         }
     }
+
+
 }
 
 
@@ -73,7 +75,6 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
 mod tests
 {
     use crate::extractors::{types, ActType, ExtractorPlugin};
-
     #[test]
     fn test()
     {
@@ -95,7 +96,6 @@ mod tests
         assert_eq!(number3, 444);
         let number4 = plugin.get_raw_number(types::ФЕДЕРАЛЬНЫЙ_ЗАКОН, "475-ФЗ").unwrap();
         assert_eq!(number4, 475);
-        
     }
 
     #[test]

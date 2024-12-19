@@ -8,7 +8,8 @@
     "build": "tsc && rsbuild build",
     "serve": "rsbuild dev",
     "tauri": "tauri dev",
-    "build:client:win": "rsbuild build && tauri build --target x86_64-pc-windows-gnu"
+    "build:client:win": "tauri build --target x86_64-pc-windows-gnu",
+    "build:client": "tauri build"
   },
   "dependencies": {
     "@tauri-apps/api": "2.1.1",

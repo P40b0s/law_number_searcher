@@ -34,9 +34,8 @@ emits:
 		const load = async () =>
 		{
 			is_loading.value = true;
-			let p = (await searcher_commands.get_exists_parsers()).get_value();
 			let dict = await searcher_commands.get_signatory_authorites();
-			load_options(dict, p);
+			load_options(dict);
 			is_loading.value = false;
 		}
 		onMounted(async ()=>

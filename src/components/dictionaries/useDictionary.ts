@@ -2,12 +2,12 @@ import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, useThemeVars,
 import { CSSProperties, h, ref, RendererElement, RendererNode, VNode } from "vue";
 import { Result } from "../../tauri/abstract";
 import { SelectBaseOption, type Value } from "naive-ui/es/select/src/interface";
-import { EmergencyRound, RefreshOutlined } from "@vicons/material";
+import { CodeRound, DoneOutlineSharp, EmergencyRound, GradeOutlined, GradeRound, GradeSharp, PlaylistAddCheckCircleTwotone, RefreshOutlined } from "@vicons/material";
 import Loader from '../loaders/Loader1.vue';
 type Node =  VNode<RendererNode, RendererElement, {
     [key: string]: any;
 }>
-type SelectedValue = Dictionary & (SelectOption | SelectGroupOption) & {parser: boolean};
+type SelectedValue = Dictionary & (SelectOption | SelectGroupOption);
 export const useDictionary = (placeholder: string, update_callback: (dict: Dictionary|null) => void, rescan_callback: () => void) =>
 {
     const themeVars = useThemeVars();
@@ -24,7 +24,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
     };
     
     const status = ref<'warning'|'success'|'error'>('success');
-    const load_options = (dict: Result<Dictionary[]>, parsers: string[])  =>
+    const load_options = (dict: Result<Dictionary[]>)  =>
     {
         unselect();
         status.value = 'success';
@@ -45,7 +45,8 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     id: o.id,
                     name: o.name,
                     key: o.id,
-                    parser: parsers.some(s=>s == o.id)
+                    havingParser: o.havingParser,
+                    disabled: !o.havingParser
                 } as SelectedValue
                 return org;
             });
@@ -82,8 +83,6 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     alignItems: 'center',
                     width: '100%',
                     fontSize: '15px',
-                    
-
                 } as CSSProperties
             },
             [
@@ -106,20 +105,24 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     } as CSSProperties
 
                 }),
-                option.parser ?
+                option.havingParser ?
                 h(NTooltip, {
-                    placement: 'bottom'
+                    placement: 'left'
                 },
                 {
-                    default:() => "Для данного вида документа есть парсер",
+                    default:() => "Парсер найден",
                     trigger:() => 
                     h(NIcon,
                     {
                         color: '#78e378',
                         size: '25px',
+                        style:
+                        {
+                            filter: 'blur(1px)'
+                        }   as CSSProperties
                     },
                     {
-                        default: () => h(EmergencyRound)
+                        default: () => h(GradeRound)
                     })
                 }) : [],
             ])
@@ -188,7 +191,6 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                             padding: '70px 32px'
                         } as CSSProperties
                     }, h(Loader))
-                    
                 }
         )
     }

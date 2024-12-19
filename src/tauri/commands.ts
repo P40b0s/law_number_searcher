@@ -5,12 +5,12 @@ import { Plugin, Result } from "./abstract";
 class Searcher extends Plugin<'get_signatory_authorites' | 'get_exists_parsers' | 'get_types' | 'get_exists_numbers' | 'get_lost_numbers'> implements ICommand
 {
     plugin = "plugin:searcher|";
-    public async get_signatory_authorites<R extends SignatoryAuthority[]>(): Promise<Result<R>>
+    public async get_signatory_authorites<R extends Dictionary[]>(): Promise<Result<R>>
     {
         const r = await this.get<R>('get_signatory_authorites');
         return r;
     }
-    public async get_types<R extends PublicationDocumentType[]>(sa_id: string): Promise<Result<R>>
+    public async get_types<R extends Dictionary[]>(sa_id: string): Promise<Result<R>>
     {
         const r = await this.get<R>('get_types', {payload: sa_id});
         return r;
@@ -37,8 +37,8 @@ class Searcher extends Plugin<'get_signatory_authorites' | 'get_exists_parsers' 
 
 interface ICommand
 {
-    get_signatory_authorites<R extends SignatoryAuthority[]>(): Promise<Result<R>>;
-    get_types<R extends PublicationDocumentType[]>(sa_id: string): Promise<Result<R>>;
+    get_signatory_authorites<R extends Dictionary[]>(): Promise<Result<R>>;
+    get_types<R extends Dictionary[]>(sa_id: string): Promise<Result<R>>;
     get_exists_parsers<R extends string[]>(): Promise<Result<R>>;
     get_exists_numbers<R extends string[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>;
     get_lost_numbers<R extends string[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>

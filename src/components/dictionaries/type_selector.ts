@@ -47,7 +47,7 @@ emits:
 				is_loading.value = true;
 				unselect();
 				let dict = await searcher_commands.get_types(organ.id);
-				load_options(dict, []);
+				load_options(dict);
 				is_loading.value = false;
 			}
 		}

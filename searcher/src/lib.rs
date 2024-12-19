@@ -1,31 +1,84 @@
 use std::sync::{Arc, LazyLock};
 pub use error::SearcherError;
-use plugins::ExtractorManager;
+use plugins::{ExtractorManager, ExtractorPlugin};
 use publication_api::PublicationDocumentCard;
 pub use publication_api::{SignatoryAuthority, PublicationApiError, DocumentType};
 use regex::Regex;
+use serde::{Deserialize, Serialize};
 use utilites::Date;
 mod error;
 static PLUGINS: LazyLock<Arc<ExtractorManager>> = LazyLock::new(|| Arc::new(ExtractorManager::new()));
-
+#[derive(Deserialize, Debug, Serialize)]
+#[serde(rename_all="camelCase")]
+pub struct Dictionary
+{
+    pub id: String,
+    pub name: String,
+    pub having_parser: bool
+}
+impl Into<Dictionary> for SignatoryAuthority
+{
+    fn into(self) -> Dictionary 
+    {
+        Dictionary 
+        {
+            id: self.id,
+            name: self.name,
+            having_parser: false
+        }
+    }
+}
+impl Into<Dictionary> for DocumentType
+{
+    fn into(self) -> Dictionary 
+    {
+        Dictionary 
+        {
+            id: self.id,
+            name: self.name,
+            having_parser: false
+        }
+    }
+}
 pub struct Searcher{}
+///так как DocumentType и signatory authority одинаковые и идут с весами которые нам ненужны, но отсуствует поле что для них есть парсер которое нам как раз нужно, сделаем новую структуру и будет все конвертить в нее
 impl Searcher
 {
-    pub async fn get_signatory_authorites() -> Result<Vec<SignatoryAuthority>, SearcherError>
+    pub async fn get_signatory_authorites() -> Result<Vec<Dictionary>, SearcherError>
     {
         let organs = publication_api::PublicationApi::get_signatory_authorites().await?;
+        let organs: Vec<Dictionary> = organs.into_iter().map(|o| 
+            {
+                let mut d: Dictionary = o.into();
+                d.having_parser = Self::parser_exists(&d.id);
+                d
+            }
+        ).collect();
         Ok(organs)
     }
-    pub async fn get_types(sa: &str) -> Result<Vec<DocumentType>, SearcherError>
+    pub async fn get_types(sa: &str) -> Result<Vec<Dictionary>, SearcherError>
     {
         let types = publication_api::PublicationApi::get_documents_types_by_signatory_authority(sa).await?;
+        let types_with_parsers = Self::get_types_in_parser(sa).await?;
+        let types: Vec<Dictionary> = types.into_iter().map(|t|
+        {
+            let mut d: Dictionary = t.into();
+            d.having_parser = types_with_parsers.contains(&d.id);
+            d
+        }).collect();
         Ok(types)
     }
-    pub fn get_exists_parsers<'a>() -> Result<Vec<&'a str>, SearcherError>
+    pub async fn get_types_in_parser(sa: &str) -> Result<Vec<String>, SearcherError>
     {
-        let parsers = PLUGINS.get_exists_parsers()?;
-        Ok(parsers)
+        let plugin = PLUGINS.get_plugin(sa)?;
+        let ids: Vec<String> = plugin.type_ids().into_iter().map(|t| t.to_string()).collect();
+        Ok(ids)
     }
+    fn parser_exists(sa: &str) -> bool
+    {
+        PLUGINS.get_plugin(sa).is_ok()
+    }
+   
     pub async fn get_exists_numbers(signatory_authority: &str, doc_type: &str, year: u32) -> Result<Vec<String>, SearcherError>
     {
         let date_from_format = ["01.01.".to_owned(), year.to_string()].concat();

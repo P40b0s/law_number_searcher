@@ -39,6 +39,6 @@ export default defineConfig({
           charset: 'UTF-8',
           viewport: 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, minimum-scale=1.0, viewport-fit=cover'
         },
-        title: '普惠交易平台'
+        title: 'Воу воу'
       },
 });
