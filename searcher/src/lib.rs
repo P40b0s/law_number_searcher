@@ -63,7 +63,28 @@ impl Searcher
         Ok(numbers)
     }
 
-    
+
+    /// Retrieves a list of "lost" document numbers for the given signatory authority, document type, and year.
+    ///
+    /// This function first retrieves the list of existing document numbers using the `get_exists_numbers` function.
+    /// It then uses a plugin associated with the given signatory authority to determine which of those numbers should be
+    /// considered "lost" or skipped. The resulting list of skipped/lost numbers is returned.
+    ///
+    /// # Arguments
+    /// * `signatory_authority` - The signatory authority for which to retrieve lost document numbers.
+    /// * `doc_type` - The document type for which to retrieve lost document numbers.
+    /// * `year` - The year for which to retrieve lost document numbers.
+    ///
+    /// # Returns
+    /// A `Result` containing a `Vec<String>` of the lost document numbers, or a `SearcherError` if an error occurs.
+    pub async fn get_lost_numbers(signatory_authority: &str, doc_type: &str, year: u32) -> Result<Vec<String>, SearcherError>
+    {
+        let numbers = Self::get_exists_numbers(signatory_authority, doc_type, year).await?;
+        //logger::debug!("numbers {:?}", &numbers);
+        let plugin = PLUGINS.get_plugin(signatory_authority)?;
+        let skipped = plugin.get_skip_numbers(doc_type, &numbers)?;
+        Ok(skipped)
+    }
 }
 
 
@@ -85,7 +106,21 @@ mod tests
     async fn test_get_all_numbers()
     {
         logger::StructLogger::new_default();
-        let organs = super::Searcher::get_exists_numbers("225698f1-cfbc-4e42-9caa-32f9f7403211", "82a8bf1c-3bc7-47ed-827f-7affd43a7f27", 2024).await.unwrap();
+        let organs = super::Searcher::get_exists_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::УКАЗ, 2024).await.unwrap();
+        logger::debug!("{:?}", organs);
+    } 
+    #[tokio::test]
+    async fn test_get_skipped_numbers()
+    {
+        logger::StructLogger::new_default();
+        let organs = super::Searcher::get_lost_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::УКАЗ, 2024).await.unwrap();
+        logger::debug!("{:?}", organs);
+    } 
+    #[tokio::test]
+    async fn test_get_skipped_numbers_fz()
+    {
+        logger::StructLogger::new_default();
+        let organs = super::Searcher::get_lost_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::ФЕДЕРАЛЬНЫЙ_ЗАКОН, 2024).await.unwrap();
         logger::debug!("{:?}", organs);
     } 
     #[tokio::test]

@@ -6,7 +6,8 @@ fn main() {
         "get_signatory_authorites",
         "get_exists_parsers",
         "get_types",
-        "get_exists_numbers"
+        "get_exists_numbers",
+        "get_lost_numbers"
         ]))
       ).unwrap();
     }

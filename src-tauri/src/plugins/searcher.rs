@@ -44,6 +44,17 @@ pub async fn get_exists_numbers<'a>(ExistsNumbersRequest {signatory_authority, a
 }
 
 #[tauri::command]
+pub async fn get_lost_numbers<'a>(ExistsNumbersRequest {signatory_authority, act_type, year}: ExistsNumbersRequest<'a>) -> Result<Vec<String>, Error>
+{
+    let numbers = searcher::Searcher::get_lost_numbers(signatory_authority, act_type, year).await?;
+    //doc_types.sort_by(|a, b| a.name.cmp(&b.name));
+	logger::debug!("Найдено пропущеных номеров: {}", numbers.len());
+    Ok(numbers)
+}
+
+
+
+#[tauri::command]
 pub fn get_exists_parsers<'a>() -> Result<Vec<&'a str>, Error>
 {
     let parsers = searcher::Searcher::get_exists_parsers()?;
@@ -57,7 +68,8 @@ pub fn searcher_plugin<R: Runtime>(app_state: Arc<AppState>, repository: Arc<App
         get_signatory_authorites,
         get_exists_parsers,
         get_types,
-        get_exists_numbers
+        get_exists_numbers,
+        get_lost_numbers
         ])
         .setup(|app_handle, _| 
         {

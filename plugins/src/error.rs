@@ -11,7 +11,7 @@ pub enum ExtractorError
         #[from]
         source: std::io::Error,
     },
-    #[error("Ошибка преобразования номера документа в число: `{}`", source)]
+    #[error("Ошибка преобразования номера документа `{}` в число: `{}`", number, source)]
     ParseNumberError {number: String, #[source] source: ParseIntError},
     #[error("Ошибка формат номера `{}` не поддерживается", .0)]
     NumberFormatError(String),

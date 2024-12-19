@@ -4,6 +4,8 @@ use serde::{Deserialize, Serialize};
 use crate::ExtractorError;
 mod prezident;
 pub mod number_extractors;
+pub mod types;
+pub mod signatory_authorites;
 
 
 
@@ -60,7 +62,7 @@ pub trait ExtractorPlugin<'a> where Self: Send + Sync
 
     fn get_raw_number(&self, act_type: &str,  number: &str) -> Result<u32, crate::error::ExtractorError>;
 
-    fn get_skip_numbers(&'a self, act_type: &str, numbers: &[&str]) -> Result<Vec<String>, crate::error::ExtractorError>
+    fn get_skip_numbers(&'a self, act_type: &str, numbers: &[String]) -> Result<Vec<String>, crate::error::ExtractorError>
     {
         let tp: ActType = act_type.parse()?;
         let mut raw_numbers = Vec::with_capacity(numbers.len());
@@ -73,7 +75,8 @@ pub trait ExtractorPlugin<'a> where Self: Send + Sync
             min = min.min(raw_number);
             raw_numbers.push(raw_number);
         }
-        logger::info!("min {} max {} all {:?}", min, max, &numbers);
+        //logger::info!("min {} max {} all {:?}", min, max, &numbers);
+        raw_numbers.sort();
         let mut skipped = Vec::new();
         for n in min..max
         {
@@ -106,9 +109,9 @@ impl FromStr for ActType
             let s = s.as_str();
             match s
             {
-                "7ff5b3b5-3757-44f1-bb76-3766cabe3593" => Ok(ActType::ФедеральныйЗакон),
-                "82a8bf1c-3bc7-47ed-827f-7affd43a7f27" => Ok(ActType::Указ),
-                "0790e34b-784b-4372-884e-3282622a24bd" => Ok(ActType::Распоряжение),
+                types::ФЕДЕРАЛЬНЫЙ_ЗАКОН => Ok(ActType::ФедеральныйЗакон),
+                types::УКАЗ => Ok(ActType::Указ),
+                types::РАСПОРЯЖЕНИЕ => Ok(ActType::Распоряжение),
                 _ => Err(crate::ExtractorError::ParseActTypeError(s.to_owned()))
             }
         }
@@ -133,13 +136,32 @@ impl Display for ActType
     {
         match self
         {
-            ActType::ФедеральныйЗакон => f.write_str("7ff5b3b5-3757-44f1-bb76-3766cabe3593"),
-            ActType::Указ => f.write_str("82a8bf1c-3bc7-47ed-827f-7affd43a7f27"),
-            ActType::Распоряжение => f.write_str("0790e34b-784b-4372-884e-3282622a24bd")
+            ActType::ФедеральныйЗакон => f.write_str(types::ФЕДЕРАЛЬНЫЙ_ЗАКОН),
+            ActType::Указ => f.write_str(types::УКАЗ),
+            ActType::Распоряжение => f.write_str(types::РАСПОРЯЖЕНИЕ)
         }
     }
 }
+#[macro_export]
+macro_rules! create_error {
+    ($e:expr) => {{
+        logger::error!("{}", $e);
+        Err($e)
+    }};
+}
 
+#[cfg(test)]
+mod tests
+{
+    use super::*;
+    #[test]
+    fn test_act_type_from_str()
+    {
+        logger::StructLogger::new_default();
+        let e = crate::error::ExtractorError::ParseActTypeError("123321".to_owned());
+        //let e1 = create_error!(e);
+    }
+}
 
 
 

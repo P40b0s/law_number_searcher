@@ -1,7 +1,7 @@
 use std::u32;
 use logger::info;
 use crate::ExtractorError;
-use super::number_extractors;
+use super::{number_extractors, signatory_authorites};
 use super::{ActType, ExtractorPlugin};
 
 #[derive(Debug)]
@@ -11,7 +11,7 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
 {
     fn semantic_version(&self) -> &'static str
     {
-       "0.1.0"
+       "0.1.1"
     }
     fn name(&self) -> &'static str
     {
@@ -20,7 +20,7 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
    // &DocumentTypes=&DocumentTypes=&PublishDateSearchType=0&NumberSearchType=0&DocumentDateSearchType=0&JdRegSearchType=0&SortedBy=6&SortDestination=1
     fn signatory_authority(&self) -> &'static str
     {
-        "225698f1-cfbc-4e42-9caa-32f9f7403211"
+        signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ
     }
 
     fn type_ids(&self) -> &'static[ActType] 
@@ -52,7 +52,7 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
                 ActType::Распоряжение => number_extractors::get_number_with_dash_delim(number)
             }
         }
-        else 
+        else
         {
             return Err(crate::ExtractorError::ActTypeNotSupported(act_type.to_owned()));    
         }
@@ -72,7 +72,7 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
 #[cfg(test)]
 mod tests
 {
-    use crate::extractors::{ActType, ExtractorPlugin};
+    use crate::extractors::{types, ActType, ExtractorPlugin};
 
     #[test]
     fn test()
@@ -87,12 +87,15 @@ mod tests
     {
         let plugin = super::PrezidentPlugin {  };
         logger::StructLogger::new_default();
-        let number1 = plugin.get_raw_number("82a8bf1c-3bc7-47ed-827f-7affd43a7f27", "32123").unwrap();
+        let number1 = plugin.get_raw_number(types::УКАЗ, "32123").unwrap();
         assert_eq!(number1, 32123);
-        let number2 = plugin.get_raw_number("7ff5b3b5-3757-44f1-bb76-3766cabe3593", "333-ФЗ").unwrap();
+        let number2 = plugin.get_raw_number(types::ФЕДЕРАЛЬНЫЙ_ЗАКОН, "333-ФЗ").unwrap();
         assert_eq!(number2, 333);
-        let number3 = plugin.get_raw_number("0790e34b-784b-4372-884e-3282622a24bd", "444-рп").unwrap();
+        let number3 = plugin.get_raw_number(types::РАСПОРЯЖЕНИЕ, "444-рп").unwrap();
         assert_eq!(number3, 444);
+        let number4 = plugin.get_raw_number(types::ФЕДЕРАЛЬНЫЙ_ЗАКОН, "475-ФЗ").unwrap();
+        assert_eq!(number4, 475);
+        
     }
 
     #[test]
@@ -101,13 +104,13 @@ mod tests
         let plugin = super::PrezidentPlugin {  };
         logger::StructLogger::new_default();
         let numbers = vec![
-            "166-ФЗ",
-            "167-ФЗ",
-            "169-ФЗ",
-            "170-ФЗ",
-            "180-ФЗ"
+            "166-ФЗ".to_owned(),
+            "167-ФЗ".to_owned(),
+            "169-ФЗ".to_owned(),
+            "170-ФЗ".to_owned(),
+            "180-ФЗ".to_owned()
         ];
-        let skipped = plugin.get_skip_numbers("7ff5b3b5-3757-44f1-bb76-3766cabe3593", &numbers).unwrap();
+        let skipped = plugin.get_skip_numbers(types::ФЕДЕРАЛЬНЫЙ_ЗАКОН, &numbers).unwrap();
         logger::info!("{:?}", skipped);
         assert_eq!(skipped, vec!["168-ФЗ", "171-ФЗ", "172-ФЗ", "173-ФЗ", "174-ФЗ", "175-ФЗ", "176-ФЗ", "177-ФЗ", "178-ФЗ", "179-ФЗ"]);
     }
