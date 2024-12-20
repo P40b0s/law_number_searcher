@@ -68,17 +68,21 @@ impl Searcher
         }).collect();
         Ok(types)
     }
+        //TODO необходимо сделать минимальную выборку и взять первый номер документа, проверить его, можем ли мы его парсить, и уже это показать в виде докуента можем ли мы его парсить или нет
+    //http://publication.pravo.gov.ru/api/Documents?SignatoryAuthorityId=8d31525e-fafc-4590-8580-422f588d20c9&DocumentTypes=2dddb344-d3e2-4785-a899-7aa12bd47b6f&pageSize=10&index=1
+    
     pub async fn get_types_in_parser(sa: &str) -> Result<Vec<String>, SearcherError>
     {
         let plugin = PLUGINS.get_plugin(sa)?;
         let ids: Vec<String> = plugin.type_ids().into_iter().map(|t| t.to_string()).collect();
         Ok(ids)
     }
+
     fn parser_exists(sa: &str) -> bool
     {
         PLUGINS.get_plugin(sa).is_ok()
     }
-   
+    ///получаем все номера документов за текущий год
     pub async fn get_exists_numbers(signatory_authority: &str, doc_type: &str, year: u32) -> Result<Vec<String>, SearcherError>
     {
         let date_from_format = ["01.01.".to_owned(), year.to_string()].concat();
@@ -116,20 +120,7 @@ impl Searcher
         Ok(numbers)
     }
 
-
-    /// Retrieves a list of "lost" document numbers for the given signatory authority, document type, and year.
-    ///
-    /// This function first retrieves the list of existing document numbers using the `get_exists_numbers` function.
-    /// It then uses a plugin associated with the given signatory authority to determine which of those numbers should be
-    /// considered "lost" or skipped. The resulting list of skipped/lost numbers is returned.
-    ///
-    /// # Arguments
-    /// * `signatory_authority` - The signatory authority for which to retrieve lost document numbers.
-    /// * `doc_type` - The document type for which to retrieve lost document numbers.
-    /// * `year` - The year for which to retrieve lost document numbers.
-    ///
-    /// # Returns
-    /// A `Result` containing a `Vec<String>` of the lost document numbers, or a `SearcherError` if an error occurs.
+    /// получение всех пропущеных номеров
     pub async fn get_lost_numbers(signatory_authority: &str, doc_type: &str, year: u32) -> Result<Vec<String>, SearcherError>
     {
         let numbers = Self::get_exists_numbers(signatory_authority, doc_type, year).await?;

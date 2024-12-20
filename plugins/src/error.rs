@@ -13,7 +13,7 @@ pub enum ExtractorError
     },
     #[error("Ошибка преобразования номера документа `{}` в число: `{}`", number, source)]
     ParseNumberError {number: String, #[source] source: ParseIntError},
-    #[error("Ошибка формат номера `{}` не поддерживается", .0)]
+    #[error("Ошибка, формат номера `{}` не поддерживается", .0)]
     NumberFormatError(String),
     #[error("Ошибка идентификации типа документа: `{}`", .0)]
     ParseActTypeError(String),

@@ -3703,10 +3703,17 @@ fn convert_json_to_constants(json_str: &str) -> Vec<String>
 mod tests
 {
     #[test]
-    fn get_consts()
+    fn get_signatory_consts()
     {
         let json = utilites::io::read_file_to_binary("/hard/xar/projects/rust/number_searcher/plugins/json/SignatoryAuthorities.json").unwrap();
         let consts = super::convert_json_to_constants(String::from_utf8(json).unwrap().as_str());
         std::fs::write("constants.rs", consts.join("\n")).unwrap();
+    }
+    #[test]
+    fn get_types_consts()
+    {
+        let json = utilites::io::read_file_to_binary("/hard/xar/projects/rust/number_searcher/plugins/json/DocumentTypes.json").unwrap();
+        let consts = super::convert_json_to_constants(String::from_utf8(json).unwrap().as_str());
+        std::fs::write("types.rs", consts.join("\n")).unwrap();
     }
 }

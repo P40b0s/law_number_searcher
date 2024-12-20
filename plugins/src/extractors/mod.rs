@@ -1,12 +1,14 @@
-use std::{fmt::Display, str::FromStr};
+use std::{cell::OnceCell, fmt::Display, str::FromStr};
 use hashbrown::HashMap;
 use prezident::PrezidentPlugin;
+use regex::Regex;
 use serde::{Deserialize, Serialize};
 use crate::ExtractorError;
 mod prezident;
 pub mod number_extractors;
 pub mod types;
 pub mod signatory_authorites;
+mod universal;
 
 
 
@@ -40,104 +42,154 @@ impl<'a> ExtractorManager<'a>
 }
 
 
-
-
-
+static CLEAR_NUMBER_RE: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"\d{1,4}").unwrap());
 pub trait ExtractorPlugin<'a> where Self: Send + Sync
 {
-    fn semantic_version(&self) -> &'static str;
-    ///наименование органа
-    fn name(&self) -> &'static str;
-    ///guid signatory_authority
-    fn signatory_authority(&self) -> &'static str;
-    /// guid с типом документа
-    fn type_ids(&self) -> &'static[ActType];
+    fn signatory_authority(&self) -> Option<&'static str>;
     ///url сайта где официально опубликовываются данные докуенты (кроме publication.pravo.gov.ru)
     fn official_publication_url(&self) -> Option<&'static str>;
 
-
-    fn get_raw_number(&self, act_type: &str,  number: &str) -> Result<u32, crate::error::ExtractorError>;
-
-    fn get_skip_numbers(&'a self, act_type: &str, numbers: &[String]) -> Result<Vec<String>, crate::error::ExtractorError>
+    fn get_raw_number(&'a self, act_type: &str,  number: &'a str) -> Result<(u32, &'a str), crate::error::ExtractorError>
     {
-        let tp: ActType = act_type.parse()?;
+        //указы распоряжения итд со всякими постфиксами точно пападут под этот регекс, поэтому обработать нужно будет только крайние случаи
+        if let Some(mch) = CLEAR_NUMBER_RE.find(number)
+        {
+            let index = mch.end();
+            let n = number.split_at(index);
+            return Ok((n.0.parse().unwrap(), n.1));
+        }
+        else
+        {
+            match act_type
+            {
+                // types::УКАЗ => number_extractors::get_clean_number(number),
+                // types::ФЕДЕРАЛЬНЫЙ_ЗАКОН => number_extractors::get_number_with_dash_delim(number),
+                // types::ФЕДЕРАЛЬНЫЙ_КОНСТИТУЦИОННЫЙ_ЗАКОН => number_extractors::get_number_with_dash_delim(number),
+                //здесь рассмотрим пограничные случаи
+                _ => Err(crate::error::ExtractorError::NumberFormatError(number.to_owned()))
+            }
+        }
+        
+    }
+
+    fn get_first_number(&'a self, signatory_authority: &str, act_type: &str, numbers: &'a [String]) -> Result<String, crate::error::ExtractorError>
+    {
+        if numbers.len() == 0
+        {
+            return Ok(Vec::new());
+        }
         let mut raw_numbers = Vec::with_capacity(numbers.len());
         let mut max = 0;
         let mut min = u32::MAX;
+        let postfix: OnceCell<String> = OnceCell::new();
         for n in numbers
         {
             let raw_number = self.get_raw_number(act_type, n)?;
-            max = max.max(raw_number);
-            min = min.min(raw_number);
-            raw_numbers.push(raw_number);
+            postfix.set(raw_number.1.to_owned());
+            max = max.max(raw_number.0);
+            min = min.min(raw_number.0);
+            raw_numbers.push(raw_number.0);
         }
-        //logger::info!("min {} max {} all {:?}", min, max, &numbers);
         raw_numbers.sort();
         let mut skipped = Vec::new();
         for n in min..max
         {
+            //если номер не найден добавляем его в список пропущеных
             if let Err(_) = raw_numbers.binary_search(&n)
             {
-                skipped.push(self.number_format(&tp, n));
+                let formatted = [n.to_string(), postfix.get().unwrap().to_owned()].concat();
+                skipped.push(formatted);
             }
         }
         Ok(skipped)
     }
-    fn number_format(&'a self, act_type: &ActType, number: u32) -> String;
-}
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
-pub enum ActType
-{
-    Указ,
-    Распоряжение,
-    ФедеральныйЗакон
-}
-
-impl FromStr for ActType
-{
-    type Err = super::error::ExtractorError;
-    fn from_str(s: &str) -> Result<Self, Self::Err> 
+    fn get_skip_numbers(&'a self, signatory_authority: &str, act_type: &str, numbers: &'a [String]) -> Result<Vec<String>, crate::error::ExtractorError>
     {
-        if let Ok(guid) = uuid::Uuid::parse_str(s)
+        if numbers.len() == 0
         {
-            let s = guid.to_string();
-            let s = s.as_str();
-            match s
+            return Ok(Vec::new());
+        }
+        let mut raw_numbers = Vec::with_capacity(numbers.len());
+        let mut max = 0;
+        let mut min = u32::MAX;
+        let postfix: OnceCell<String> = OnceCell::new();
+        for n in numbers
+        {
+            let raw_number = self.get_raw_number(act_type, n)?;
+            postfix.set(raw_number.1.to_owned());
+            max = max.max(raw_number.0);
+            min = min.min(raw_number.0);
+            raw_numbers.push(raw_number.0);
+        }
+        raw_numbers.sort();
+        let mut skipped = Vec::new();
+        for n in min..max
+        {
+            //если номер не найден добавляем его в список пропущеных
+            if let Err(_) = raw_numbers.binary_search(&n)
             {
-                types::ФЕДЕРАЛЬНЫЙ_ЗАКОН => Ok(ActType::ФедеральныйЗакон),
-                types::УКАЗ => Ok(ActType::Указ),
-                types::РАСПОРЯЖЕНИЕ => Ok(ActType::Распоряжение),
-                _ => Err(crate::ExtractorError::ParseActTypeError(s.to_owned()))
+                let formatted = [n.to_string(), postfix.get().unwrap().to_owned()].concat();
+                skipped.push(formatted);
             }
         }
-        else 
-        {
-            return Err(crate::ExtractorError::ParseActTypeError(s.to_owned()));   
-        }
+        Ok(skipped)
     }
-}
-impl TryInto<ActType> for &str
-{
-    type Error = super::error::ExtractorError;
-    fn try_into(self) -> Result<ActType, Self::Error> 
-    {
-        self.parse()
-    }
+    fn number_format(&'a self, act_type: &str, number: u32) -> String;
 }
 
-impl Display for ActType
-{
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result 
-    {
-        match self
-        {
-            ActType::ФедеральныйЗакон => f.write_str(types::ФЕДЕРАЛЬНЫЙ_ЗАКОН),
-            ActType::Указ => f.write_str(types::УКАЗ),
-            ActType::Распоряжение => f.write_str(types::РАСПОРЯЖЕНИЕ)
-        }
-    }
-}
+// #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
+// pub enum ActType
+// {
+//     Указ,
+//     Распоряжение,
+//     ФедеральныйЗакон
+// }
+
+// impl FromStr for ActType
+// {
+//     type Err = super::error::ExtractorError;
+//     fn from_str(s: &str) -> Result<Self, Self::Err> 
+//     {
+//         if let Ok(guid) = uuid::Uuid::parse_str(s)
+//         {
+//             let s = guid.to_string();
+//             let s = s.as_str();
+//             match s
+//             {
+//                 types::ФЕДЕРАЛЬНЫЙ_ЗАКОН => Ok(ActType::ФедеральныйЗакон),
+//                 types::УКАЗ => Ok(ActType::Указ),
+//                 types::РАСПОРЯЖЕНИЕ => Ok(ActType::Распоряжение),
+//                 _ => Err(crate::ExtractorError::ParseActTypeError(s.to_owned()))
+//             }
+//         }
+//         else 
+//         {
+//             return Err(crate::ExtractorError::ParseActTypeError(s.to_owned()));   
+//         }
+//     }
+// }
+// impl TryInto<ActType> for &str
+// {
+//     type Error = super::error::ExtractorError;
+//     fn try_into(self) -> Result<ActType, Self::Error> 
+//     {
+//         self.parse()
+//     }
+// }
+
+// impl Display for ActType
+// {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result 
+//     {
+//         match self
+//         {
+//             ActType::ФедеральныйЗакон => f.write_str(types::ФЕДЕРАЛЬНЫЙ_ЗАКОН),
+//             ActType::Указ => f.write_str(types::УКАЗ),
+//             ActType::Распоряжение => f.write_str(types::РАСПОРЯЖЕНИЕ)
+//         }
+//     }
+// }
 #[macro_export]
 macro_rules! create_error {
     ($e:expr) => {{

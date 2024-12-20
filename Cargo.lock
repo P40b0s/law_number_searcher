@@ -2973,6 +2973,7 @@ version = "0.1.0"
 dependencies = [
  "hashbrown 0.15.2",
  "logger 0.1.2 (git+https://github.com/P40b0s/logger.git)",
+ "regex",
  "serde",
  "serde_json",
  "thiserror 2.0.8",

@@ -1,69 +1,31 @@
 use std::u32;
 use logger::info;
 use crate::ExtractorError;
-use super::{number_extractors, signatory_authorites};
-use super::{ActType, ExtractorPlugin};
+use super::{number_extractors, signatory_authorites, types};
+use super::{ExtractorPlugin};
 
 #[derive(Debug)]
 pub struct PrezidentPlugin where Self: Send + Sync {}
 
 impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
 {
-    fn semantic_version(&self) -> &'static str
-    {
-       "0.1.1"
-    }
-    fn name(&self) -> &'static str
-    {
-        "Президент Российской Федерации"
-    }
    // &DocumentTypes=&DocumentTypes=&PublishDateSearchType=0&NumberSearchType=0&DocumentDateSearchType=0&JdRegSearchType=0&SortedBy=6&SortDestination=1
-    fn signatory_authority(&self) -> &'static str
+    fn signatory_authority(&self) -> Option<&'static str>
     {
-        signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ
+        Some(signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ)
     }
-
-    fn type_ids(&self) -> &'static[ActType] 
-    {
-        &[
-            //указ
-            ActType::Указ,
-            //распоряжение
-            ActType::ФедеральныйЗакон,
-            //федеральный закон
-            ActType::Распоряжение
-        ]
-    }
-
     fn official_publication_url(&self) -> Option<&'static str> 
     {
-        Some("http://publication.pravo.gov.ru")
+        None
     }
 
-    fn get_raw_number(&self, act_type: &str,  number: &str) -> Result<u32, ExtractorError>
-    {
-        let tp: ActType = act_type.parse()?;
-        if self.type_ids().contains(&tp)
-        {
-            match tp
-            {
-                ActType::Указ => number_extractors::get_clean_number(number),
-                ActType::ФедеральныйЗакон => number_extractors::get_number_with_dash_delim(number),
-                ActType::Распоряжение => number_extractors::get_number_with_dash_delim(number)
-            }
-        }
-        else
-        {
-            return Err(crate::ExtractorError::ActTypeNotSupported(act_type.to_owned()));    
-        }
-    }
-    fn number_format(&'a self, act_type: &ActType, number: u32) -> String 
+    fn number_format(&'a self, act_type: &str, number: u32) -> String 
     {
         match act_type
         {
-            ActType::ФедеральныйЗакон => [number.to_string(), "-ФЗ".to_owned()].concat(),
-            ActType::Указ => number.to_string(),
-            ActType::Распоряжение => [number.to_string(), "-рп".to_owned()].concat(),
+            types::ФЕДЕРАЛЬНЫЙ_ЗАКОН => [number.to_string(), "-ФЗ".to_owned()].concat(),
+            types::РАСПОРЯЖЕНИЕ => [number.to_string(), "-рп".to_owned()].concat(),
+            _ => number.to_string()
         }
     }
 
@@ -74,14 +36,7 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
 #[cfg(test)]
 mod tests
 {
-    use crate::extractors::{types, ActType, ExtractorPlugin};
-    #[test]
-    fn test()
-    {
-        let plugin = super::PrezidentPlugin {  };
-        logger::StructLogger::new_default();
-        logger::debug!("{}", plugin.name());
-    }
+    use crate::extractors::{types, ExtractorPlugin};
 
     #[test]
     fn test_raw_numbers()
