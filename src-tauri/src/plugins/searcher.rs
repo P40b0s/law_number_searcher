@@ -18,12 +18,12 @@ pub struct ExistsNumbersRequest<'a>
 #[derive(Serialize, Deserialize)]
 pub struct Number
 {
-    signatory_authority: String,
-    type_id: String,
+    signatory_authority: uuid::Uuid,
+    type_id: uuid::Uuid,
     year: u32,
     number: String,
     note: Option<String>,
-    status: u32
+    status: i8
 }
 
 impl Into<Number> for NumberDBO
@@ -32,8 +32,8 @@ impl Into<Number> for NumberDBO
     {
         Number
         {
-            signatory_authority: self.signatory_authority.to_string(),
-            type_id: self.type_id.to_string(),
+            signatory_authority: self.signatory_authority,
+            type_id: self.type_id,
             year: self.year,
             number: self.number,
             note: self.note,
@@ -63,22 +63,40 @@ pub async fn get_types(payload: &str) -> Result<Vec<Dictionary>, Error>
 #[tauri::command]
 pub async fn get_exists_numbers<'a>(ExistsNumbersRequest {signatory_authority, act_type, year}: ExistsNumbersRequest<'a>) -> Result<Vec<String>, Error>
 {
-    let mut numbers = searcher::Searcher::get_exists_numbers(signatory_authority, act_type, year).await?;
+    let numbers = searcher::Searcher::get_exists_numbers(signatory_authority, act_type, year).await?;
     //doc_types.sort_by(|a, b| a.name.cmp(&b.name));
 	logger::debug!("Найдено номеров документов: {}", numbers.len());
     Ok(numbers)
 }
 
 #[tauri::command]
-pub async fn get_lost_numbers<'a>(ExistsNumbersRequest {signatory_authority, act_type, year}: ExistsNumbersRequest<'a>, db: State<'_, Arc<AppRepository<Repository>>>) -> Result<Vec<String>, Error>
+pub async fn get_lost_numbers<'a>(ExistsNumbersRequest {signatory_authority, act_type, year}: ExistsNumbersRequest<'a>, db: State<'_, Arc<AppRepository<Repository>>>) -> Result<Vec<Number>, Error>
 {
     let numbers = searcher::Searcher::get_lost_numbers(signatory_authority, act_type, year).await?;
-    let numbers = numbers.into_iter().map(|n|
+    let mut mod_numbers: Vec<Number> = Vec::with_capacity(numbers.len());
+    for n in &numbers
     {
-        let db_obj = db.repository.get_number()
-    });
-	logger::debug!("Найдено пропущеных номеров: {}", numbers.len());
-    Ok(numbers)
+        let db_number = db.repository.get_number(signatory_authority, act_type, year, n).await?;
+        if let Some(db_obj) = db_number
+        {
+            //значит такой объект уже есть
+            mod_numbers.push(db_obj.into());
+        }
+        else 
+        {
+            mod_numbers.push(Number 
+            { 
+                number: n.to_owned(),
+                note: None,
+                signatory_authority: uuid::Uuid::parse_str(signatory_authority).unwrap(),
+                type_id: uuid::Uuid::parse_str(act_type).unwrap(),
+                year,
+                status: 0
+            });
+        }
+    }
+	logger::debug!("Найдено пропущеных номеров: {}", mod_numbers.len());
+    Ok(mod_numbers)
 }
 
 

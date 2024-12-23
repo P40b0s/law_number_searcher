@@ -2,7 +2,7 @@ import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, useThemeVars,
 import { CSSProperties, h, ref, RendererElement, RendererNode, VNode } from "vue";
 import { Result } from "../../tauri/abstract";
 import { SelectBaseOption, type Value } from "naive-ui/es/select/src/interface";
-import { CodeRound, DoneOutlineSharp, EmergencyRound, GradeOutlined, GradeRound, GradeSharp, PlaylistAddCheckCircleTwotone, RefreshOutlined } from "@vicons/material";
+import { BlockRound, CodeRound, DoneOutlineSharp, EmergencyRound, GradeOutlined, GradeRound, GradeSharp, NearbyErrorRound, PlaylistAddCheckCircleTwotone, RefreshOutlined } from "@vicons/material";
 import Loader from '../loaders/Loader1.vue';
 type Node =  VNode<RendererNode, RendererElement, {
     [key: string]: any;
@@ -45,8 +45,8 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     id: o.id,
                     name: o.name,
                     key: o.id,
-                    havingParser: o.havingParser,
-                    disabled: !o.havingParser
+                    parserType: o.parserType,
+                    disabled: (o.parserType == -1)
                 } as SelectedValue
                 return org;
             });
@@ -105,26 +105,80 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     } as CSSProperties
 
                 }),
-                option.havingParser ?
                 h(NTooltip, {
                     placement: 'left'
                 },
                 {
-                    default:() => "Парсер найден",
-                    trigger:() => 
-                    h(NIcon,
+                    default:() => 
                     {
-                        color: '#78e378',
-                        size: '25px',
-                        style:
+                        switch(option.parserType)
                         {
-                            filter: 'blur(1px)'
-                        }   as CSSProperties
+                            case -1:
+                            {
+                                return "Парсер не найден"
+                            }
+                            case 0:
+                            {
+                                return "Используется парсер по умолчанию"
+                            }
+                            case 1:
+                            {
+                                return "Используется специальный парсер"
+                            }
+                        }
                     },
+                    trigger:() => 
                     {
-                        default: () => h(GradeRound)
-                    })
-                }) : [],
+                        switch(option.parserType)
+                        {
+                            case -1:
+                            {
+                                return  h(NIcon,
+                                    {
+                                        color: 'rgb(204,51,51)',
+                                        size: '25px',
+                                        style:
+                                        {
+                                            //filter: 'blur(1px)'
+                                        }   as CSSProperties
+                                    },
+                                    {
+                                        default: () => h(BlockRound)
+                                    })
+                            }
+                            case 0:
+                            {
+                                return  h(NIcon,
+                                    {
+                                        color: 'rgb(115,140,136)',
+                                        size: '25px',
+                                        style:
+                                        {
+                                            //filter: 'blur(1px)'
+                                        }   as CSSProperties
+                                    },
+                                    {
+                                        default: () => h(GradeRound)
+                                    })
+                            }
+                            case 1:
+                            {
+                                return  h(NIcon,
+                                    {
+                                        color: '#78e378',
+                                        size: '25px',
+                                        style:
+                                        {
+                                            //filter: 'blur(1px)'
+                                        }   as CSSProperties
+                                    },
+                                    {
+                                        default: () => h(GradeRound)
+                                    })
+                            }
+                        }
+                    }
+                }),
             ])
     }
 
@@ -143,6 +197,46 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                 icon:() =>
                     h(NIcon,{color: '#72cc3e', component: RefreshOutlined})
             });
+    }
+
+    const empty = () =>
+    {
+        if(status.value == 'error')
+        {
+            return  retry_button();
+        }
+        else
+        {
+            if(is_loading.value)
+            {
+                return h('div',
+                    {
+                        style:
+                        {
+                            display : 'flex',
+                            flexDirection:'column',
+                            alignContent: 'center',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        } as CSSProperties
+                    },
+                    [
+                        h('div', {style: {fontSize: '16px'}}, "Ожидейте, идет загрузка...."),
+                        h('div', 
+                        {
+                            style:
+                            {
+                                padding: '70px 32px'
+                            } as CSSProperties
+                        }, h(Loader))
+                    ]
+                )
+            }
+            else
+            {
+                return h('div', "Ничего не найдено")
+            }
+        }
     }
 
     const select_element = () => 
@@ -183,14 +277,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                 },
                 {
                     action:() => h('div', `Количество: ${search_patterns.value ? count.value /2 : count.value}`),
-                    empty:() => status.value == 'error' ? retry_button() :
-                    h('div', 
-                    {
-                        style:
-                        {
-                            padding: '70px 32px'
-                        } as CSSProperties
-                    }, h(Loader))
+                    empty:() => empty()
                 }
         )
     }

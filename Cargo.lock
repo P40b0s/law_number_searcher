@@ -3085,7 +3085,7 @@ dependencies = [
 [[package]]
 name = "publication"
 version = "0.1.0"
-source = "git+https://github.com/P40b0s/publication_api.git#4d731cec91b24a4b9bc1de1a8c322f5eaca0e098"
+source = "git+https://github.com/P40b0s/publication_api.git#8f1313368165ecad4f8bad8a7635c0670ce5f3a5"
 dependencies = [
  "logger 0.1.2 (git+https://github.com/P40b0s/logger.git)",
  "scraper",

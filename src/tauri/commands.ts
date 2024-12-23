@@ -26,7 +26,7 @@ class Searcher extends Plugin<'get_signatory_authorites' | 'get_exists_parsers' 
         return r;
         
     }
-    public async get_lost_numbers<R extends string[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>
+    public async get_lost_numbers<R extends Number[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>
     {
         const r = await this.get<R>('get_lost_numbers', {existsNumbersRequest: {signatory_authority, act_type, year}});
         return r;
@@ -41,7 +41,7 @@ interface ICommand
     get_types<R extends Dictionary[]>(sa_id: string): Promise<Result<R>>;
     get_exists_parsers<R extends string[]>(): Promise<Result<R>>;
     get_exists_numbers<R extends string[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>;
-    get_lost_numbers<R extends string[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>
+    get_lost_numbers<R extends Number[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>
 }
 
 

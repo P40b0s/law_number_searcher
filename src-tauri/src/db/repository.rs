@@ -28,7 +28,7 @@ impl Repository
 pub trait IRepository
 {
     async fn add_number(&self);
-    async fn get_number(&self, sa: &str, ty: &str, year: u32, number: &str)  -> Result<NumberDBO, Error>;
+    async fn get_number(&self, sa: &str, ty: &str, year: u32, number: &str) -> Result<Option<NumberDBO>, Error>;
 }
 
 
@@ -55,7 +55,7 @@ pub struct NumberDBO
     pub year: u32,
     pub number: String,
     pub note: Option<String>,
-    pub status: u32
+    pub status: i8
 }
 impl FromRow<'_, SqliteRow> for NumberDBO
 {
@@ -66,7 +66,7 @@ impl FromRow<'_, SqliteRow> for NumberDBO
         let year: u32 = row.try_get("year")?;
         let number: String = row.try_get("number")?;
         let note: Option<String> = row.try_get("note")?;
-        let status: u32 = row.try_get("status")?;
+        let status: i8 = row.try_get("status")?;
         let obj = NumberDBO {
             signatory_authority: uuid::Uuid::parse_str(signatory_authority).unwrap(),
             type_id: uuid::Uuid::parse_str(type_id).unwrap(),
@@ -89,7 +89,7 @@ impl IRepository for Repository
     {
         let connection = Arc::clone(&self.connection);
     }
-    async fn get_number(&self, sa: &str, ty: &str, year: u32, number: &str) -> Result<NumberDBO, Error>
+    async fn get_number(&self, sa: &str, ty: &str, year: u32, number: &str) -> Result<Option<NumberDBO>, Error>
     {
         let pool = Arc::clone(&self.connection);
         let sql = "SELECT signatory_authority, type_id, year, number, note, status FROM numbers WHERE signatory_authority = $1 AND type_id = $2 AND year = $3 AND number = $4";
@@ -98,13 +98,13 @@ impl IRepository for Repository
         .bind(ty)
         .bind(year)
         .bind(number)
-        .fetch_one(&*pool).await;
-        if r.is_err()
-        {
-            logger::error!("{}", r.as_ref().err().unwrap());
-            let _ = r?;
-        }
-        Ok(r.unwrap())
+        .fetch_optional(&*pool).await?;
+        // if r.is_err()
+        // {
+        //     logger::error!("{}", r.as_ref().err().unwrap());
+        //     return Err(Error::SqlxError(r.err().unwrap()));
+        // }
+        Ok(r)
     }
 }
 
