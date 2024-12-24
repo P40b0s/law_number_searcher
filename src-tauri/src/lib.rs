@@ -9,6 +9,7 @@ mod plugins;
 mod db;
 mod error;
 mod state;
+mod emits;
 pub use error::Error;
 
 

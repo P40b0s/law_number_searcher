@@ -1,9 +1,10 @@
-import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, useThemeVars, type SelectGroupOption, type SelectOption } from "naive-ui";
+import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, NProgress, useThemeVars, type SelectGroupOption, type SelectOption } from "naive-ui";
 import { CSSProperties, h, ref, RendererElement, RendererNode, VNode } from "vue";
 import { Result } from "../../tauri/abstract";
 import { SelectBaseOption, type Value } from "naive-ui/es/select/src/interface";
-import { BlockRound, CodeRound, DoneOutlineSharp, EmergencyRound, GradeOutlined, GradeRound, GradeSharp, NearbyErrorRound, PlaylistAddCheckCircleTwotone, RefreshOutlined } from "@vicons/material";
+import { BlockRound, ClearRound, CodeRound, DoneOutlineSharp, EmergencyRound, GradeOutlined, GradeRound, GradeSharp, NearbyErrorRound, PlaylistAddCheckCircleTwotone, RefreshOutlined } from "@vicons/material";
 import Loader from '../loaders/Loader1.vue';
+import {tauri_events} from '../../tauri/events';
 type Node =  VNode<RendererNode, RendererElement, {
     [key: string]: any;
 }>
@@ -16,12 +17,19 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
     const is_loading = ref(false);
     const search_patterns = ref<string[]>();
     const count = ref(0);
+    //процесс загрузки
+    const process = ref(0);
     const unselect = () =>
     {
         selected.value = null;
         options.value = [];
         count.value = 0;
+        process.value = 0;
     };
+    const load_process = tauri_events.load_process(async (p) =>
+    {
+        process.value = p.payload;
+    });
     
     const status = ref<'warning'|'success'|'error'>('success');
     const load_options = (dict: Result<Dictionary[]>)  =>
@@ -46,14 +54,17 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     name: o.name,
                     key: o.id,
                     parserType: o.parserType,
-                    disabled: (o.parserType == -1)
+                    disabled: (o.parserType == -1 || o.parserType == 2)
                 } as SelectedValue
                 return org;
             });
             if(dm.length == 1)
             {
-                selected.value = dm[0].value as string;
-                update_callback(dm[0]);
+                if(dm[0].parserType != -1 && dm[0].parserType != 2)
+                {
+                    selected.value = dm[0].value as string;
+                    update_callback(dm[0]);
+                }
             }
             else
             {
@@ -102,6 +113,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     style:
                     {
                         flexGrow: '2',
+                        textWrap: 'wrap'
                     } as CSSProperties
 
                 }),
@@ -124,6 +136,10 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                             case 1:
                             {
                                 return "Используется специальный парсер"
+                            }
+                            case 2:
+                            {
+                                return "Не найдено ни одного документа"
                             }
                         }
                     },
@@ -176,6 +192,21 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                                         default: () => h(GradeRound)
                                     })
                             }
+                            case 2:
+                            {
+                                return  h(NIcon,
+                                    {
+                                        color: 'rgb(204,51,51)',
+                                        size: '25px',
+                                        style:
+                                        {
+                                            //filter: 'blur(1px)'
+                                        }   as CSSProperties
+                                    },
+                                    {
+                                        default: () => h(ClearRound)
+                                    })
+                            }
                         }
                     }
                 }),
@@ -221,7 +252,14 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                         } as CSSProperties
                     },
                     [
-                        h('div', {style: {fontSize: '16px'}}, "Ожидейте, идет загрузка...."),
+                        h('div', {style: {fontSize: '16px'}}, "Ожидайте, идет загрузка...."),
+                        h(NProgress, 
+                        {
+                            type: 'line',
+                            indicatorPlacement: 'inside',
+                            processing: true,
+                            percentage: process.value
+                        }),
                         h('div', 
                         {
                             style:

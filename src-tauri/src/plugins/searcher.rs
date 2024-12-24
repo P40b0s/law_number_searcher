@@ -2,9 +2,10 @@ use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 use tauri::plugin::{Builder, TauriPlugin};
-use tauri::{Manager, Runtime, State};
+use tauri::{AppHandle, Manager, Runtime, State};
 
 use crate::db::{AppRepository, IRepository, NumberDBO, Repository};
+use crate::emits::Emits;
 use crate::state::AppState;
 use crate::Error;
 use searcher::{SearcherError, Dictionary};
@@ -52,27 +53,59 @@ pub async fn get_signatory_authorites() -> Result<Vec<Dictionary>, Error>
 }
 
 #[tauri::command]
-pub async fn get_types(payload: &str) -> Result<Vec<Dictionary>, Error>
+pub async fn get_types<R: Runtime>(app: AppHandle<R>, payload: &str) -> Result<Vec<Dictionary>, Error>
 {
-    let mut doc_types = searcher::Searcher::get_types(payload).await?;
+    let (sender, mut receiver) =  tokio::sync::mpsc::channel::<u32>(1);
+    let join_me = tokio::spawn(
+        async move 
+        {
+            while let Some(p) = receiver.recv().await 
+            {
+                Emits::load_process_emit(&app, p);
+                logger::info!("текущий процент выполнения: {}%", p);
+            }
+        });
+    let mut doc_types = searcher::Searcher::get_types(payload, Some(sender)).await?;
     doc_types.sort_by(|a, b| a.name.cmp(&b.name));
 	logger::debug!("Найдено типов документов: {}", doc_types.len());
+    let _ = join_me.await;
     Ok(doc_types)
 }
 
 #[tauri::command]
-pub async fn get_exists_numbers<'a>(ExistsNumbersRequest {signatory_authority, act_type, year}: ExistsNumbersRequest<'a>) -> Result<Vec<String>, Error>
+pub async fn get_exists_numbers<'a, R: Runtime>(app: AppHandle<R>, ExistsNumbersRequest {signatory_authority, act_type, year}: ExistsNumbersRequest<'a>) -> Result<Vec<String>, Error>
 {
-    let numbers = searcher::Searcher::get_exists_numbers(signatory_authority, act_type, year).await?;
+    let (sender, mut receiver) =  tokio::sync::mpsc::channel::<u32>(1);
+    let join_me = tokio::spawn(
+        async move 
+        {
+            while let Some(p) = receiver.recv().await 
+            {
+                Emits::load_process_emit(&app, p);
+                logger::info!("текущий процент выполнения: {}%", p);
+            }
+        });
+    let numbers = searcher::Searcher::get_exists_numbers(signatory_authority, act_type, year, Some(sender)).await?;
     //doc_types.sort_by(|a, b| a.name.cmp(&b.name));
 	logger::debug!("Найдено номеров документов: {}", numbers.len());
+    let _ = join_me.await;
     Ok(numbers)
 }
 
 #[tauri::command]
-pub async fn get_lost_numbers<'a>(ExistsNumbersRequest {signatory_authority, act_type, year}: ExistsNumbersRequest<'a>, db: State<'_, Arc<AppRepository<Repository>>>) -> Result<Vec<Number>, Error>
+pub async fn get_lost_numbers<'a, R: Runtime>(app: AppHandle<R>, ExistsNumbersRequest {signatory_authority, act_type, year}: ExistsNumbersRequest<'a>, db: State<'_, Arc<AppRepository<Repository>>>) -> Result<Vec<Number>, Error>
 {
-    let numbers = searcher::Searcher::get_lost_numbers(signatory_authority, act_type, year).await?;
+    let (sender, mut receiver) =  tokio::sync::mpsc::channel::<u32>(1);
+    let join_me = tokio::spawn(
+        async move 
+        {
+            while let Some(p) = receiver.recv().await 
+            {
+                Emits::load_process_emit(&app, p);
+                logger::info!("текущий процент выполнения: {}%", p);
+            }
+        });
+    let numbers = searcher::Searcher::get_lost_numbers(signatory_authority, act_type, year, Some(sender)).await?;
     let mut mod_numbers: Vec<Number> = Vec::with_capacity(numbers.len());
     for n in &numbers
     {
@@ -96,6 +129,7 @@ pub async fn get_lost_numbers<'a>(ExistsNumbersRequest {signatory_authority, act
         }
     }
 	logger::debug!("Найдено пропущеных номеров: {}", mod_numbers.len());
+    let _ = join_me.await;
     Ok(mod_numbers)
 }
 

@@ -4,7 +4,7 @@ import ThemeManager from './components/ThemeManager.vue';
 import MainView from './views/main.ts';
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
-import { darkTheme, lightTheme, NConfigProvider, NGlobalStyle} from 'naive-ui';
+import { darkTheme, lightTheme, NConfigProvider, NNotificationProvider, NGlobalStyle} from 'naive-ui';
 import { useTheme } from './composables/useTheme.ts';
 const greetMsg = ref("");
 const name = ref("");
@@ -19,15 +19,16 @@ async function greet()
 </script>
 <template lang="pug">
 n-config-provider(:theme="theme")
-  main.container
-    .header
-      .header-left
-      .header-right
-        theme-manager
-    .main-content
-      MainView
-    .footer footer
-  n-global-style
+  n-notification-provider
+    main.container
+      .header
+        .header-left
+        .header-right
+          theme-manager
+      .main-content
+        MainView
+      .footer footer
+    n-global-style
 </template>
 
 <style>

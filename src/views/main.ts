@@ -30,7 +30,7 @@ export default defineComponent({
                 }
             },
             {
-                default:() => [searcher_tab(), temp_tab()]
+                default:() => [searcher_tab()]
             }
         )
     }

@@ -16,7 +16,8 @@ pub struct Dictionary
     pub name: String,
     /// тип парсера  
     /// 0 - default  
-    /// 1 - кастомная имлементация парсера под конкретный signatory_authority id  
+    /// 1 - кастомная имлементация парсера под конкретный signatory_authority id 
+    /// 2 - для проверки номера документ небыл найден, значит за год нет ни одного документа
     /// -1 - данный документ не поддерживается
     pub parser_type: i8
 }
@@ -61,41 +62,40 @@ impl Searcher
         Ok(organs)
     }
 
-    pub async fn get_types(sa: &str) -> Result<Vec<Dictionary>, SearcherError>
+    pub async fn get_types(sa: &str, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<Dictionary>, SearcherError>
     {
         let types = publication_api::PublicationApi::get_documents_types_by_signatory_authority(sa).await?;
         //let types_with_parsers = Self::get_types_in_parser(sa).await?;
         let plugin = PLUGINS.get_plugin(sa)?;
         let mut result: Vec<Dictionary> = Vec::with_capacity(types.len());
-        for dt in types
+        let percentage_mul = 100 / types.len() as u32;
+        for (i, dt) in types.into_iter().enumerate()
         {
             let mut d: Dictionary = dt.into();
-            let first_number = Self::get_first_number(sa, &d.id).await.unwrap_or("".to_owned());
-            let support = plugin.number_is_support(&first_number);
+            let first_number = Self::get_first_number(sa, &d.id).await?;
             let organ_parser = Self::organ_parser_type(sa);
-            if support
+            if let Some(f_n) = first_number
             {
-                d.parser_type = organ_parser
+                let support = plugin.number_is_support(&f_n);
+                if support
+                {
+                    d.parser_type = organ_parser
+                }
+                else 
+                {
+                    d.parser_type = -1;
+                }
             }
             else 
             {
-                d.parser_type = -1;
+                d.parser_type = 2;
+            }
+            if let Some(c) = sender.as_ref()
+            {
+                let _ = c.send(percentage_mul * (i+1) as u32).await;
             }
             result.push(d);
         }
-        // let types: Vec<Dictionary> = types.into_iter().map(|t|
-        // {
-        //     let mut d: Dictionary = t.into();
-        //     let first_number = publication_api::PublicationApi::get_first_document(sa, &d.id).await;
-        //     let support = plugin.number_is_support(&d.id, number);
-        //     let organ_parser = Self::organ_parser_type(sa);
-        //     if support
-        //     {
-        //         d.parser_type = 
-        //     }
-        //     d.parser_type = ;
-        //     d
-        // }).collect();
         Ok(result)
     }
         //TODO необходимо сделать минимальную выборку и взять первый номер документа, проверить его, можем ли мы его парсить, и уже это показать в виде докуента можем ли мы его парсить или нет
@@ -121,7 +121,7 @@ impl Searcher
         }
     }
     ///получаем все номера документов за текущий год
-    pub async fn get_exists_numbers(signatory_authority: &str, doc_type: &str, year: u32) -> Result<Vec<String>, SearcherError>
+    pub async fn get_exists_numbers(signatory_authority: &str, doc_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<String>, SearcherError>
     {
         let date_from_format = ["01.01.".to_owned(), year.to_string()].concat();
         let date_to_format = ["31.12.".to_owned(), year.to_string()].concat();
@@ -140,39 +140,27 @@ impl Searcher
             date_to.as_ref().unwrap(),
             &[doc_type.to_owned()],
             Some(&signatory_authority.to_owned()),
-            None).await?;
+            None,
+            sender).await?;
         //let mut numbers = Vec::with_capacity(docs.len());
         let result: Vec<String> = docs.into_iter().map(|d| d.number).collect();
-        //static RE: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"№\s+(.+)\s").unwrap());
-        // for d in docs
-        // {
-        //     if let Some(number) = RE.captures(&d.complex_name)
-        //     {
-        //         numbers.push(number[1].to_owned());
-        //     }
-        //     else 
-        //     {
-        //         logger::error!("Ошибка извлечения номера из названия `{}` -> `{}`", d.complex_name, d.eo_number);
-        //         return Err(SearcherError::ParseNumberError(d.complex_name, d.eo_number))
-        //     }
-        // }
         Ok(result)
     }
 
     /// получение всех пропущеных номеров
-    pub async fn get_lost_numbers(signatory_authority: &str, doc_type: &str, year: u32) -> Result<Vec<String>, SearcherError>
+    pub async fn get_lost_numbers(signatory_authority: &str, doc_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<String>, SearcherError>
     {
         let plugin = PLUGINS.get_plugin(signatory_authority)?;
-        let numbers = Self::get_exists_numbers(signatory_authority, doc_type, year).await?;
+        let numbers = Self::get_exists_numbers(signatory_authority, doc_type, year, sender).await?;
         //logger::debug!("numbers {:?}", &numbers);
         let skipped = plugin.get_skip_numbers(doc_type, numbers)?;
         Ok(skipped)
     }
     /// получение номера первого документа из списка
-    pub async fn get_first_number(signatory_authority: &str, doc_type: &str) -> Result<String, SearcherError>
+    pub async fn get_first_number(signatory_authority: &str, doc_type: &str) -> Result<Option<String>, SearcherError>
     {
         let first = publication_api::PublicationApi::get_first_document(signatory_authority, doc_type).await?;
-        Ok(first.number)
+        Ok(first.and_then(|n| Some(n.number)))
     }
 }
 
@@ -195,22 +183,52 @@ mod tests
     async fn test_get_all_numbers()
     {
         logger::StructLogger::new_default();
-        let organs = super::Searcher::get_exists_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::УКАЗ, 2024).await.unwrap();
+        let (sender, mut receiver) =  tokio::sync::mpsc::channel::<u32>(1);
+        let s = tokio::spawn(
+            async move 
+            {
+                while let Some(p) = receiver.recv().await 
+                {
+                    logger::info!("текущий процент выполнения: {}%", p);
+                }
+            });
+        let organs = super::Searcher::get_exists_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::УКАЗ, 2024, Some(sender)).await.unwrap();
         logger::debug!("{:?}", organs);
+        s.await;
     } 
     #[tokio::test]
     async fn test_get_skipped_numbers()
     {
         logger::StructLogger::new_default();
-        let organs = super::Searcher::get_lost_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::УКАЗ, 2024).await.unwrap();
+        let (sender, mut receiver) =  tokio::sync::mpsc::channel::<u32>(1);
+        let s = tokio::spawn(
+            async move 
+            {
+                while let Some(p) = receiver.recv().await 
+                {
+                    logger::info!("текущий процент выполнения: {}%", p);
+                }
+            });
+        let organs = super::Searcher::get_lost_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::УКАЗ, 2024, Some(sender)).await.unwrap();
         logger::debug!("{:?}", organs);
+        s.await;
     } 
     #[tokio::test]
     async fn test_get_skipped_numbers_fz()
     {
         logger::StructLogger::new_default();
-        let organs = super::Searcher::get_lost_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::ФЕДЕРАЛЬНЫЙ_ЗАКОН, 2024).await.unwrap();
+        let (sender, mut receiver) =  tokio::sync::mpsc::channel::<u32>(1);
+        let s = tokio::spawn(
+            async move 
+            {
+                while let Some(p) = receiver.recv().await 
+                {
+                    logger::info!("текущий процент выполнения: {}%", p);
+                }
+            });
+        let organs = super::Searcher::get_lost_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::ФЕДЕРАЛЬНЫЙ_ЗАКОН, 2024, Some(sender)).await.unwrap();
         logger::debug!("{:?}", organs);
+        s.await;
     } 
     #[tokio::test]
     /// получать карточку каждого документа это очень долго, есть вариант взять номер из полного наименования
