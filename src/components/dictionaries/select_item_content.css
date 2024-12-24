@@ -2,3 +2,12 @@
 {
     width: 100%;
 }
+/* .n-base-selection
+{
+     --n-padding-single-top: 20px;
+    --n-padding-single-bottom: 20px;
+    --n-padding-single-left: 20px;
+    --n-padding-single-right: 20px; 
+    --n-height: calc(--n-height + 5em) !important;
+   
+} */

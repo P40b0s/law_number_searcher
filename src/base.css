@@ -2,6 +2,7 @@
 {
   font-family: 'Source Code Pro';
   font-size: 15px;
+  --select-hight: 200px;
   /* transition: background-color 0.5s ease, color 0.5s ease; */
 }
 

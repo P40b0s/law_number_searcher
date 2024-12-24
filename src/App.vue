@@ -4,7 +4,7 @@ import ThemeManager from './components/ThemeManager.vue';
 import MainView from './views/main.ts';
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
-import { darkTheme, lightTheme, NConfigProvider, NNotificationProvider, NGlobalStyle} from 'naive-ui';
+import { darkTheme, lightTheme, NConfigProvider, NNotificationProvider, type GlobalThemeOverrides, NGlobalStyle} from 'naive-ui';
 import { useTheme } from './composables/useTheme.ts';
 const greetMsg = ref("");
 const name = ref("");
@@ -14,15 +14,26 @@ async function greet()
   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
   greetMsg.value = await invoke("greet", { name: name.value });
 }
+const themeOverrides: GlobalThemeOverrides = {
+    Select: {
+        peers: {
+        InternalSelection: {
+            heightLarge: "60px"
+        },
+        InternalSelectMenu: {
+        },
+        }
+    },
+    }
 
 
 </script>
 <template lang="pug">
-n-config-provider(:theme="theme")
+n-config-provider(:theme="theme" :theme-overrides="themeOverrides")
   n-notification-provider
     main.container
       .header
-        .header-left
+        .header-left 
         .header-right
           theme-manager
       .main-content

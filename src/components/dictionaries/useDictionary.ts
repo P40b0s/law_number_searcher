@@ -1,4 +1,4 @@
-import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, NProgress, useThemeVars, type SelectGroupOption, type SelectOption } from "naive-ui";
+import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, NProgress, type GlobalThemeOverrides, useThemeVars, type SelectGroupOption, type SelectOption } from "naive-ui";
 import { CSSProperties, h, ref, RendererElement, RendererNode, VNode } from "vue";
 import { Result } from "../../tauri/abstract";
 import { SelectBaseOption, type Value } from "naive-ui/es/select/src/interface";
@@ -94,6 +94,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     alignItems: 'center',
                     width: '100%',
                     fontSize: '15px',
+                    height: '100%'
                 } as CSSProperties
             },
             [
@@ -113,7 +114,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     style:
                     {
                         flexGrow: '2',
-                        textWrap: 'wrap'
+                        textWrap: 'wrap',
                     } as CSSProperties
 
                 }),
@@ -276,6 +277,19 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
             }
         }
     }
+    const themeOverrides: GlobalThemeOverrides = {
+    Select: {
+        peers: {
+        InternalSelection: {
+            textColor: '#FF0000'
+        },
+        InternalSelectMenu: {
+            height: '1220',
+            paddingLarge: '100'
+        },
+        }
+    },
+    }
 
     const select_element = () => 
     {
@@ -289,8 +303,11 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     placeholder: placeholder,
                     filterable: true,
                     status: status.value,
+                    size: 'large',
                     filter: filter,
                     renderLabel: label,
+                    themeOverrides: themeOverrides,
+                    
                     onUpdateValue:(val: string, option: SelectBaseOption|null) =>
                     {
                         let s = options.value.findIndex(i=> i.value == val);

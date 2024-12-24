@@ -4,12 +4,12 @@
   "version": "0.1.2",
   "type": "module",
   "scripts": {
-    "icon": "tauri icon tasker.png",
     "build": "tsc && rsbuild build",
     "serve": "rsbuild dev",
     "tauri": "tauri dev",
     "build:client:win": "tauri build --target x86_64-pc-windows-gnu",
-    "build:client": "tauri build"
+    "build:client": "tauri build",
+    "icon": "tauri icon ./src-tauri/icons/numbers.png"
   },
   "dependencies": {
     "@tauri-apps/api": "2.1.1",
