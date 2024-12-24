@@ -5,6 +5,7 @@ import { computed, ref } from 'vue';
 import OrganSelector from './dictionaries/organ_selector'
 import TypeSelector from './dictionaries/type_selector'
 import Numbers from './Numbers.vue';
+import {type Number, new_number, test_numbers} from '../@types/number'
 import { type Result } from '../tauri/abstract';
 import { tauri_events } from '../tauri/events';
 </script>
@@ -24,14 +25,14 @@ import { tauri_events } from '../tauri/events';
             n-progress.progress(v-if="search_in_process == true" type="line" :height="30" :border-radius="4" :fill-border-radius="0" indicator-text-color="#874a0d" indicator-placement='inside' processing :percentage="process")
         n-button(@click="start_search" :loading="search_in_process" :disabled="btn_disabled") Поиск
 n-divider
-numbers(:numbers="numbers")
+numbers(:numbers="numbers" :alternative_publication_site="alternative_publication_site")
 </template>
 
 
 <script setup lang="ts">
 const selected_organ = ref<Dictionary|null>(null);
 const selected_type = ref<Dictionary|null>(null);
-const tp_disabled = computed(()=> !(selected_organ.value != null));
+const tp_disabled = computed(()=> (selected_organ.value == null || search_in_process.value));
 const btn_disabled = computed(()=> (selected_organ.value == null || selected_type.value == null || search_in_process.value));
 const current_year = new Date().getFullYear();
 const year = ref(current_year);
@@ -39,7 +40,8 @@ const numbers = ref<Number[]>([]);
 const process = ref<number>(0);
 const search_in_process = ref(false);
 const notification = useNotification();
-//
+const alternative_publication_site = ref<string>("http://publication.pravo.gov.ru")
+
 const select_organ = (org: Dictionary|null) =>
 {
     selected_organ.value = org;

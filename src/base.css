@@ -2,7 +2,8 @@
 {
   font-family: 'Source Code Pro';
   font-size: 15px;
-  --select-hight: 200px;
+  overflow-x: hidden;
+  overflow-y: hidden;
   /* transition: background-color 0.5s ease, color 0.5s ease; */
 }
 
