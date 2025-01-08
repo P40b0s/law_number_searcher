@@ -1,29 +1,21 @@
 use hashbrown::HashMap;
 use super::{default::DefaultPlugin, plugin_trait::NumberExtractorPlugin, OffSiteParser};
-use crate::{extractors::bash::BashOffSiteParser, signatory_authorites, ExtractorError};
-
+use crate::{extractors::bash::BashOffSiteParser, signatory_authorites};
 
 
 // macro_rules! add_plugins
 // {
-//     ($([$signatory_authority:expr, $extractor:expr, $parser:expr]),+) => 
+//     ($([$extractors:expr, $parsers:expr, $signatory_authority:expr, $extractor:expr, $parser:expr]),+) => 
 //     {{
-//         let mut extractors = HashMap::new();
-//         let mut parsers = HashMap::new();
 //         $(
 //             let plugin: Box<dyn NumberExtractorPlugin> = Box::new($extractor);
-//             extractors.insert($signatory_authority.to_owned(), plugin);
+//             $extractors.insert($signatory_authority.to_owned(), plugin);
 //             if $parser.is_some()
 //             {
 //                 let parser: Box<dyn OffSiteParser> = Box::new($parser.unwrap());
-//                 parsers.insert($signatory_authority.to_owned(), parser);
+//                 $parsers.insert($signatory_authority.to_owned(), parser);
 //             }
 //         )+
-//         return ExtractorManager 
-//         {
-//             extractors,
-//             parsers
-//         };
 //     }};
 //     ($([$signatory_authority:expr, $extractor:expr]),+) => 
 //     {{
@@ -40,36 +32,6 @@ use crate::{extractors::bash::BashOffSiteParser, signatory_authorites, Extractor
 //         };
 //     }};
 // }
-
-macro_rules! add_plugins
-{
-    ($([$extractors:expr, $parsers:expr, $signatory_authority:expr, $extractor:expr, $parser:expr]),+) => 
-    {{
-        $(
-            let plugin: Box<dyn NumberExtractorPlugin> = Box::new($extractor);
-            $extractors.insert($signatory_authority.to_owned(), plugin);
-            if $parser.is_some()
-            {
-                let parser: Box<dyn OffSiteParser> = Box::new($parser.unwrap());
-                $parsers.insert($signatory_authority.to_owned(), parser);
-            }
-        )+
-    }};
-    ($([$signatory_authority:expr, $extractor:expr]),+) => 
-    {{
-        let mut extractors = HashMap::new();
-        let mut parsers = HashMap::new();
-        $(
-            let plugin: Box<dyn NumberExtractorPlugin> = Box::new($extractor);
-            extractors.insert($signatory_authority.to_owned(), plugin);
-        )+
-        return ExtractorManager 
-        {
-            extractors,
-            parsers
-        };
-    }};
-}
 
 
 struct PluginRegistrator<'a>
@@ -167,19 +129,3 @@ impl<'a> ExtractorManager<'a>
         self.parsers.get(signatory_authority)
     }
 }
-
-// struct PluginRegistrator<'s, 'a: 's> {
-//     extractors: &'s mut hashbrown::HashMap<String, Box<dyn NumberExtractorPlugin<'a> + 'a>>,
-//     parsers: &'s mut hashbrown::HashMap<String, Box<dyn OffSiteParser>>,
-// }
-
-// impl<'s, 'a: 's> PluginRegistrator<'s, 'a> {
-//     fn register_plugin<P: NumberExtractorPlugin<'a> + 'a>(&'s mut self, key: &str, plugin: P) {
-//         let plugin: Box<dyn NumberExtractorPlugin<'a>> = Box::new(plugin);
-//         self.extractors.insert(key.to_owned(), plugin);
-//     }
-// }
-
-// trait NumberExtractorPlugin<'a> {}
-
-// trait OffSiteParser {}

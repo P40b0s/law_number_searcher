@@ -1,6 +1,6 @@
 
 import { Plugin, Result } from "./abstract";
-import { type Number } from "../@types/number";
+import { type ExportNumbers, type Number } from "../@types/number";
 
 class Searcher extends Plugin<
 'get_signatory_authorites' 
@@ -10,7 +10,8 @@ class Searcher extends Plugin<
 | 'get_lost_numbers'
 | 'get_alternative_publ_site'
 | 'save_number'
-| 'check_alternative_publ_info'> implements ICommand
+| 'check_alternative_publ_info'
+| 'export_to_excel'> implements ICommand
 {
     plugin = "plugin:searcher|";
     public async get_signatory_authorites<R extends Dictionary[]>(): Promise<Result<R>>
@@ -56,6 +57,13 @@ class Searcher extends Plugin<
         const r = await this.post<Number[], R>('check_alternative_publ_info', numbers);
         return r;
     }
+
+    public async export_to_excel<R extends void>(numbers: ExportNumbers): Promise<Result<R>>
+    {
+        const r = await this.post<ExportNumbers, R>('export_to_excel', numbers);
+        return r;
+        
+    }
 }
 
 
@@ -69,6 +77,8 @@ interface ICommand
     get_alternative_publ_site<R extends string>(signatory_authority: string): Promise<Result<R>>;
     save_number<R extends void>(number: Number): Promise<Result<R>>;
     check_alternative_publ_info<R extends Number[]>(numbers: Number[]): Promise<Result<R>>;
+    export_to_excel<R extends void>(numbers: ExportNumbers): Promise<Result<R>>;
+   
 }
 
 

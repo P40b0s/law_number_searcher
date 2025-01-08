@@ -18,5 +18,9 @@ impl Emits
     {
         handle.emit("load-base-process", ProcessType { percent: value, description: description.to_owned() }).unwrap();
     }
+    pub fn alternative_site_search_process_emit<R: Runtime>(handle: &AppHandle<R>, value: String)
+    {
+        handle.emit("alternative-search-process", value).unwrap();
+    }
     
 }

@@ -9,7 +9,8 @@ fn main() {
         "get_lost_numbers",
         "get_alternative_publ_site",
         "save_number",
-        "check_alternative_publ_info"
+        "check_alternative_publ_info",
+        "export_to_excel"
         ]))
       ).unwrap();
     }

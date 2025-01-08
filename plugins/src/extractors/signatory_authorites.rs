@@ -3669,7 +3669,7 @@ pub const ГЛАВА_РЕСПУБЛИКИ_БУРЯТИЯ: &'static str = "60b7b2
 
 
 
-
+#[allow(dead_code)]
 fn convert_json_to_constants(json_str: &str) -> Vec<String> 
 {
     let json: Value = serde_json::from_str(json_str).expect("Failed to parse JSON");

@@ -12,7 +12,8 @@ type ProcessEventType =
  */
 export class TauriEvents extends AbstractEvents<
     'load-process'
-  | 'load-base-process' >
+  | 'load-base-process'
+  | 'alternative-search-process' >
 {
   public async load_process(func: (arg: event.Event<ProcessEventType>) => void): Promise<Unlistener>
   {
@@ -21,6 +22,10 @@ export class TauriEvents extends AbstractEvents<
   public async load_base_process(func: (arg: event.Event<ProcessEventType>) => void): Promise<Unlistener>
   {
     return await this.subscribe('load-base-process', func)
+  }
+  public async alternative_search_process(func: (arg: event.Event<string>) => void): Promise<Unlistener>
+  {
+    return await this.subscribe('alternative-search-process', func)
   }
 }
 const tauri_events = new TauriEvents();

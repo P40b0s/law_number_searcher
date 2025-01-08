@@ -1,14 +1,12 @@
-use std::cell::OnceCell;
 use std::sync::{Arc, LazyLock};
 use std::u32;
 use futures::future::BoxFuture;
-use logger::info;
-use regex::{Match, Regex};
+use regex::Regex;
 use scraper::Selector;
 use utilites::http::{HyperClient, Uri};
-use crate::{create_parser, create_plugin, ExtractorError};
+use crate::{create_parser, create_plugin};
 use super::plugin_trait::Number;
-use super::{number_extractors, signatory_authorites, types, OffSiteParser};
+use super::{signatory_authorites, OffSiteParser};
 use super::NumberExtractorPlugin;
 
 //Some("https://npa.bashkortostan.ru"),
@@ -25,7 +23,7 @@ create_parser!(BashOffSiteParser,
         GLAVA_PATTERN
     ], parse);
 
-async fn parse(regexes: Arc<LazyLock<Vec<Regex>>>, api_url: &str, sa: &str, act_type: &str, year: u32) 
+async fn parse(regexes: Arc<LazyLock<Vec<Regex>>>, api_url: &str, sa: &str, _act_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<String>>) 
 -> Result<Vec<String>, crate::error::ExtractorError>
 {
     let mut page = 1;
@@ -42,6 +40,10 @@ async fn parse(regexes: Arc<LazyLock<Vec<Regex>>>, api_url: &str, sa: &str, act_
                     numbers.push(mch.as_str().to_owned());
                 }
             }
+        }
+        if let Some(s) = sender.as_ref()
+        {
+            let _ = s.send(["Получение данных с ".to_owned(), api_url.to_owned(), " стр. № ".to_owned(), page.to_string()].concat()).await;
         }
         page += 1;
         html = query(year, page, sa, api_url).await?;
@@ -168,8 +170,8 @@ mod tests
     #[tokio::test]
     async fn test_raw_numbers()
     {
-        logger::StructLogger::new_default();
-        let q = super::query(2024, 1, "", "https://npa.bashkortostan.ru").await;
+        let _ = logger::StructLogger::new_default();
+        let _q = super::query(2024, 1, "", "https://npa.bashkortostan.ru").await;
     }
 
     #[test]

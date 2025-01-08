@@ -4,11 +4,12 @@ use serde::{Deserialize, Serialize};
 use tauri::plugin::{Builder, TauriPlugin};
 use tauri::{AppHandle, Manager, Runtime, State};
 
-use crate::db::{AppRepository, IRepository, NumberDBO, Repository};
+use crate::db::{AppRepository, IRepository, Repository};
 use crate::emits::Emits;
 use crate::state::AppState;
+use crate::types::Number;
 use crate::Error;
-use searcher::{SearcherError, Dictionary};
+use searcher:: Dictionary;
 #[derive(Serialize, Deserialize)]
 pub struct ExistsNumbersRequest<'a>
 {
@@ -17,62 +18,12 @@ pub struct ExistsNumbersRequest<'a>
     year: u32
 }
 #[derive(Serialize, Deserialize)]
-///status - `0` неопубликован `1` проверен `2` опубликован на другом сайте
-pub struct Number
+pub struct ExportNumbersRequest<'a>
 {
-    signatory_authority: uuid::Uuid,
-    type_id: uuid::Uuid,
-    year: u32,
-    number: String,
-    note: Option<String>,
-    status: i8
-}
-
-impl Into<Number> for NumberDBO
-{
-    fn into(self) -> Number 
-    {
-        Number
-        {
-            signatory_authority: self.signatory_authority,
-            type_id: self.type_id,
-            year: self.year,
-            number: self.number,
-            note: self.note,
-            status: self.status
-        }
-    }
-}
-impl Into<NumberDBO> for &mut Number
-{
-    fn into(self) -> NumberDBO
-    {
-        NumberDBO
-        {
-            signatory_authority: self.signatory_authority,
-            type_id: self.type_id,
-            year: self.year,
-            number: self.number.clone(),
-            note: self.note.clone(),
-            status: self.status
-        }
-    }
-}
-
-impl Into<NumberDBO> for Number
-{
-    fn into(self) -> NumberDBO
-    {
-        NumberDBO
-        {
-            signatory_authority: self.signatory_authority,
-            type_id: self.type_id,
-            year: self.year,
-            number: self.number,
-            note: self.note,
-            status: self.status
-        }
-    }
+    organ_name: &'a str,
+    type_name: &'a str,
+    alternative_site: Option<&'a str>,
+    numbers: Vec<Number>
 }
 
 #[tauri::command]
@@ -175,7 +126,7 @@ pub async fn get_lost_numbers<'a, R: Runtime>(app: AppHandle<R>, ExistsNumbersRe
 }
 
 #[tauri::command]
-pub fn get_alternative_publ_site<R: Runtime>(app: AppHandle<R>, payload: &str) -> Option<&str>
+pub fn get_alternative_publ_site<R: Runtime>(_app: AppHandle<R>, payload: &str) -> Option<&str>
 {
     searcher::Searcher::get_alternative_publ_site(payload)
 }
@@ -192,57 +143,35 @@ pub async fn check_alternative_publ_info<R: Runtime>(payload: Vec<Number>, app: 
 {
     if let Some(first) = payload.first()
     {
+        let (sender, mut receiver) =  tokio::sync::mpsc::channel::<String>(1);
+        let app2 = app.clone();
+        let join_me = tokio::spawn(
+        async move 
+        {
+            while let Some(p) = receiver.recv().await 
+            {
+                Emits::alternative_site_search_process_emit(&app2, p);
+            }
+        });
         let db = app.state::<Arc<AppRepository<Repository>>>();
         let new_numbers = searcher::Searcher::check_alternative_publ_site_info(
             &first.signatory_authority.to_string(),
             &first.type_id.to_string(),
-            first.year).await?;
-        let source: Option<(uuid::Uuid, uuid::Uuid, u32)> = payload
-            .first()
-            .and_then(|f| Some((f.signatory_authority.clone(), f.type_id.clone(), f.year)));
+            first.year,
+            Some(sender)).await?;
         let mut old_numbers = payload;
-        for n in &new_numbers
+        for n in old_numbers.iter_mut()
         {
-            if let Some(on) = old_numbers.iter_mut().find(|f| &f.number == n)
+            if new_numbers.contains(&n.number)
             {
-                if on.status == 0
+                if n.status == 0
                 {
-                    on.status = 2;
-                    let _ = db.repository.save_number(on.into()).await;
+                    n.status = 2;
+                    let _ = db.repository.save_number(n.into()).await;
                 }
             }
-            else 
-            {
-                if let Some(s) = source
-                {
-                    old_numbers.push(Number 
-                        { 
-                            signatory_authority: s.0,
-                            type_id: s.1,
-                            year: s.2,
-                            number: n.to_owned(),
-                            note: None,
-                            status: 2 
-                        });    
-                } 
-            }
         }
-        // for n in old_numbers.iter_mut()
-        // {
-        //     if new_numbers.contains(&n.number)
-        //     {
-        //         if n.status == 0
-        //         {
-        //             n.status = 2;
-        //             let _ = db.repository.save_number(n.into()).await;
-        //         }
-        //     }
-        //     //если на сайте есть такой номер а у нас нет
-        //     else 
-        //     {
-               
-        //     }
-        // }
+        let _ = join_me.await;
         return Ok(old_numbers);
     }
     logger::info!("В запрос не передано ни одного номера, возват изначальной коллекции");
@@ -250,13 +179,33 @@ pub async fn check_alternative_publ_info<R: Runtime>(payload: Vec<Number>, app: 
 }
 
 
+#[tauri::command]
+pub async fn export_to_excel<'a, R: Runtime>(_app: AppHandle<R>, payload: ExportNumbersRequest<'a>) -> Result<(), Error>
+{
+    let res = crate::services::export(payload.organ_name, payload.type_name, payload.alternative_site, &payload.numbers);
+    if res.is_err()
+    {
+        let err = res.err().as_ref().unwrap().to_string();
+        logger::error!("Ошибка создания файла отчета: {}", &err);
+        return Err(Error::ExportError(err));
+    }
+   Ok(())
+}
 
 // #[tauri::command]
-// pub fn get_exists_parsers<'a>() -> Result<Vec<&'a str>, Error>
+// pub async fn export_to_excel<'a, R: Runtime>(app: AppHandle<R>, ExportNumbersRequest {organ_name, type_name, alternative_site, numbers}: ExportNumbersRequest<'a>) -> Result<(), Error>
 // {
-//     let parsers = searcher::Searcher::get_exists_parsers()?;
-//     Ok(parsers)
+//     let res = crate::services::export(organ_name, type_name, alternative_site, &numbers);
+//     if res.is_err()
+//     {
+//         let err = res.err().as_ref().unwrap().to_string();
+//         logger::error!("Ошибка создания файла отчета: {}", &err);
+//         return Err(Error::ExportError(err));
+//     }
+//    Ok(())
 // }
+
+
 
 pub fn searcher_plugin<R: Runtime>(app_state: Arc<AppState>, repository: Arc<AppRepository<Repository>>) -> TauriPlugin<R> 
 {
@@ -268,7 +217,8 @@ pub fn searcher_plugin<R: Runtime>(app_state: Arc<AppState>, repository: Arc<App
         get_lost_numbers,
         get_alternative_publ_site,
         save_number,
-        check_alternative_publ_info
+        check_alternative_publ_info,
+        export_to_excel
         ])
         .setup(|app_handle, _| 
         {

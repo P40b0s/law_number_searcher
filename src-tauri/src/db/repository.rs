@@ -1,6 +1,5 @@
 use std::sync::Arc;
-use sqlx::{encode::IsNull, error::BoxDynError, sqlite::SqliteRow, Any, Database, Decode, Encode, FromRow, Row, SqlitePool, Value};
-use utilites::Date;
+use sqlx::{sqlite::SqliteRow, FromRow, Row, SqlitePool,};
 
 use crate::Error;
 
@@ -89,7 +88,7 @@ impl IRepository for Repository
     {
         let connection = Arc::clone(&self.connection);
         let sql = "INSERT OR REPLACE INTO numbers (note, status, signatory_authority, number, year, type_id) VALUES ($1, $2, $3, $4, $5, $6)";
-        let r = sqlx::query(&sql)
+        let _r = sqlx::query(&sql)
         .bind(number.note.as_ref())
         .bind(number.status)
         .bind(number.signatory_authority.to_string())

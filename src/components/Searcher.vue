@@ -34,7 +34,7 @@ import { useSelectHeight } from '../composables/useSelechtHeight';
                     div {{process_description2}}
         n-button(@click="start_search" :loading="search_in_process" :disabled="btn_disabled") Поиск
 n-divider
-numbers(v-model:numbers="numbers" :alternative_publication_site="alternative_publication_site")
+numbers(v-model:numbers="numbers" :organ_name="selected_organ?.name" :type_name="selected_type?.name" :alternative_publication_site="alternative_publication_site")
 </template>
 
 

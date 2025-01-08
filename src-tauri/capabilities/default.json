@@ -13,7 +13,9 @@
     "searcher:allow-get-lost-numbers",
     "searcher:allow-get-alternative-publ-site",
     "searcher:allow-save-number",
-    "searcher:allow-check-alternative-publ-info"
+    "searcher:allow-check-alternative-publ-info",
+    "searcher:allow-export-to-excel"
+    
     
 
   ]

@@ -3,14 +3,11 @@ pub mod plugin_trait;
 mod bash;
 mod burat;
 pub use plugin_trait::{NumberExtractorPlugin, OffSiteParser};
-pub mod number_extractors;
 pub mod types;
 pub mod signatory_authorites;
 mod default;
 mod extractor_manager;
 pub use extractor_manager::ExtractorManager;
-use regex::Regex;
-use futures::future::BoxFuture;
 
 #[macro_export]
 macro_rules! create_error {
@@ -48,19 +45,6 @@ macro_rules! create_plugin
                         v
                     })
                 }
-            }
-
-            //TODO так делать неправильно пока незнаю как
-            pub fn get_regexes() -> std::sync::LazyLock<Vec<regex::Regex>>
-            {
-                std::sync::LazyLock::new(||
-                {
-                    let mut v = Vec::new();
-                    $(
-                        v.push(regex::Regex::new($regex_pattern).unwrap());
-                    )+
-                    v
-                })
             }
         }
 
@@ -118,6 +102,7 @@ macro_rules! create_parser
                 {
                     regexes: std::sync::Arc::new(std::sync::LazyLock::new(||
                     {
+                        #[allow(unused_mut)]
                         let mut v = Vec::new();
                         $(
                             v.push(regex::Regex::new($regex_pattern).unwrap());
@@ -134,12 +119,12 @@ macro_rules! create_parser
             {
                 $site_url
             }
-            fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32) 
+            fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32, sender: Option<tokio::sync::mpsc::Sender<String>>) 
             -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>
             {
                 Box::pin(async move 
                 {
-                   $f(std::sync::Arc::clone(&self.regexes), $api_url, sa, act_type, year).await
+                   $f(std::sync::Arc::clone(&self.regexes), $api_url, sa, act_type, year, sender).await
                 })
             }
         }
@@ -149,22 +134,18 @@ macro_rules! create_parser
 #[cfg(test)]
 mod tests
 {
-    use plugin_trait::Number;
-    use regex::Match;
-
-    use super::*;
     #[test]
     fn test_act_type_from_str()
     {
-        logger::StructLogger::new_default();
+        let _ = logger::StructLogger::new_default();
 
-        let e = crate::error::ExtractorError::ParseActTypeError("123321".to_owned());
+        let _ = crate::error::ExtractorError::ParseActTypeError("123321".to_owned());
         //let e1 = create_error!(e);
     }
     #[test]
     fn test_macro()
     {
-        logger::StructLogger::new_default();
+        let _ = logger::StructLogger::new_default();
         //create_plugin2!("1", "2", "3", "4");
         
         //create_plugin!(TestStuct, "asqwqweqweqwe", None, "1", "2", "3", |_| Box::pin(async move {Ok(None)}));

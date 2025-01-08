@@ -195,12 +195,12 @@ impl Searcher
         }
     }
     #[no_mangle]
-    pub async fn check_alternative_publ_site_info(sa: &str, doc_type: &str, year: u32) -> Result<Vec<String>, SearcherError>
+    pub async fn check_alternative_publ_site_info(sa: &str, doc_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<String>>) -> Result<Vec<String>, SearcherError>
     {
         let plugin = PLUGINS.get_off_site_parser(sa);
         if let Some(p) = plugin
         {
-            let mut numbers = p.check_numbers_on_alternative_site(sa, doc_type, year).await?;
+            let numbers = p.check_numbers_on_alternative_site(sa, doc_type, year, sender).await?;
             Ok(numbers)
         }
         else 
@@ -217,19 +217,18 @@ impl Searcher
 mod tests
 {
     use regex::Regex;
-    use serde_json::error;
 
     #[tokio::test]
     async fn test_get_organs()
     {
-        logger::StructLogger::new_default();
+        let _ = logger::StructLogger::new_default();
         let organs = super::Searcher::get_signatory_authorites().await.unwrap();
         logger::debug!("{:?}", organs);
     } 
     #[tokio::test]
     async fn test_get_all_numbers()
     {
-        logger::StructLogger::new_default();
+        let _ = logger::StructLogger::new_default();
         let (sender, mut receiver) =  tokio::sync::mpsc::channel::<u32>(1);
         let s = tokio::spawn(
             async move 
@@ -241,12 +240,12 @@ mod tests
             });
         let organs = super::Searcher::get_exists_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::УКАЗ, 2024, Some(sender)).await.unwrap();
         logger::debug!("{:?}", organs);
-        s.await;
+        let _ = s.await;
     } 
     #[tokio::test]
     async fn test_get_skipped_numbers()
     {
-        logger::StructLogger::new_default();
+        let _ = logger::StructLogger::new_default();
         let (sender, mut receiver) =  tokio::sync::mpsc::channel::<u32>(1);
         let s = tokio::spawn(
             async move 
@@ -258,12 +257,12 @@ mod tests
             });
         let organs = super::Searcher::get_lost_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::УКАЗ, 2024, Some(sender)).await.unwrap();
         logger::debug!("{:?}", organs);
-        s.await;
+        let _ = s.await;
     } 
     #[tokio::test]
     async fn test_get_skipped_numbers_fz()
     {
-        logger::StructLogger::new_default();
+        let _ = logger::StructLogger::new_default();
         let (sender, mut receiver) =  tokio::sync::mpsc::channel::<u32>(1);
         let s = tokio::spawn(
             async move 
@@ -275,13 +274,13 @@ mod tests
             });
         let organs = super::Searcher::get_lost_numbers(plugins::signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, plugins::types::ФЕДЕРАЛЬНЫЙ_ЗАКОН, 2024, Some(sender)).await.unwrap();
         logger::debug!("{:?}", organs);
-        s.await;
+        let _ = s.await;
     } 
     #[tokio::test]
     /// получать карточку каждого документа это очень долго, есть вариант взять номер из полного наименования
     async fn test_split()
     {
-        logger::StructLogger::new_default();
+        let _ = logger::StructLogger::new_default();
         let text = r#"Федеральный закон от 13.12.2024 № 475-ФЗ\n \"О внесении изменений в отдельные законодательные акты Российской Федерации\""#;
         static RE: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"№\s+(.+)\s").unwrap());
         if let Some(caps) = RE.captures(text) 

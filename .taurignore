@@ -2,3 +2,4 @@ extractors
 node_modules
 target
 *.sq3*
+reports

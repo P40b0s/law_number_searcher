@@ -13,6 +13,14 @@ export type Number =
     status: number
 }
 
+export type ExportNumbers = 
+{
+    organ_name: string,
+    type_name: string,
+    alternative_site?: string,
+    numbers: Number[]
+} 
+
 export const new_number = (sa: string, ty: string, year: number, number: string, status: number, note?: string) =>
 {
     return {

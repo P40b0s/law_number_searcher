@@ -13,6 +13,14 @@ pub enum Error
     WrongRegisterKeyError(String),
     #[error(transparent)]
     SearcherError(#[from] searcher::SearcherError),
+    #[error("Ошибка, при поиске номеров на альтернативном сайте опубликования `{0}`")]
+    AlternativePublSiteError(String),
+    #[error("На альтернативном сайте опубликования не найдено ни одного документа")]
+    AlternativePublSiteNoData,
+    #[error("Ошибка экспорта списка номеров в формат excel: `{0}`")]
+
+    ExportError(String)
+
 }
 
 impl serde::Serialize for Error 

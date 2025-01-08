@@ -1,15 +1,11 @@
-use std::cell::OnceCell;
 use std::sync::{Arc, LazyLock};
 use std::u32;
 use futures::future::BoxFuture;
-use logger::info;
-use regex::{Match, Regex};
+use regex::Regex;
 use scraper::Selector;
-use utilites::http::{HeaderName, HyperClient, Uri, ACCEPT, ACCEPT_ENCODING, CONNECTION, CONTENT_TYPE, HOST, USER_AGENT};
-use crate::{create_parser, create_plugin, ExtractorError};
-use super::plugin_trait::Number;
-use super::{number_extractors, signatory_authorites, types, OffSiteParser};
-use super::NumberExtractorPlugin;
+use utilites::http::{HyperClient, Uri, ACCEPT, ACCEPT_ENCODING, HOST, USER_AGENT};
+use crate::create_parser;
+use super::{signatory_authorites, types, OffSiteParser};
 
 
 
@@ -18,7 +14,7 @@ create_parser!(BuryatOffSiteParser,
     "https://egov-buryatia.ru/npa_template",[],
      parse);
 
-async fn parse(_regexes: Arc<LazyLock<Vec<Regex>>>, api_url: &str, sa: &str, act_type: &str, year: u32) 
+async fn parse(_regexes: Arc<LazyLock<Vec<Regex>>>, api_url: &str, sa: &str, act_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<String>>) 
 -> Result<Vec<String>, crate::error::ExtractorError>
 {
     let mut page = 1;
@@ -42,55 +38,15 @@ async fn parse(_regexes: Arc<LazyLock<Vec<Regex>>>, api_url: &str, sa: &str, act
             }
         }
         page += 1;
+        if let Some(s) = sender.as_ref()
+        {
+            let _ = s.send(["Получение данных с ".to_owned(), api_url.to_owned(), " стр. № ".to_owned(), page.to_string()].concat()).await;
+        }
         html = query(year, page, sa, act_type, api_url).await?;
     }
     Ok(numbers)
 }
 
-// create_plugin!(RegionPlugin,
-//     signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ,
-//     r"(?<number>\d{1,4})(?<postfix>-[VIX]+)");
-
-
-// pub struct B{}
-// impl OffSiteParser for B
-// {
-//     fn official_publication_url(&self) -> &'static str
-//     {
-//         "https://egov-buryatia.ru/npa_template"
-//     }
-//     fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32) 
-//     -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>
-//     {
-//         Box::pin(async move 
-//         {
-//             let regexes: Option<std::sync::LazyLock<Vec<regex::Regex>>> = match sa
-//             {
-//                 signatory_authorites::ГЛАВА_РЕСПУБЛИКИ_БУРЯТИЯ => Some(HeadPlugin::get_regexes()),
-//                 signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ => Some(RegionPlugin::get_regexes()),
-//                 _ => None
-//             };
-//             if regexes.is_none()
-//             {
-//                 return Err(ExtractorError::ActTypeNotSupported(["Не найден регекс к текущему органу: ", sa].concat()));
-//             }
-//             let regexes = regexes.unwrap();
-//             let mut page = 1;
-//             let mut html = query(year, page, sa, act_type, self.official_publication_url()).await?;
-//             let mut numbers = Vec::new();
-//             while let Some(items) = scrap(&html)
-//             {
-//                 for name in items
-//                 {
-//                     numbers.push(mch.as_str().to_owned());
-//                 }
-//                 page += 1;
-//                 html = query(year, page, sa, act_type, self.official_publication_url()).await?;
-//             }
-//             Ok(numbers)
-//         })
-//     }
-// }
 fn client(uri: &str) -> HyperClient
 {
     let uri: Uri = uri.parse().unwrap();
@@ -181,7 +137,7 @@ mod tests
     {
         let _ = logger::StructLogger::new_custom(logger::LevelFilter::Debug, Some(&[("html5ever", logger::LevelFilter::Info), ("selectors::matching", logger::LevelFilter::Info)]));
         let br = super::BuryatOffSiteParser::new();
-        let res = br.check_numbers_on_alternative_site(signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ, types::ЗАКОН, 2024).await.unwrap();
+        let res = br.check_numbers_on_alternative_site(signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ, types::ЗАКОН, 2024, None).await.unwrap();
         for href in res
         {
             logger::debug!("документ: {}",  href);

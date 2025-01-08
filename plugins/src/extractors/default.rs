@@ -1,9 +1,6 @@
-use std::u32;
 use regex::Regex;
 use super::plugin_trait::Number;
-use super::OffSiteParser;
 use super::NumberExtractorPlugin;
-use futures::future::BoxFuture;
 ///Если данного вида акта не будет в перечне плагинов, то будет кидать на этот плагин
 #[derive(Debug)]
 pub struct DefaultPlugin where Self: Send + Sync {}

@@ -1,9 +1,4 @@
-use std::{cell::OnceCell, fmt::Display, str::FromStr};
-use hashbrown::HashMap;
-use regex::Regex;
-use serde::{Deserialize, Serialize};
-use crate::ExtractorError;
-use futures::future::{BoxFuture, FutureExt};
+use futures::future::BoxFuture;
 
 pub struct Number
 {
@@ -81,6 +76,6 @@ pub trait OffSiteParser where Self: Send + Sync
     ///страница альтернативного сайта опубликования
     fn official_publication_url(&self) -> &'static str;
     ///проверка найденых пропущеных номеров на альтернативном сайте опубликования
-    fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32) 
+    fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32, sender: Option<tokio::sync::mpsc::Sender<String>>) 
     -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>;
 }
