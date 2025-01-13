@@ -27,7 +27,7 @@ impl Repository
 }
 pub trait IRepository
 {
-    async fn add_number(&self);
+    async fn save_number(&self, number: NumberDBO) -> Result<(), Error>;
     async fn get_number(&self, sa: &str, ty: &str, year: u32, number: &str) -> Result<Option<NumberDBO>, Error>;
 }
 
@@ -85,9 +85,19 @@ impl FromRow<'_, SqliteRow> for NumberDBO
 impl IRepository for Repository
 {
    
-    async fn add_number(&self) 
+    async fn save_number(&self, number: NumberDBO) -> Result<(), Error>
     {
         let connection = Arc::clone(&self.connection);
+        let sql = "UPDATE numbers SET note = $1, status = $2 WHERE signatory_authority = $3 AND number = $4 AND year = $5 AND type_id = $6";
+        let r = sqlx::query(&sql)
+        .bind(number.note.as_ref())
+        .bind(number.status)
+        .bind(number.signatory_authority.to_string())
+        .bind(number.number)
+        .bind(number.year)
+        .bind(number.type_id.to_string())
+        .execute(&*connection).await?;
+        Ok(())
     }
     async fn get_number(&self, sa: &str, ty: &str, year: u32, number: &str) -> Result<Option<NumberDBO>, Error>
     {

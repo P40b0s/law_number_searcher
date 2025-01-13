@@ -156,12 +156,29 @@ impl Searcher
         let skipped = plugin.get_skip_numbers(doc_type, numbers)?;
         Ok(skipped)
     }
+    /// получение всех пропущеных номеров
+    pub async fn get_alternative_site_numbers(signatory_authority: &str, doc_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<String>, SearcherError>
+    {
+        let plugin = PLUGINS.get_plugin(signatory_authority)?;
+        let numbers = Self::get_exists_numbers(signatory_authority, doc_type, year, sender).await?;
+        //logger::debug!("numbers {:?}", &numbers);
+        let skipped = plugin.get_skip_numbers(doc_type, numbers)?;
+        Ok(skipped)
+    }
     /// получение номера первого документа из списка
     pub async fn get_first_number(signatory_authority: &str, doc_type: &str) -> Result<Option<String>, SearcherError>
     {
         let first = publication_api::PublicationApi::get_first_document(signatory_authority, doc_type).await?;
         Ok(first.and_then(|n| Some(n.number)))
     }
+
+    pub async fn get_alternative_publ_site(sa: &str) -> Result<Option<&str>, SearcherError>
+    {
+        let plugin = PLUGINS.get_plugin(sa)?;
+        let site = plugin.official_publication_url();
+        Ok(site)
+    }
+   
 }
 
 

@@ -51,6 +51,8 @@ export default defineComponent({
             }
         )
     }
+
+    const search_view = () => h(Searcher);
     const temp_tab = () => 
         {
             return h(NTabPane,
@@ -91,10 +93,10 @@ export default defineComponent({
     //     )
     // }
 
-    return {tab_view}
+    return {tab_view, search_view}
     },
     render ()
     {
-        return this.tab_view();
+        return this.search_view();
     }
 })

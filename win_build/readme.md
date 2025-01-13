@@ -1,4 +1,4 @@
-sudo dnf config-manager addrepo --from-repofile=nasm.repo
+cd win  
 sudo dnf config-manager setopt nasm.enabled=1
 
 sudo dnf install -y cmake \

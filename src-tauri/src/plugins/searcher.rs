@@ -43,6 +43,22 @@ impl Into<Number> for NumberDBO
     }
 }
 
+impl Into<NumberDBO> for Number
+{
+    fn into(self) -> NumberDBO
+    {
+        NumberDBO
+        {
+            signatory_authority: self.signatory_authority,
+            type_id: self.type_id,
+            year: self.year,
+            number: self.number,
+            note: self.note,
+            status: self.status
+        }
+    }
+}
+
 #[tauri::command]
 pub async fn get_signatory_authorites() -> Result<Vec<Dictionary>, Error>
 {
@@ -133,6 +149,19 @@ pub async fn get_lost_numbers<'a, R: Runtime>(app: AppHandle<R>, ExistsNumbersRe
     Ok(mod_numbers)
 }
 
+#[tauri::command]
+pub async fn get_alternative_publ_site<R: Runtime>(app: AppHandle<R>, payload: &str) -> Result<Option<&str>, Error>
+{
+    let site = searcher::Searcher::get_alternative_publ_site(payload).await?;
+    Ok(site)
+}
+#[tauri::command]
+pub async fn save_number<R: Runtime>(payload: &Number, app: AppHandle<R>) -> Result<(), Error>
+{
+    let db = app.state::<Arc<AppRepository<Repository>>>();
+    db.repository.save_number(payload.into()).await;
+    Ok(())
+}
 
 
 // #[tauri::command]
@@ -149,7 +178,9 @@ pub fn searcher_plugin<R: Runtime>(app_state: Arc<AppState>, repository: Arc<App
         get_signatory_authorites,
         get_types,
         get_exists_numbers,
-        get_lost_numbers
+        get_lost_numbers,
+        get_alternative_publ_site,
+        save_number
         ])
         .setup(|app_handle, _| 
         {

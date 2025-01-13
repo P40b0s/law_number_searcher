@@ -9,6 +9,7 @@
     "tauri": "tauri dev",
     "build:client:win": "tauri build --target x86_64-pc-windows-gnu",
     "build:client": "tauri build",
+    "build:mobile": "cargo tauri android dev",
     "icon": "tauri icon ./src-tauri/icons/numbers.png"
   },
   "dependencies": {

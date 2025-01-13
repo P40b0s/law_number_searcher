@@ -19,7 +19,7 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
     {
         None
     }
-    fn get_raw_number<'b>(&'a self, act_type: &str,  number: &'b str) -> Result<Number<'b>, crate::error::ExtractorError>
+    fn get_raw_number<'b>(&'a self, act_type: &str,  number: &'b str) -> Result<Number, crate::error::ExtractorError>
     {
         match act_type
         {
@@ -35,7 +35,7 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
                     return Ok(Number 
                     {
                         number: n.0.parse().unwrap(),
-                        postfix: Some(n.1),
+                        postfix: Some(n.1.to_owned()),
                         prefix: None
                     });
                 }

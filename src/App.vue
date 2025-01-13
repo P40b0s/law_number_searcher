@@ -4,7 +4,7 @@ import ThemeManager from './components/ThemeManager.vue';
 import MainView from './views/main.ts';
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
-import { darkTheme, lightTheme, NConfigProvider, NNotificationProvider, type GlobalThemeOverrides, NGlobalStyle} from 'naive-ui';
+import { darkTheme, lightTheme, NConfigProvider, NNotificationProvider, NModalProvider, type GlobalThemeOverrides, NGlobalStyle} from 'naive-ui';
 import { useTheme } from './composables/useTheme.ts';
 import { useSelectHeight } from './composables/useSelechtHeight.ts';
 const greetMsg = ref("");
@@ -34,15 +34,16 @@ const themeOverrides: GlobalThemeOverrides = {
 <template lang="pug">
 n-config-provider(:theme="theme" )
   n-notification-provider
-    main.container
-      .header
-        .header-left 
-        .header-right
-          theme-manager
-      .main-content
-        MainView
-      .footer footer
-    n-global-style
+    n-modal-provider
+      main.container
+        .header
+          .header-left 
+          .header-right
+            theme-manager
+        .main-content
+          MainView
+        .footer footer
+      n-global-style
 </template>
 
 <style>

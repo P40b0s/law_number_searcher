@@ -41,17 +41,14 @@ const numbers = ref<Number[]>([]);
 const process = ref<number>(0);
 const search_in_process = ref(false);
 const notification = useNotification();
-const alternative_publication_site = ref<string>("http://publication.pravo.gov.ru")
+const alternative_publication_site = ref<string|undefined>("www.ya.ru")
 const {height} = useSelectHeight();
 const select_organ = (org: Dictionary|null) =>
 {
     selected_organ.value = org;
-   
-    //height.value = (40 * (org?.name.length ?? 50) /50).toString();
 }
 const select_type = (tp: Dictionary|null) =>
 {
-    console.log(tp);
     selected_type.value = tp;
 }
 const load_process = tauri_events.load_process(async (p) =>
@@ -62,6 +59,7 @@ const start_search = async () =>
 {
     process.value = 0;
     search_in_process.value = true;
+    alternative_publication_site.value = (await searcher_commands.get_alternative_publ_site(selected_organ.value?.id as string)).value;
     const n = await searcher_commands.get_lost_numbers(selected_organ.value?.id as string, selected_type.value?.id as string, year.value);
     if(n.is_err())
     {

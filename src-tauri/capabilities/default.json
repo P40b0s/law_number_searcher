@@ -9,6 +9,7 @@
     "searcher:allow-get-signatory-authorites",
     "searcher:allow-get-types",
     "searcher:allow-get-exists-numbers",
-    "searcher:allow-get-lost-numbers"
+    "searcher:allow-get-lost-numbers",
+    "searcher:allow-get-alternative-publ-site"
   ]
 }

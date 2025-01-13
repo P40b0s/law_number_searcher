@@ -12,3 +12,4 @@ uuid= {version="1.11.0", features = ["v7"] }
 thiserror="2.0.7"
 hashbrown="0.15.2"
 regex="1.11.1"
+scraper="0.22.0"

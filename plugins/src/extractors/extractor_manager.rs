@@ -13,8 +13,10 @@ impl<'a> ExtractorManager<'a>
     {
         let mut hm = HashMap::new();
         let default_plugin = Box::new(DefaultPlugin{});
-        let plugin: Box<dyn ExtractorPlugin> = Box::new(PrezidentPlugin{});
-        hm.insert(plugin.signatory_authority().to_owned(), plugin);
+        let prez_plugin: Box<dyn ExtractorPlugin> = Box::new(PrezidentPlugin{});
+        let bash_plugin = super::bash::CustomPlugin::get_plugin();
+        hm.insert(prez_plugin.signatory_authority().to_owned(), prez_plugin);
+        hm.insert(bash_plugin.signatory_authority().to_owned(), bash_plugin);
         hm.insert(default_plugin.signatory_authority().to_owned(), default_plugin);
         Self
         {

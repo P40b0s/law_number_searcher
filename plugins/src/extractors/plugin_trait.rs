@@ -4,11 +4,12 @@ use regex::Regex;
 use serde::{Deserialize, Serialize};
 use crate::ExtractorError;
 
-pub struct Number<'b>
+pub struct Number
 {
     pub number: u32,
-    pub postfix: Option<&'b str>,
-    pub prefix: Option<&'b str>
+    pub postfix: Option<String>,
+    //хотел сделать ссылки, но если брать префикс и постфикс из регекса то малыми жертвами ссылки сделать не получится
+    pub prefix: Option<String>
 }
 
 pub static CLEAR_NUMBER_RE: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^\d{1,4}").unwrap());
@@ -17,30 +18,12 @@ pub trait ExtractorPlugin<'a> where Self: Send + Sync
     fn signatory_authority(&self) -> &'static str;
     ///url сайта где официально опубликовываются данные докуенты (кроме publication.pravo.gov.ru)
     fn official_publication_url(&self) -> Option<&'static str>;
-
-    fn get_raw_number<'b>(&'a self, act_type: &str,  number: &'b str) -> Result<Number<'b>, crate::error::ExtractorError>;
-    // {
-    //     //указы распоряжения итд со всякими постфиксами точно пападут под этот регекс, поэтому обработать нужно будет только крайние случаи
-    //     if let Some(mch) = CLEAR_NUMBER_RE.find(number)
-    //     {
-    //         let index = mch.end();
-    //         let n = number.split_at(index);
-    //         return Ok((n.0.parse().unwrap(), n.1));
-    //     }
-    //     else
-    //     {
-    //         match act_type
-    //         {
-    //             _ => Err(crate::error::ExtractorError::NumberFormatError(number.to_owned()))
-    //         }
-    //     }
-        
-    // }
+    fn get_raw_number<'b>(&'a self, act_type: &str,  number: &'b str) -> Result<Number, crate::error::ExtractorError>;
     fn number_is_support(&'a self, number: &str) -> bool;
+    // fn check_numbers_on_alternative_site(numbers: Vec<String>, year: u32)
     // {
-    //     CLEAR_NUMBER_RE.find(number).is_some()
-    // }
 
+    // }
     fn get_skip_numbers<'b: 'a>(&'a self,  act_type: &str, numbers: Vec<String>) -> Result<Vec<String>, crate::error::ExtractorError>
     {
         if numbers.len() == 0
@@ -84,9 +67,10 @@ pub trait ExtractorPlugin<'a> where Self: Send + Sync
                 {
                     formatted_str.push(po.to_owned());
                 }
-                skipped.push(formatted_str);
+                logger::debug!("{}", &formatted_str.concat());
+                skipped.push(formatted_str.concat());
             }
         }
-        Ok(skipped.concat())
+        Ok(skipped)
     }
 }
