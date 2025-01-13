@@ -8,10 +8,11 @@ import Numbers from './Numbers.vue';
 import {type Number, new_number, test_numbers} from '../@types/number'
 import { type Result } from '../tauri/abstract';
 import { tauri_events } from '../tauri/events';
+import { useSelectHeight } from '../composables/useSelechtHeight';
 </script>
 <template lang="pug">
 .search-container    
-    organ-selector(@select="select_organ" placeholder="Выберите принявший орган")
+    organ-selector#orgsel(@select="select_organ" placeholder="Выберите принявший орган")
     type-selector(:disabled="tp_disabled" paceholder="Выберите вид документа" @select="select_type", :selected_organ="selected_organ")
     .search-action
         n-input-number(
@@ -41,10 +42,12 @@ const process = ref<number>(0);
 const search_in_process = ref(false);
 const notification = useNotification();
 const alternative_publication_site = ref<string>("http://publication.pravo.gov.ru")
-
+const {height} = useSelectHeight();
 const select_organ = (org: Dictionary|null) =>
 {
     selected_organ.value = org;
+   
+    //height.value = (40 * (org?.name.length ?? 50) /50).toString();
 }
 const select_type = (tp: Dictionary|null) =>
 {

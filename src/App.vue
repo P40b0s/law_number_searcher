@@ -6,9 +6,11 @@ import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import { darkTheme, lightTheme, NConfigProvider, NNotificationProvider, type GlobalThemeOverrides, NGlobalStyle} from 'naive-ui';
 import { useTheme } from './composables/useTheme.ts';
+import { useSelectHeight } from './composables/useSelechtHeight.ts';
 const greetMsg = ref("");
 const name = ref("");
 const { theme } = useTheme();
+const {height} = useSelectHeight();
 async function greet() 
 {
   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
@@ -18,7 +20,8 @@ const themeOverrides: GlobalThemeOverrides = {
     Select: {
         peers: {
         InternalSelection: {
-            heightLarge: "60px"
+            //heightLarge: undefined
+            heightLarge: height.value
         },
         InternalSelectMenu: {
         },
@@ -26,10 +29,10 @@ const themeOverrides: GlobalThemeOverrides = {
     },
     }
 
-
+//:theme-overrides="themeOverrides"
 </script>
 <template lang="pug">
-n-config-provider(:theme="theme" :theme-overrides="themeOverrides")
+n-config-provider(:theme="theme" )
   n-notification-provider
     main.container
       .header

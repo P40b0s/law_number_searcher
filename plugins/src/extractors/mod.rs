@@ -1,5 +1,6 @@
 mod prezident;
 pub mod plugin_trait;
+mod bash;
 pub use plugin_trait::ExtractorPlugin;
 pub mod number_extractors;
 pub mod types;
