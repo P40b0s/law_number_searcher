@@ -88,7 +88,7 @@ impl IRepository for Repository
     async fn save_number(&self, number: NumberDBO) -> Result<(), Error>
     {
         let connection = Arc::clone(&self.connection);
-        let sql = "UPDATE numbers SET note = $1, status = $2 WHERE signatory_authority = $3 AND number = $4 AND year = $5 AND type_id = $6";
+        let sql = "INSERT OR REPLACE INTO numbers (note, status, signatory_authority, number, year, type_id) VALUES ($1, $2, $3, $4, $5, $6)";
         let r = sqlx::query(&sql)
         .bind(number.note.as_ref())
         .bind(number.status)
@@ -97,6 +97,7 @@ impl IRepository for Repository
         .bind(number.year)
         .bind(number.type_id.to_string())
         .execute(&*connection).await?;
+        
         Ok(())
     }
     async fn get_number(&self, sa: &str, ty: &str, year: u32, number: &str) -> Result<Option<NumberDBO>, Error>

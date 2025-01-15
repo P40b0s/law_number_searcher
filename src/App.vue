@@ -17,22 +17,17 @@ async function greet()
   greetMsg.value = await invoke("greet", { name: name.value });
 }
 const themeOverrides: GlobalThemeOverrides = {
-    Select: {
-        peers: {
-        InternalSelection: {
-            //heightLarge: undefined
-            heightLarge: height.value
-        },
-        InternalSelectMenu: {
-        },
-        }
+    Scrollbar: {
+        width: '8px',
+        railInsetHorizontal: '6px 6px 6px auto',
+        borderRadius: 2,
     },
     }
 
 //:theme-overrides="themeOverrides"
 </script>
 <template lang="pug">
-n-config-provider(:theme="theme" )
+n-config-provider(:theme="theme" :theme-overrides="themeOverrides")
   n-notification-provider
     n-modal-provider
       main.container

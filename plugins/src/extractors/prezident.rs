@@ -3,21 +3,17 @@ use logger::info;
 use crate::ExtractorError;
 use super::plugin_trait::{Number, CLEAR_NUMBER_RE};
 use super::{number_extractors, signatory_authorites, types};
-use super::ExtractorPlugin;
-
+use super::NumberExtractorPlugin;
+use futures::future::{BoxFuture, FutureExt};
 #[derive(Debug)]
 pub struct PrezidentPlugin where Self: Send + Sync {}
 
-impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
+impl<'a> NumberExtractorPlugin<'a> for PrezidentPlugin
 {
    // &DocumentTypes=&DocumentTypes=&PublishDateSearchType=0&NumberSearchType=0&DocumentDateSearchType=0&JdRegSearchType=0&SortedBy=6&SortDestination=1
     fn signatory_authority(&self) -> &'static str
     {
         signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ
-    }
-    fn official_publication_url(&self) -> Option<&'static str> 
-    {
-        None
     }
     fn get_raw_number<'b>(&'a self, act_type: &str,  number: &'b str) -> Result<Number, crate::error::ExtractorError>
     {
@@ -80,7 +76,7 @@ impl<'a> ExtractorPlugin<'a> for PrezidentPlugin
 #[cfg(test)]
 mod tests
 {
-    use crate::extractors::plugin_trait::ExtractorPlugin;
+    use crate::extractors::plugin_trait::NumberExtractorPlugin;
     use crate::extractors::types;
 
     #[test]

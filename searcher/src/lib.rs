@@ -1,9 +1,7 @@
 use std::sync::{Arc, LazyLock};
 pub use error::SearcherError;
-use plugins::{ExtractorManager, ExtractorPlugin};
-use publication_api::PublicationDocumentCard;
+use plugins::ExtractorManager;
 pub use publication_api::{SignatoryAuthority, PublicationApiError, DocumentType};
-use regex::Regex;
 use serde::{Deserialize, Serialize};
 use utilites::Date;
 mod error;
@@ -66,7 +64,7 @@ impl Searcher
     {
         let types = publication_api::PublicationApi::get_documents_types_by_signatory_authority(sa).await?;
         //let types_with_parsers = Self::get_types_in_parser(sa).await?;
-        let plugin = PLUGINS.get_plugin(sa)?;
+        let plugin = PLUGINS.get_number_extractor_plugin(sa);
         let mut result: Vec<Dictionary> = Vec::with_capacity(types.len());
         let percentage_mul = 100 / types.len() as u32;
         for (i, dt) in types.into_iter().enumerate()
@@ -110,7 +108,7 @@ impl Searcher
 
     fn organ_parser_type(sa: &str) -> i8
     {
-        let plugin = PLUGINS.get_plugin(sa).unwrap();
+        let plugin = PLUGINS.get_number_extractor_plugin(sa);
         if plugin.signatory_authority() == "default"
         {
             0
@@ -150,7 +148,7 @@ impl Searcher
     /// получение всех пропущеных номеров
     pub async fn get_lost_numbers(signatory_authority: &str, doc_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<String>, SearcherError>
     {
-        let plugin = PLUGINS.get_plugin(signatory_authority)?;
+        let plugin = PLUGINS.get_number_extractor_plugin(signatory_authority);
         let numbers = Self::get_exists_numbers(signatory_authority, doc_type, year, sender).await?;
         //logger::debug!("numbers {:?}", &numbers);
         let skipped = plugin.get_skip_numbers(doc_type, numbers)?;
@@ -159,7 +157,7 @@ impl Searcher
     /// получение всех пропущеных номеров
     pub async fn get_alternative_site_numbers(signatory_authority: &str, doc_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<String>, SearcherError>
     {
-        let plugin = PLUGINS.get_plugin(signatory_authority)?;
+        let plugin = PLUGINS.get_number_extractor_plugin(signatory_authority);
         let numbers = Self::get_exists_numbers(signatory_authority, doc_type, year, sender).await?;
         //logger::debug!("numbers {:?}", &numbers);
         let skipped = plugin.get_skip_numbers(doc_type, numbers)?;
@@ -172,11 +170,31 @@ impl Searcher
         Ok(first.and_then(|n| Some(n.number)))
     }
 
-    pub async fn get_alternative_publ_site(sa: &str) -> Result<Option<&str>, SearcherError>
+    pub fn get_alternative_publ_site(sa: &str) -> Option<&str>
     {
-        let plugin = PLUGINS.get_plugin(sa)?;
-        let site = plugin.official_publication_url();
-        Ok(site)
+        let plugin = PLUGINS.get_off_site_parser(sa);
+        if let Some(p) = plugin
+        {
+            Some(p.official_publication_url())
+        }
+        else 
+        {
+            None
+        }
+    }
+
+    pub async fn check_alternative_publ_site_info(sa: &str, doc_type: &str, year: u32) -> Result<Vec<String>, SearcherError>
+    {
+        let plugin = PLUGINS.get_off_site_parser(sa);
+        if let Some(p) = plugin
+        {
+            let numbers = p.check_numbers_on_alternative_site(sa, doc_type, year).await?;
+            Ok(numbers)
+        }
+        else 
+        {
+            Err(SearcherError::AlternativeSiteParserError(sa.to_owned(), doc_type.to_owned()))
+        }
     }
    
 }

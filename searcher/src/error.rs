@@ -14,7 +14,9 @@ pub enum SearcherError
     #[error("Ошибка извлечения номера из наименования`{0}` в документе EO `{1}`")]
     /// 1 - наименование из корого производится извлечение
     /// 2 - номер опубликования
-    ParseNumberError(String, String)
+    ParseNumberError(String, String),
+    #[error("Для органа `{0}` и вида документа `{1}` отсутсвует парсер альтернативного сайта опубликования")]
+    AlternativeSiteParserError(String, String)
 }
 
 impl serde::Serialize for SearcherError

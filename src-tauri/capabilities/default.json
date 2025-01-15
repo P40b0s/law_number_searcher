@@ -10,6 +10,9 @@
     "searcher:allow-get-types",
     "searcher:allow-get-exists-numbers",
     "searcher:allow-get-lost-numbers",
-    "searcher:allow-get-alternative-publ-site"
+    "searcher:allow-get-alternative-publ-site",
+    "searcher:allow-save-number",
+    "searcher:allow-check-alternative-publ-info"
+
   ]
 }

@@ -19,6 +19,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
     const count = ref(0);
     //процесс загрузки
     const process = ref(0);
+    const process_description = ref("");
     const unselect = () =>
     {
         selected.value = null;
@@ -28,7 +29,8 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
     };
     const load_process = tauri_events.load_process(async (p) =>
     {
-        process.value = p.payload;
+        process.value = p.payload.percent;
+        process_description.value = p.payload.description;
     });
     
     const status = ref<'warning'|'success'|'error'>('success');
@@ -253,7 +255,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                         } as CSSProperties
                     },
                     [
-                        h('div', {style: {fontSize: '16px'}}, "Ожидайте, идет загрузка...."),
+                        h('div', {style: {fontSize: '16px'}}, "Ожидайте, идет загрузка. " + process_description.value),
                         h(NProgress, 
                         {
                             type: 'line',

@@ -8,7 +8,8 @@ fn main() {
         "get_exists_numbers",
         "get_lost_numbers",
         "get_alternative_publ_site",
-        "save_number"
+        "save_number",
+        "check_alternative_publ_info"
         ]))
       ).unwrap();
     }

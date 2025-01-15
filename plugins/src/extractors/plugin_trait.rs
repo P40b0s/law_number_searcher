@@ -3,6 +3,7 @@ use hashbrown::HashMap;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use crate::ExtractorError;
+use futures::future::{BoxFuture, FutureExt};
 
 pub struct Number
 {
@@ -13,26 +14,24 @@ pub struct Number
 }
 
 pub static CLEAR_NUMBER_RE: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^\d{1,4}").unwrap());
-pub trait ExtractorPlugin<'a> where Self: Send + Sync
+pub trait NumberExtractorPlugin<'a> where Self: Send + Sync
 {
     fn signatory_authority(&self) -> &'static str;
     ///url сайта где официально опубликовываются данные докуенты (кроме publication.pravo.gov.ru)
-    fn official_publication_url(&self) -> Option<&'static str>;
+    //fn official_publication_url(&self) -> Option<&'static str>;
     fn get_raw_number<'b>(&'a self, act_type: &str,  number: &'b str) -> Result<Number, crate::error::ExtractorError>;
     fn number_is_support(&'a self, number: &str) -> bool;
-    // fn check_numbers_on_alternative_site(numbers: Vec<String>, year: u32)
-    // {
-
-    // }
+    //fn check_numbers_on_alternative_site(&'a self, year: u32) -> BoxFuture<'a, Result<Option<Vec<String>>, crate::error::ExtractorError>>;
     fn get_skip_numbers<'b: 'a>(&'a self,  act_type: &str, numbers: Vec<String>) -> Result<Vec<String>, crate::error::ExtractorError>
     {
         if numbers.len() == 0
         {
             return Ok(Vec::<String>::new());
         }
+        //logger::debug!("{:?}", &numbers);
         let mut raw_numbers = Vec::with_capacity(numbers.len());
         let mut max = 0;
-        let mut min = u32::MAX;
+        let mut min = 1;
         let mut prefix: Option<String> = None;
         let mut postfix: Option<String> = None;
         for n in numbers
@@ -67,10 +66,16 @@ pub trait ExtractorPlugin<'a> where Self: Send + Sync
                 {
                     formatted_str.push(po.to_owned());
                 }
-                logger::debug!("{}", &formatted_str.concat());
+                //logger::debug!("{}", &formatted_str.concat());
                 skipped.push(formatted_str.concat());
             }
         }
         Ok(skipped)
     }
+}
+
+pub trait OffSiteParser where Self: Send + Sync
+{
+    fn official_publication_url(&self) -> &'static str;
+    fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32) -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>;
 }

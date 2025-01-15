@@ -9,7 +9,8 @@ class Searcher extends Plugin<
 | 'get_exists_numbers' 
 | 'get_lost_numbers'
 | 'get_alternative_publ_site'
-| 'save_number'> implements ICommand
+| 'save_number'
+| 'check_alternative_publ_info'> implements ICommand
 {
     plugin = "plugin:searcher|";
     public async get_signatory_authorites<R extends Dictionary[]>(): Promise<Result<R>>
@@ -39,7 +40,7 @@ class Searcher extends Plugin<
         return r;
         
     }
-    public async get_alternative_publ_site<R extends string>(signatory_authority: string): Promise<Result<R>>
+    public async get_alternative_publ_site<R extends string|undefined>(signatory_authority: string): Promise<Result<R>>
     {
         const r = await this.get<R>('get_alternative_publ_site', {payload: signatory_authority});
         return r;
@@ -48,6 +49,11 @@ class Searcher extends Plugin<
     public async save_number<R extends void>(number: Number): Promise<Result<R>>
     {
         const r = await this.post<Number, R>('save_number', number);
+        return r;
+    }
+    public async check_alternative_publ_info<R extends Number[]>(numbers: Number[]): Promise<Result<R>>
+    {
+        const r = await this.post<Number[], R>('check_alternative_publ_info', numbers);
         return r;
     }
 }
@@ -62,6 +68,7 @@ interface ICommand
     get_lost_numbers<R extends Number[]>(signatory_authority: string, act_type: string, year: number): Promise<Result<R>>;
     get_alternative_publ_site<R extends string>(signatory_authority: string): Promise<Result<R>>;
     save_number<R extends void>(number: Number): Promise<Result<R>>;
+    check_alternative_publ_info<R extends Number[]>(numbers: Number[]): Promise<Result<R>>;
 }
 
 

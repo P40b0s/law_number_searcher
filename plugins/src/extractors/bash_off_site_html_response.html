@@ -1,559 +1,1113 @@
- 
-
-
 <!DOCTYPE html>
 <html lang="ru">
-  <head><meta name='hmac-token-name' content='Ajax-Token'/>
+<head><meta name='hmac-token-name' content='Ajax-Token'/>
 
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
-    <meta name="description" content="Опубликование нормативных правовых актов Республики Бурятия">
-    <link rel="stylesheet" href="/npa_template/css/fonts.css"/>
-    <link rel="stylesheet" href="/npa_template/css/index.lib.css"/>
-	<link rel="stylesheet" href="/npa_template/css/index.css"/>
-	<meta http-equiv="X-FRAME-OPTIONS" content="ALLOW">
-	<meta http-equiv="X-FRAME-OPTIONS" content="SAMEORIGIN">
-
-	
-
-    <title>Опубликование нормативных правовых актов Республики Бурятия</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="robots" content="Опубликование нормативных правовых актов Республики Бурятия" />
-<meta name="keywords" content="Опубликование нормативных правовых актов Республики Бурятия" />
-<meta name="description" content="Опубликование нормативных правовых актов Республики Бурятия" />
-<link href="/bitrix/cache/css/s1/npa_hural/page_43b576359d7117496b0550e68ecd0ba0/page_43b576359d7117496b0550e68ecd0ba0_v1.css?1721369850396" type="text/css"  rel="stylesheet" />
-<link href="/bitrix/cache/css/s1/npa_hural/template_5ab86403ef541b3e2f1a72a2446d856b/template_5ab86403ef541b3e2f1a72a2446d856b_v1.css?17213698501127" type="text/css"  data-template-style="true" rel="stylesheet" />
-<script charset="utf-8" src="/62d8ed86c2c19d3ccd5edac7.js?1707760795652"></script>
-<script>if(!window.BX)window.BX={};if(!window.BX.message)window.BX.message=function(mess){if(typeof mess==='object'){for(let i in mess) {BX.message[i]=mess[i];} return true;}};</script>
-<script>(window.BX||top.BX).message({'JS_CORE_LOADING':'Загрузка...','JS_CORE_NO_DATA':'- Нет данных -','JS_CORE_WINDOW_CLOSE':'Закрыть','JS_CORE_WINDOW_EXPAND':'Развернуть','JS_CORE_WINDOW_NARROW':'Свернуть в окно','JS_CORE_WINDOW_SAVE':'Сохранить','JS_CORE_WINDOW_CANCEL':'Отменить','JS_CORE_WINDOW_CONTINUE':'Продолжить','JS_CORE_H':'ч','JS_CORE_M':'м','JS_CORE_S':'с','JSADM_AI_HIDE_EXTRA':'Скрыть лишние','JSADM_AI_ALL_NOTIF':'Показать все','JSADM_AUTH_REQ':'Требуется авторизация!','JS_CORE_WINDOW_AUTH':'Войти','JS_CORE_IMAGE_FULL':'Полный размер'});</script>
-
-<script src="/bitrix/js/main/core/core.js?1717048607494198"></script>
-
-<script>BX.Runtime.registerExtension({'name':'main.core','namespace':'BX','loaded':true});</script>
-<script>BX.setJSList(['/bitrix/js/main/core/core_ajax.js','/bitrix/js/main/core/core_promise.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/loadext/loadext.js','/bitrix/js/main/loadext/extension.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/includes/js/includes.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/ui/polyfill/closest/js/closest.js','/bitrix/js/main/polyfill/fill/main.polyfill.fill.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/core/core.js','/bitrix/js/main/polyfill/intersectionobserver/js/intersectionobserver.js','/bitrix/js/main/lazyload/dist/lazyload.bundle.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/parambag/dist/parambag.bundle.js']);
-</script>
-<script>BX.Runtime.registerExtension({'name':'ui.dexie','namespace':'BX.Dexie3','loaded':true});</script>
-<script>BX.Runtime.registerExtension({'name':'ls','namespace':'window','loaded':true});</script>
-<script>BX.Runtime.registerExtension({'name':'fx','namespace':'window','loaded':true});</script>
-<script>BX.Runtime.registerExtension({'name':'fc','namespace':'window','loaded':true});</script>
-<script>(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','SERVER_TZ_OFFSET':'0','UTF_MODE':'Y','SITE_ID':'s1','SITE_DIR':'/','USER_ID':'','SERVER_TIME':'1736757890','USER_TZ_OFFSET':'0','USER_TZ_AUTO':'Y','bitrix_sessid':'31339f4f11aa743ec73be3f929d21d24'});</script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Официальный интернет-портал правовой информации Республики Башкортостан</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<script charset="utf-8" src="/65f1a6acaf5a5fbeca754acc.js?1725017463263"></script>
+<script data-skip-moving="true">(function(w, d, n) {var cl = "bx-core";var ht = d.documentElement;var htc = ht ? ht.className : undefined;if (htc === undefined || htc.indexOf(cl) !== -1){return;}var ua = n.userAgent;if (/(iPad;)|(iPhone;)/i.test(ua)){cl += " bx-ios";}else if (/Windows/i.test(ua)){cl += ' bx-win';}else if (/Macintosh/i.test(ua)){cl += " bx-mac";}else if (/Linux/i.test(ua) && !/Android/i.test(ua)){cl += " bx-linux";}else if (/Android/i.test(ua)){cl += " bx-android";}cl += (/(ipad|iphone|android|mobile|touch)/i.test(ua) ? " bx-touch" : " bx-no-touch");cl += w.devicePixelRatio && w.devicePixelRatio >= 2? " bx-retina": " bx-no-retina";if (/AppleWebKit/.test(ua)){cl += " bx-chrome";}else if (/Opera/.test(ua)){cl += " bx-opera";}else if (/Firefox/.test(ua)){cl += " bx-firefox";}ht.className = htc ? htc + " " + cl : cl;})(window, document, navigator);</script>
 
 
-<script  src="/bitrix/cache/js/s1/npa_hural/kernel_main/kernel_main_v1.js?1731252593176874"></script>
-<script src="/bitrix/js/ui/dexie/dist/dexie3.bundle.min.js?169952991688274"></script>
-<script src="/bitrix/js/main/core/core_ls.min.js?15112485057365"></script>
-<script src="/bitrix/js/main/core/core_frame_cache.js?171704859617037"></script>
-<script>BX.setJSList(['/bitrix/js/main/core/core_fx.js','/bitrix/js/main/session.js','/bitrix/js/main/pageobject/pageobject.js','/bitrix/js/main/core/core_window.js','/bitrix/js/main/utils.js','/bitrix/js/main/date/main.date.js','/bitrix/js/main/core/core_date.js']);</script>
-<script>BX.setCSSList(['/local/templates/npa_hural/components/bitrix/news.list/izmeneniya_v_zakonodatelstve/style.css','/local/templates/npa_hural/styles.css']);</script>
+<link href="/bitrix/cache/css/s1/npa/kernel_main/kernel_main_v1.css?173394989110074" type="text/css"  rel="stylesheet" />
+<link href="/bitrix/js/ui/design-tokens/dist/ui.design-tokens.min.css?173394972123463" type="text/css"  rel="stylesheet" />
+<link href="/bitrix/js/ui/fonts/opensans/ui.font.opensans.min.css?16740608872320" type="text/css"  rel="stylesheet" />
+<link href="/bitrix/js/main/popup/dist/main.popup.bundle.min.css?173394977526589" type="text/css"  rel="stylesheet" />
+<link href="/bitrix/cache/css/s1/npa/page_5a211a0576c6fc4be57dc19b95bbc652/page_5a211a0576c6fc4be57dc19b95bbc652_v1.css?17339499493571" type="text/css"  rel="stylesheet" />
+<link href="/bitrix/cache/css/s1/npa/template_ca9c1a0ff00e006632789aa2a2f0f40c/template_ca9c1a0ff00e006632789aa2a2f0f40c_v1.css?173394994927127" type="text/css"  data-template-style="true" rel="stylesheet" />
 
 
-<script type="text/javascript">var _ba = _ba || []; _ba.push(["aid", "80e449881ebd45738529d5d3ac56f94a"]); _ba.push(["host", "egov-buryatia.ru"]); (function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script>
 
 
-  </head>
-  <body><noscript><img src="/66e62fa9fdce224d8704b67e4e6ed9fa.gif" width="0" height="0" alt="" /></noscript>
+<script type="extension/settings" data-extension="main.date">{"formats":{"FORMAT_DATE":"DD.MM.YYYY","FORMAT_DATETIME":"DD.MM.YYYY HH:MI:SS","SHORT_DATE_FORMAT":"d.m.Y","MEDIUM_DATE_FORMAT":"j M Y","LONG_DATE_FORMAT":"j F Y","DAY_MONTH_FORMAT":"j F","DAY_SHORT_MONTH_FORMAT":"j M","SHORT_DAY_OF_WEEK_MONTH_FORMAT":"D, j F","SHORT_DAY_OF_WEEK_SHORT_MONTH_FORMAT":"D, j M","DAY_OF_WEEK_MONTH_FORMAT":"l, j F","FULL_DATE_FORMAT":"l, j F  Y","SHORT_TIME_FORMAT":"H:i","LONG_TIME_FORMAT":"H:i:s"}}</script>
 
-  <div id="panel">
-					</div>
-    <div class="page-app page-app--hide" data-is="page-app">
-      <!-- <div class="npa-header"> 
-		<h1 class="npa-header__heading page-desktop-header__logo">
-			<img class="page-desktop-header__logo-img" src="/upload/iblock/017/0170a5bc251fc6b518ace58306e5dcc3.png" width="68">
-			<a href="/npa_template/" style="text-decoration:none; color:#FFF;">Опубликование нормативных правовых актов Республики Бурятия</a>
-		</h1>
-      </div> -->
-	  <div class="npa-body">
-<div class="npa-section">
- 
-<form class="npa-finder" action="/npa_template//search/index.php" method="POST" data-is="npa-finder">
-            <label class="npa-finder__search-field">
-              <input class="npa-finder__search" type="text" name="q" value = "" placeholder="Введите слово для поиска и нажмите Enter"/>
-            </label>
-            <input class="npa-finder__button" type="submit" name="s" value="Найти"/>
-          </form>          
-          <ul class="npa-head-list">
-		  <li class="npa-head-list__item"><a class="npa-head-list__link" href=""></a></li>          </ul>
+
+
+  <link rel="shortcut icon" href="/upload/resize_cache/alt/733/733b26827c7c54be24d3c00f4f9a4241_16_16.png">
+  <link rel="apple-touch-icon-precomposed" href="/local/templates/npa/images/favicon.png?1736855239">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    </head>
+<body><noscript><img src="/8314667af9455c315578f3ab6400211a.gif" width="0" height="0" alt="" /></noscript>
+
+    <svg style="display: none;">
+  <symbol id="icon-document" x="0px" y="0px" viewBox="0 0 488 488">
+    <g transform="translate(0 -540.36)">
+      <g>
+        <g>
+          <path d="M448.9,650.483c0-0.1-0.1-0.3-0.1-0.4c0-0.2-0.1-0.3-0.1-0.5c0-0.1-0.1-0.3-0.1-0.4s-0.1-0.3-0.2-0.4
+				c-0.1-0.1-0.1-0.3-0.2-0.4c-0.1-0.1-0.1-0.3-0.2-0.4c-0.1-0.1-0.1-0.3-0.2-0.4c-0.1-0.2-0.2-0.4-0.4-0.6
+				c-0.1-0.1-0.1-0.2-0.2-0.3c-0.1-0.2-0.3-0.4-0.4-0.5l-82.3-102.121c-0.2-0.3-0.5-0.5-0.7-0.8c-0.1-0.1-0.1-0.1-0.2-0.1
+				c-0.2-0.2-0.4-0.4-0.6-0.6c-0.1-0.1-0.2-0.1-0.3-0.2c-0.2-0.1-0.4-0.3-0.6-0.4c-0.1-0.1-0.2-0.1-0.3-0.2
+				c-0.2-0.1-0.4-0.2-0.6-0.3c-0.1-0.1-0.2-0.1-0.3-0.2c-0.2-0.1-0.4-0.2-0.7-0.3c-0.1,0-0.2-0.1-0.3-0.1c-0.2-0.1-0.5-0.1-0.7-0.2
+				c-0.1,0-0.2-0.1-0.3-0.1c-0.3-0.1-0.5-0.1-0.8-0.1c-0.1,0-0.2,0-0.3,0c-0.4,0-0.7-0.1-1.1-0.1H90.5c-5.5,0-10,4.501-10,10.002
+				v41.108H49c-5.5,0-10,4.501-10,10.002v416.885c0,5.501,4.5,10.002,10,10.002h349.2c5.5,0,10-4.501,10-10.002V977.25H439
+				c5.5,0,10-4.501,10-10.002V652.383c0-0.3,0-0.6,0-0.9c0-0.1,0-0.2,0-0.4C449,650.883,449,650.683,448.9,650.483z M366.7,578.568
+				l51.4,63.813h-51.4V578.568z M349.6,658.784l27.6,34.007h-51.3v-63.213l22.4,27.606C348.7,657.784,349.1,658.284,349.6,658.784z
+				 M100.5,560.264h246.2v63.113l-23-28.306c-0.2-0.3-0.5-0.5-0.7-0.8c-0.1-0.1-0.1-0.1-0.2-0.2c-0.2-0.2-0.4-0.3-0.6-0.5
+				c-0.1-0.1-0.2-0.1-0.3-0.2c-0.2-0.1-0.4-0.3-0.6-0.4c-0.1-0.1-0.2-0.1-0.3-0.2c-0.2-0.1-0.4-0.2-0.6-0.3
+				c-0.1-0.1-0.2-0.1-0.3-0.1c-0.2-0.1-0.5-0.2-0.7-0.3c-0.1,0-0.2-0.1-0.3-0.1c-0.2-0.1-0.5-0.1-0.7-0.2c-0.1,0-0.2-0.1-0.3-0.1
+				c-0.3-0.1-0.5-0.1-0.8-0.1c-0.1,0-0.2,0-0.3,0c-0.4,0-0.7-0.1-1.1-0.1H100.5V560.264z M59,1008.356V611.375h246.9v91.419
+				c0,5.501,4.5,10.002,10,10.002h72.3v295.561l0,0H59z M429,957.345h-20.8l0-0.1V702.693c0-0.3,0-0.6,0-0.9c0-0.1,0-0.2,0-0.4
+				s0-0.4-0.1-0.6c0-0.1-0.1-0.3-0.1-0.4c0-0.2-0.1-0.3-0.1-0.5c0-0.2-0.1-0.3-0.1-0.4s-0.1-0.3-0.2-0.4c-0.1-0.1-0.1-0.3-0.2-0.4
+				c-0.1-0.1-0.1-0.3-0.2-0.4c-0.1-0.1-0.1-0.3-0.2-0.4c-0.1-0.2-0.2-0.4-0.3-0.5c-0.1-0.1-0.1-0.2-0.2-0.2
+				c-0.2-0.2-0.3-0.5-0.5-0.7l-27.6-34.007H429V957.345z" />
+          <path d="M325.9,753.704H121.3c-5.5,0-10,4.501-10,10.002s4.5,10.002,10,10.002h204.6c5.5,0,10-4.501,10-10.002
+				C335.9,758.205,331.4,753.704,325.9,753.704z" />
+          <path d="M325.9,814.716H121.3c-5.5,0-10,4.501-10,10.002s4.5,10.002,10,10.002h204.6c5.5,0,10-4.501,10-10.002
+				S331.4,814.716,325.9,814.716z" />
+          <path d="M325.9,875.729H121.3c-5.5,0-10,4.501-10,10.002s4.5,10.002,10,10.002h204.6c5.5,0,10-4.501,10-10.002
+				C335.9,880.23,331.4,875.729,325.9,875.729z" />
+          <path d="M325.9,936.741H121.3c-5.5,0-10,4.501-10,10.002s4.5,10.002,10,10.002h204.6c5.5,0,10-4.501,10-10.002
+				S331.4,936.741,325.9,936.741z" />
+        </g>
+      </g>
+    </g>
+  </symbol>
+  <symbol id="icon-download" viewBox="0 0 18 20">
+    <path
+      fill="currentColor"
+      d="M16.800,20.000 L1.200,20.000 C0.538,20.000 -0.000,19.441 -0.000,18.750 L-0.000,13.750 L2.400,13.750 L2.400,17.500 L15.600,17.500 L15.600,13.750 L18.000,13.750 L18.000,18.750 C18.000,19.441 17.464,20.000 16.800,20.000 ZM9.451,14.786 C9.337,14.921 9.173,15.000 9.000,15.000 C8.827,15.000 8.663,14.923 8.549,14.786 L4.349,9.786 C4.194,9.601 4.156,9.340 4.254,9.116 C4.351,8.894 4.565,8.750 4.800,8.750 L7.200,8.750 L7.200,0.625 C7.200,0.280 7.469,-0.000 7.800,-0.000 L10.200,-0.000 C10.531,-0.000 10.800,0.280 10.800,0.625 L10.800,8.750 L13.200,8.750 C13.435,8.750 13.649,8.893 13.746,9.116 C13.843,9.340 13.807,9.603 13.651,9.786 L9.451,14.786 Z"
+    />
+  </symbol>
+  <symbol id="icon-chevron-left" viewBox="0 0 16 27">
+    <g stroke="none" stroke-width="1" fill-rule="evenodd">
+      <g transform="translate(-455.000000, -2563.000000)" fill-rule="nonzero">
+        <g transform="translate(-2.000000, 2015.000000)">
+          <g transform="translate(443.000000, 506.000000)">
+            <path
+              d="M14,55.1857467 C14,54.7132831 14.1804058,54.2407028 14.5404003,53.8803581 L25.8800517,42.5409985 C26.6013831,41.8196672 27.7708982,41.8196672 28.4919378,42.5409985 C29.2129773,43.2620381 29.2129773,44.4313198 28.4919378,45.1527095 L18.4581419,55.1857467 L28.4912374,65.2191924 C29.212277,65.9402319 29.212277,67.1096888 28.4912374,67.8306699 C27.7701979,68.5523515 26.6010329,68.5523515 25.8797015,67.8306699 L14.5399917,56.4914855 C14.1800556,56.1309657 14,55.6583854 14,55.1857467 Z"></path>
+          </g>
+        </g>
+      </g>
+    </g>
+  </symbol>
+  <symbol id="icon-chevron-right" viewBox="0 0 16 27">
+    <g stroke="none" stroke-width="1" fill-rule="evenodd">
+      <g transform="translate(-1131.000000, -2563.000000)" fill-rule="nonzero">
+        <g transform="translate(-2.000000, 2015.000000)">
+          <g transform="translate(443.000000, 506.000000)">
+            <path
+              d="M690,55.1857467 C690,54.7132831 690.180406,54.2407028 690.5404,53.8803581 L701.880052,42.5409985 C702.601383,41.8196672 703.770898,41.8196672 704.491938,42.5409985 C705.212977,43.2620381 705.212977,44.4313198 704.491938,45.1527095 L694.458142,55.1857467 L704.491237,65.2191924 C705.212277,65.9402319 705.212277,67.1096888 704.491237,67.8306699 C703.770198,68.5523515 702.601033,68.5523515 701.879701,67.8306699 L690.539992,56.4914855 C690.180056,56.1309657 690,55.6583854 690,55.1857467 Z"
+              transform="translate(697.516359, 55.185966) scale(-1, 1) translate(-697.516359, -55.185966) "></path>
+          </g>
+        </g>
+      </g>
+    </g>
+  </symbol>
+  <symbol id="icon-calendar" viewBox="0 0 24 24">
+    <path d="M0 0h24v24H0z" fill="none" />
+    <path
+      d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z" />
+  </symbol>
+  <symbol id="icon-chevron-left" viewBox="0 0 16 27">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g transform="translate(-455.000000, -2563.000000)" fill-rule="nonzero">
+        <g transform="translate(-2.000000, 2015.000000)">
+          <g transform="translate(443.000000, 506.000000)">
+            <path
+              d="M14,55.1857467 C14,54.7132831 14.1804058,54.2407028 14.5404003,53.8803581 L25.8800517,42.5409985 C26.6013831,41.8196672 27.7708982,41.8196672 28.4919378,42.5409985 C29.2129773,43.2620381 29.2129773,44.4313198 28.4919378,45.1527095 L18.4581419,55.1857467 L28.4912374,65.2191924 C29.212277,65.9402319 29.212277,67.1096888 28.4912374,67.8306699 C27.7701979,68.5523515 26.6010329,68.5523515 25.8797015,67.8306699 L14.5399917,56.4914855 C14.1800556,56.1309657 14,55.6583854 14,55.1857467 Z"></path>
+          </g>
+        </g>
+      </g>
+    </g>
+  </symbol>
+  <symbol id="icon-chevron-right" viewBox="0 0 16 27">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g transform="translate(-1131.000000, -2563.000000)" fill-rule="nonzero">
+        <g transform="translate(-2.000000, 2015.000000)">
+          <g transform="translate(443.000000, 506.000000)">
+            <path
+              d="M690,55.1857467 C690,54.7132831 690.180406,54.2407028 690.5404,53.8803581 L701.880052,42.5409985 C702.601383,41.8196672 703.770898,41.8196672 704.491938,42.5409985 C705.212977,43.2620381 705.212977,44.4313198 704.491938,45.1527095 L694.458142,55.1857467 L704.491237,65.2191924 C705.212277,65.9402319 705.212277,67.1096888 704.491237,67.8306699 C703.770198,68.5523515 702.601033,68.5523515 701.879701,67.8306699 L690.539992,56.4914855 C690.180056,56.1309657 690,55.6583854 690,55.1857467 Z"
+              transform="translate(697.516359, 55.185966) scale(-1, 1) translate(-697.516359, -55.185966) "></path>
+          </g>
+        </g>
+      </g>
+    </g>
+  </symbol>
+  <symbol id="icon-log" viewBox="0 0 24 24">
+    <path
+      d="M0 0h24v24H0z"
+      fill="none"
+    />
+    <path
+      fill="currentColor"
+      d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"
+    />
+  </symbol>
+</svg>
+  <div id="panel"></div>
+  <div class="special-panel-wrapper hidden">
+        <div class="special-panel">
+            <div class="special-type">
+                <a href="javascript:void(0)" class="special-type__white" title="Сменить цветовую гамму: белый фон, черные буквы" data-item="white">Ц</a>
+                <a href="javascript:void(0)" class="special-type__black" title="Сменить цветовую гамму: черный фон, белые буквы" data-item="black">Ц</a>
+                <a href="javascript:void(0)" class="special-type__blue" title="Сменить цветовую гамму: голубая" data-item="blue">Ц</a>
+            </div>
+            <div class="special-size">
+                <a href="javascript:void(0)" class="special-size__small" title="Маленький размер шрифта" data-item="small">А</a>
+                <a href="javascript:void(0)" class="special-size__medium" title="Средний размер шрифта" data-item="medium">А</a>
+                <a href="javascript:void(0)" class="special-size__big" title="Большой размер шрифта" data-item="big">А</a>
+            </div>
+            <a href="javascript:void(0)" title="Обычная версия" class="special-off"><i class="fa fa-eye" aria-hidden="true"></i></a>
         </div>
-
-<!--script>
-
-	function chooseSiteLang(lang){
-		
-		var curDate = new Date();
-		var cookieDieDate = new Date(curDate.setFullYear(curDate.getFullYear() + 1))
-		document.cookie = "SITE_LANG="+lang+";expires="+cookieDieDate+";path=/npa_template/";
-		
-	}
-
-</script-->
-
-<div class="npa-list">
-	<div class="npa-list__header">
-	</div>
-	 	<div class="npa-section">
-		<form action="/npa_template/">
-		Дата документа:
-		от <input type="date" name="date_doc_from" value=""/> 
-		до <input type="date"  name="date_doc_to" value=""/><br><br>
-		Дата публикации:
-		от <input type="date" name="date_public_from" value=""/> 
-		до <input type="date"  name="date_public_to" value=""/><br><br>
-		Тип документа:
-
-			<select name="TIP_DOC">
-	    <option ></option>
-        <option  value="Апелляционное определение">Апелляционное определение</option>
-        <option  value="Закон">Закон</option>
-        <option  value="Постановление">Постановление</option>
-        <option  value="Приказ">Приказ</option>
-        <option  value="Распоряжение">Распоряжение</option>
-        <option  value="Решение">Решение</option>
-        <option  value="Соглашение">Соглашение</option>
-        <option selected value="Указ">Указ</option>
-        <option  value="Проект">Проект</option>
-        <option  value="Другое">Другое</option>
-			</select>
-			<br>
-			<br>
-			 Орган власти:
-			<select name="ORGAN_VLASTI" style="width: 85%;">
-		<option ></option>
-        <option selected value="Глава Республики Бурятия">Глава Республики Бурятия</option>
-        <option  value="Правительство Республики Бурятия">Правительство Республики Бурятия</option>
-        <option  value="Администрация Главы Республики Бурятия и Правительства Республики Бурятия">Администрация Главы Республики Бурятия и Правительства Республики Бурятия</option>
-        <option  value="Верховный суд Республики Бурятия">Верховный суд Республики Бурятия</option>
-        <option  value="Верховный суд Российской Федерации">Верховный суд Российской Федерации</option>
-        <option  value="Заместитель Председателя Правительства Республики Бурятия">Заместитель Председателя Правительства Республики Бурятия</option>
-        <option  value="Министерство здравоохранения">Министерство здравоохранения</option>
-        <option  value="Министерство имущественных и земельных отношений">Министерство имущественных и земельных отношений</option>
-        <option  value="Министерство культуры">Министерство культуры</option>
-        <option  value="Министерство образования и науки">Министерство образования и науки</option>
-        <option  value="Министерство по развитию транспорта, энергетики и дорожного хозяйства">Министерство по развитию транспорта, энергетики и дорожного хозяйства</option>
-        <option  value="Министерство природных ресурсов">Министерство природных ресурсов</option>
-        <option  value="Министерство промышленности и торговли">Министерство промышленности и торговли</option>
-        <option  value="Министерство сельского хозяйства и продовольствия">Министерство сельского хозяйства и продовольствия</option>
-        <option  value="Министерство социальной защиты населения">Министерство социальной защиты населения</option>
-        <option  value="Министерство спорта и молодежной политики Республики Бурятия">Министерство спорта и молодежной политики Республики Бурятия</option>
-        <option  value="Министерство строительства и модернизации жилищно-коммунального комплекса">Министерство строительства и модернизации жилищно-коммунального комплекса</option>
-        <option  value="Министерство туризма">Министерство туризма</option>
-        <option  value="Министерство финансов">Министерство финансов</option>
-        <option  value="Министерство экономики">Министерство экономики</option>
-        <option  value="Народный Хурал">Народный Хурал</option>
-        <option  value="Полномочное представительство Республики Бурятия при Президенте Российской Федерации">Полномочное представительство Республики Бурятия при Президенте Российской Федерации</option>
-        <option  value="Управление по обеспечению деятельности мировых судей в Республике Бурятия">Управление по обеспечению деятельности мировых судей в Республике Бурятия</option>
-        <option  value="Республиканская служба государственного строительного и жилищного надзора">Республиканская служба государственного строительного и жилищного надзора</option>
-        <option  value="Бурприроднадзор">Бурприроднадзор</option>
-        <option  value="Республиканская служба по тарифам">Республиканская служба по тарифам</option>
-        <option  value="Республиканское агентство ГОиЧС">Республиканское агентство ГОиЧС</option>
-        <option  value="Республиканское агентство занятости населения">Республиканское агентство занятости населения</option>
-        <option  value="Республиканское агентство лесного хозяйства">Республиканское агентство лесного хозяйства</option>
-        <option  value="Республиканское агентство по государственным закупкам">Республиканское агентство по государственным закупкам</option>
-        <option  value="Управление записи актов гражданского состояния Республики Бурятия">Управление записи актов гражданского состояния Республики Бурятия</option>
-        <option  value="Управление ветеринарии Республики Бурятия">Управление ветеринарии Республики Бурятия</option>
-        <option  value="Республиканская служба по охране, контролю и регулированию использования объектов животного мира, отнесенных к объектам охоты, контролю и надзору в сфере природопользования">Республиканская служба по охране, контролю и регулированию использования объектов животного мира, отнесенных к объектам охоты, контролю и надзору в сфере природопользования</option>
-        <option  value="Управление инспекции государственного надзора за техническим состоянием самоходных машин и других видов техники - Гостехнадзор Республики Бурятия ">Управление инспекции государственного надзора за техническим состоянием самоходных машин и других видов техники - Гостехнадзор Республики Бурятия </option>
-
-			</select>
-			<br>
-			<br>
- <input class="knopki" type="submit" value="Показать"> <input class="knopki" name="clear" type="submit" value="Очистить">
-		</form>
-	</div>
-	<br>
-	<br>
-	    <table class="npa-docs" id="container14">
-		<tr class="npa-tr-title">
-				<td class="npa-td-title">
-					Дата документа
-				</td >
-				<td class="npa-td-title">
-					 Дата публикации
-				</td >
-				<td class="npa-td-title">
-					Дата&nbsp;гос. регистрации
-				</td >				
-				<td class="npa-td-title">
-					Номер документа
-				</td >
-				<td class="npa-td-title">
-					Номер&nbsp;гос. регистрации
-				</td >
-				<td class="npa-td-title">
-					Тип документа
-				</td >
-				<td class="npa-td-title">
-					Орган&nbsp;власти&nbsp;или должностное&nbsp;лицо
-				</td >
-		</tr>
- 				<tr class="npa-tr">
-				<td class="npa-td">
-					12.12.2024				</td >
-				<td class="npa-td">
-					13.12.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						252				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('186522' , '278')" class="npa-name" href="/upload/iblock/d2f/2lxbelzdzxt6wvqucwmqvvah7wpt8x7p.pdf">
-						Об оценке эффективности деятельности  исполнительных органов Республики Бурятия					</a>
-				</td>
-			</tr>
-
-
-					 				<tr class="npa-tr">
-				<td class="npa-td">
-					10.12.2024				</td >
-				<td class="npa-td">
-					12.12.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						249				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('186480' , '278')" class="npa-name" href="/upload/iblock/123/mdhcks289f1sontqwil6t0g1yy36hu2o.pdf">
-						О Хандажаповой И.А.					</a>
-				</td>
-			</tr>
-
-
-					 				<tr class="npa-tr">
-				<td class="npa-td">
-					10.12.2024				</td >
-				<td class="npa-td">
-					11.12.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						248				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('186454' , '278')" class="npa-name" href="/upload/iblock/c22/826gak80pt44ptr0tbzuvpdnoilg2ras.pdf">
-						О внесении изменений в указ Главы Республики Бурятия  от 28.10.2016 № 185 «О Совете по кадровой политике  при Главе Республики Бурятия»					</a>
-				</td>
-			</tr>
-
-
-					 				<tr class="npa-tr">
-				<td class="npa-td">
-					10.12.2024				</td >
-				<td class="npa-td">
-					11.12.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						247				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('186453' , '278')" class="npa-name" href="/upload/iblock/226/6ajvktq92hy6h49ncql699ojh22062fk.pdf">
-						О внесении изменений в некоторые нормативные  правовые  акты Президента Республики Бурятия  и Главы Республики Бурятия					</a>
-				</td>
-			</tr>
-
-
-					 				<tr class="npa-tr">
-				<td class="npa-td">
-					02.12.2024				</td >
-				<td class="npa-td">
-					03.12.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						240				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('186055' , '278')" class="npa-name" href="/upload/iblock/f04/k1omdjuddsu6ru4mco8edwc2khej30kx.pdf">
-						О внесении изменения в указ Главы Республики  Бурятия от 17.11.2022 № 240 «О системе исполнительных  органов государственной власти Республики Бурятия»					</a>
-				</td>
-			</tr>
-
-
-					 				<tr class="npa-tr">
-				<td class="npa-td">
-					02.12.2024				</td >
-				<td class="npa-td">
-					03.12.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						241				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('186051' , '278')" class="npa-name" href="/upload/iblock/522/yjor1bkxs0iiiy64ut6wifrgd28t42ip.pdf">
-						О внесении изменений в некоторые указы Президента Республики Бурятия					</a>
-				</td>
-			</tr>
-
-
-					 				<tr class="npa-tr">
-				<td class="npa-td">
-					02.12.2024				</td >
-				<td class="npa-td">
-					03.12.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						239				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('186046' , '278')" class="npa-name" href="/upload/iblock/796/2bvrid8d3vairb6rf6ve78a28cv1kotc.pdf">
-						О внесении изменения в указ Главы  Республики Бурятия от 15.05.2015 № 65  «О Комиссии при Главе Республики Бурятия  по противодействию коррупции»					</a>
-				</td>
-			</tr>
-
-
-					 				<tr class="npa-tr">
-				<td class="npa-td">
-					26.11.2024				</td >
-				<td class="npa-td">
-					28.11.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						233				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('185771' , '278')" class="npa-name" href="/upload/iblock/eb9/jzhwh59u3i7wwrcx711baixj45ky5su5.pdf">
-						О внесении изменений в Указ Президента  Республики Бурятия от 22.03.2006 № 109  «О Порядке согласования кандидатур на должности  руководителей территориальных органов федеральных  органов исполнительной власти по Республике Бурятия»					</a>
-				</td>
-			</tr>
-
-
-					 				<tr class="npa-tr">
-				<td class="npa-td">
-					26.11.2024				</td >
-				<td class="npa-td">
-					26.11.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						229				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('185653' , '278')" class="npa-name" href="/upload/iblock/17e/dh21eaywrta0l5zlv83f43y0d06kjczo.pdf">
-						О Сухорукове В.В.					</a>
-				</td>
-			</tr>
-
-
-					 				<tr class="npa-tr">
-				<td class="npa-td">
-					18.11.2024				</td >
-				<td class="npa-td">
-					20.11.2024				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						224				</td>
-				<td class="npa-td">
-										</td>
-				<td class="npa-td">
-						Указ				</td>
-				<td class="npa-td">
-						Глава Республики Бурятия				</td>
-			</tr>
-							<tr class="npa-tr npa-tr-name">
-				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
-					<a target="_blank" onclick = "downloaded_doc('185384' , '278')" class="npa-name" href="/upload/iblock/149/un6vijig9gijlhgv0t010a4nvyulqxkc.pdf">
-						О присвоении классного чина государственной  гражданской службы Республики Бурятия  государственному гражданскому служащему  Республики Бурятия Администрации Главы  Республики Бурятия и Правительства  Республики Бурятия					</a>
-				</td>
-			</tr>
-
-
-						</table>
-	<div class="npa-nav npa-section"> 
-		
-<font class="text">Нормативные правовые акты 
-
-
-	21 - 30 из 1123<br /></font>
-
-	<font class="text">
-
-	
-					<a href="/npa_template/?date_doc_from=&amp;date_doc_to=&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F">Начало</a>
-			|
-							<a href="/npa_template/?date_doc_from=&amp;date_doc_to=&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=2">Пред.</a>
-						|
-		
-	
-	
-					<a href="/npa_template/?date_doc_from=&amp;date_doc_to=&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F">1</a>
-					
-					<a href="/npa_template/?date_doc_from=&amp;date_doc_to=&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=2">2</a>
-					
-					<b>3</b>
-					
-					<a href="/npa_template/?date_doc_from=&amp;date_doc_to=&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=4">4</a>
-					
-					<a href="/npa_template/?date_doc_from=&amp;date_doc_to=&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=5">5</a>
-						|
-
-			<a href="/npa_template/?date_doc_from=&amp;date_doc_to=&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=4">След.</a>&nbsp;|
-		<a href="/npa_template/?date_doc_from=&amp;date_doc_to=&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=113">Конец</a>
-	
-
-
-
-</font>	</div>
- <br>
-	<br>
-	<div class="npa-section">
- <a href="https://egov-buryatia.ru/npa_template_old/">Архив нормативных правовых актов (2009-2018 годы)</a>
-	</div>
-	 <script>
-function downloaded_doc(id, iblock_id){
-
-	BX.ajax.post(
-        "responds/downloaded_doc.php",
-        {
-			"id" : id,
-			"iblock_id" : iblock_id
-		},
-        function(){}
-    );
-}
-</script>
-</div>
-<br> </div></div>
-<footer class="page-footer">
-        <div class="page-footer__row">
-          <div class="page-footer__row-item">
-            <div class="page-footer__logo"><img class="page-footer__logo-img" src="/upload/iblock/017/0170a5bc251fc6b518ace58306e5dcc3.png" alt="" width="68"/>
-              <div class="page-footer__logo-text"><div style="font-size: 28px;font-family: PT Serif;">Опубликование нормативных правовых актов Республики Бурятия</div></div>
-            </div>
-			</div>
-          <div class="page-footer__row-item">
-            <div class="yandex_metrika_row">
-
-
-
-			</div>
-          </div>
-        </div>
-       </footer>
-
-  <div class="templates">
-      <template id="plate-riot-tag">
-        <virtual if="${ icoExist &amp;&amp; !textExist }">
-          <div class="plate__ico" riot-style="${ buildStyle() }"></div>
-        </virtual>
-        <virtual if="${ !icoExist &amp;&amp; textExist }">
-          <div class="plate__text">${params.content}</div>
-        </virtual>
-        <virtual if="${ icoExist &amp;&amp; textExist }">
-          <div class="plate__ico" riot-style="${ buildStyle() }"></div>
-          <div class="plate__text">${params.content}</div>
-        </virtual>
-      </template>
-      <template id="media-zoom-riot-tag">
-        <div class="media-zoom__background">
-          <div class="media-zoom__prev" onclick="${ prev }"></div>
-          <div class="media-zoom__next" onclick="${ next }"></div>
-        </div>
-        <div class="media-zoom__close" onclick="${ closePhotoZoom }"></div>
-        <virtual if="${mode == 'photo'}">
-          <div class="media-zoom__foreground" riot-style="${ backgroundImage }"></div>
-        </virtual>
-        <virtual if="${mode == 'video'}">
-          <video class="media-zoom__video" controls="controls">
-            <source each="${ source in videoSources} " riot-src="${ source.src }" type="${ source.type }"/>
-          </video>
-        </virtual>
-        <virtual if="${mode == 'off'}"></virtual>
-      </template>
-      <template id="contrast-panel-riot-tag">
-        <virtual if="${ visible }">
-          <div class="contrast-panel__row">
-            <div class="contrast-panel__cell">Размер шрифта
-              <div class="contrast-panel__font-size-list"> 
-                <div class="contrast-panel__font-size-item ${ fontSize == 'a' ? 'contrast-panel__font-size-item--active' : '' }" style="font-size:18px;" onclick="${ pickFontSize }" data-size="a">A </div>
-                <div class="contrast-panel__font-size-item ${ fontSize == 'aa' ? 'contrast-panel__font-size-item--active' : '' }" style="font-size:24px;" onclick="${ pickFontSize }" data-size="aa">A</div>
-                <div class="contrast-panel__font-size-item ${ fontSize == 'aaa' ? 'contrast-panel__font-size-item--active' : '' }" style="font-size:28px;" onclick="${ pickFontSize }" data-size="aaa">A</div>
-              </div>
-            </div>
-            <div class="contrast-panel__cell">Цвет сайта
-              <div class="contrast-panel__theme-color-list"> 
-                <div class="contrast-panel__theme-color-item ${ themeColor == 'noninvert' ? 'contrast-panel__theme-color-item--active' : '' }" style="font-size:28px;" onclick="${ pickThemeColor }" data-theme="noninvert">A </div>
-                <div class="contrast-panel__theme-color-item ${ themeColor == 'invert' ? 'contrast-panel__theme-color-item--active' : '' }" style="font-size:28px;" onclick="${ pickThemeColor }" data-theme="invert">A</div>
-              </div>
-            </div>
-            <div class="contrast-panel__cell"> 
-              <div class="contrast-panel__close" onclick="${ closeContrastPanel }"> 
-                <div class="contrast-panel__close-ico"> </div>Закрыть
-              </div>
-            </div>
-          </div>
-        </virtual>
-      </template>
     </div>
-    <script src="/npa_template/js/index.lib.js" type="text/javascript"></script>
-    <script src="/npa_template/js/index.js" type="text/javascript"></script>
-    <script src="/npa_template/js/start-riot.js" type="text/javascript"></script>
-  </body>
+    <div class="main-wrap">
+      <header class="header">
+        <a href="/" class="header-logo">
+          <img class="header-logo__img" src="/local/templates/npa/images/logo.png">
+          <h1 class="header-logo__title">Официальный интернет-портал<br>правовой информации<br><span class="header-logo__title--republic">Республики Башкортостан</span></h1>
+        </a>
+        <nav class="header-menu">
+          <ul class="header-menu__list">
+            <li class="header-menu__item"><a href="/about/" class="header-menu__item-title">О портале</a></li>
+            <li class="header-menu__item"><a href="/links/" class="header-menu__item-title">Ссылки</a></li>
+            <li class="header-menu__item"><a href="/contacts/" class="header-menu__item-title">Контакты</a></li>
+            <li class="header-menu__item"><a id="eye" href="javascript:void(0)" class="header-menu__item-title">Версия для <br/> слабовидящих</a></li>
+          </ul>
+        </nav>
+      </header>
+      <main class="content">
+      
+<section class="documents">
+  <div class="document__panel">
+    <div class="document__filter">
+      <form class="form">
+        <div class="form__field">
+          <div class="form__field-label">Наименование:</div>
+          <div class="form__field-value"><input type="text" class="input" name="filter_name" value=""></div>
+        </div>
+        <div class="form__field">
+          <div class="form__field-label">Вид документа:</div>
+          <div class="form__field-value">
+            <select class="select js-select" name="filter_type">
+              <option value="">Все</option>
+                              <option value="4" >Закон</option>
+                              <option value="9" >Кодекс</option>
+                              <option value="5" selected>Указ</option>
+                              <option value="6" >Постановление</option>
+                              <option value="7" >Распоряжение</option>
+                              <option value="8" >Приказ</option>
+                              <option value="10" >Определение</option>
+                              <option value="11" >Проект</option>
+                          </select>
+          </div>
+        </div>
+        <div class="form__field">
+          <div class="form__field-label">Принявший орган:</div>
+          <div class="form__field-value">
+            <select class="select js-select" name="filter_organization">
+              <option value="">Все</option>
+                              <option value="92" selected >Глава Республики Башкортостан</option>
+                              <option value="91"  >Конституционный Cуд Республики Башкортостан</option>
+                              <option value="101"  >Проект закона Республики Башкортостан</option>
+                              <option value="54"  >Правительство Республики Башкортостан</option>
+                              <option value="55"  >Государственное Собрание - Курултай Республики Башкортостан</option>
+                              <option value="90"  >Президиум Государственного Собрания - Курултая Республики Башкортостан</option>
+                              <option value="116"  >Министерство внешнеэкономических связей и конгрессной деятельности Республики Башкортостан</option>
+                              <option value="56"  >Министерство жилищно-коммунального хозяйства Республики Башкортостан</option>
+                              <option value="57"  >Министерство здравоохранения Республики Башкортостан</option>
+                              <option value="58"  >Министерство земельных и имущественных отношений Республики Башкортостан</option>
+                              <option value="59"  >Министерство культуры Республики Башкортостан</option>
+                              <option value="60"  >Министерство лесного хозяйства Республики Башкортостан</option>
+                              <option value="107"  >Министерство образования и науки Республики Башкортостан</option>
+                              <option value="119"  >Министерство предпринимательства и туризма Республики Башкортостан</option>
+                              <option value="63"  >Министерство природопользования и экологии Республики Башкортостан</option>
+                              <option value="114"  >Министерство промышленности, энергетики и инноваций Республики Башкортостан</option>
+                              <option value="66"  >Министерство сельского хозяйства Республики Башкортостан</option>
+                              <option value="100"  >Министерство семьи, труда и социальной защиты населения Республики Башкортостан</option>
+                              <option value="117"  >Министерство спорта Республики Башкортостан</option>
+                              <option value="112"  >Министерство строительства и архитектуры Республики Башкортостан</option>
+                              <option value="113"  >Министерство торговли и услуг Республики Башкортостан</option>
+                              <option value="111"  >Министерство транспорта и дорожного хозяйства Республики Башкортостан</option>
+                              <option value="68"  >Министерство финансов Республики Башкортостан</option>
+                              <option value="110"  >Министерство цифрового развития государственного управления Республики Башкортостан</option>
+                              <option value="109"  >Министерство экономического развития и инвестиционной политики Республики Башкортостан</option>
+                              <option value="120"  >Государственный комитет Республики Башкортостан по ветеринарии</option>
+                              <option value="93"  >Государственный комитет Республики Башкортостан по делам юстиции</option>
+                              <option value="94"  >Государственный комитет Республики Башкортостан по жилищному и строительному надзору</option>
+                              <option value="106"  >Государственный комитет Республики Башкортостан по конкурентной политике</option>
+                              <option value="118"  >Государственный комитет Республики Башкортостан по молодежной политике</option>
+                              <option value="104"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по предпринимательству</option>
+                              <option value="73"  >Государственный комитет Республики Башкортостан по тарифам</option>
+                              <option value="105"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по туризму</option>
+                              <option value="97"  >Государственный комитет Республики Башкортостан по чрезвычайным ситуациям</option>
+                              <option value="85"  >Агентство по печати и средствам массовой информации Республики Башкортостан</option>
+                              <option value="76"  class="select__list-item--deleted">Управление ветеринарии Республики Башкортостан</option>
+                              <option value="98"  >Управление по государственной охране объектов культурного наследия Республики Башкортостан</option>
+                              <option value="78"  >Управление по делам архивов Республики Башкортостан</option>
+                              <option value="83"  class="select__list-item--deleted">Государственная инспекция по надзору за техническим состоянием самоходных машин и других видов техники Республики Башкортостан</option>
+                              <option value="121"  >Государственный комитет Республики Башкортостан по надзору за техническим состоянием самоходных машин и других видов техники</option>
+                              <option value="53"  class="select__list-item--deleted">Президент Республики Башкортостан</option>
+                              <option value="99"  class="select__list-item--deleted">Кабинет Министров Республики Башкортостан</option>
+                              <option value="61"  class="select__list-item--deleted">Министерство молодежной политики и спорта Республики Башкортостан</option>
+                              <option value="62"  class="select__list-item--deleted">Министерство образования Республики Башкортостан</option>
+                              <option value="64"  class="select__list-item--deleted">Министерство промышленности и инновационной политики Республики Башкортостан</option>
+                              <option value="108"  class="select__list-item--deleted">Министерство промышленности и энергетики Республики Башкортостан</option>
+                              <option value="65"  class="select__list-item--deleted">Министерство связи и массовых коммуникаций Республики Башкортостан</option>
+                              <option value="67"  class="select__list-item--deleted">Министерство труда и социальной защиты населения Республики Башкортостан</option>
+                              <option value="69"  class="select__list-item--deleted">Министерство экономического развития Республики Башкортостан</option>
+                              <option value="115"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по внешнеэкономическим связям и конгрессной деятельности</option>
+                              <option value="89"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по жилищному надзору</option>
+                              <option value="95"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по информатизации и вопросам функционирования системы «Открытая Республика»</option>
+                              <option value="103"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по мониторингу социально-экономического развития</option>
+                              <option value="70"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по предпринимательству и туризму</option>
+                              <option value="96"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по предпринимательству и туризму</option>
+                              <option value="71"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по размещению государственных заказов</option>
+                              <option value="72"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по строительству и архитектуре</option>
+                              <option value="74"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по торговле и защите прав потребителей</option>
+                              <option value="75"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по транспорту и дорожному хозяйству</option>
+                              <option value="77"  class="select__list-item--deleted">Управление государственной службы занятости населения Республики Башкортостан</option>
+                              <option value="79"  class="select__list-item--deleted">Управление записи актов гражданского состояния Республики Башкортостан</option>
+                              <option value="80"  class="select__list-item--deleted">Управление по контролю и надзору в сфере образования Республики Башкортостан</option>
+                              <option value="81"  class="select__list-item--deleted">Управление Республики Башкортостан по организации деятельности мировых судей и ведению регистров правовых актов</option>
+                              <option value="82"  class="select__list-item--deleted">Государственная жилищная инспекция Республики Башкортостан</option>
+                              <option value="84"  class="select__list-item--deleted">Инспекция государственного строительного надзора Республики Башкортостан </option>
+                              <option value="88"  class="select__list-item--deleted">Агентство по информационным технологиям Республики Башкортостан</option>
+                              <option value="86"  class="select__list-item--deleted">Агентство по территориальному развитию Республики Башкортостан</option>
+                              <option value="87"  class="select__list-item--deleted">Агентство по туризму Республики Башкортостан</option>
+                              <option value="102"  class="select__list-item--deleted">Государственный комитет Республики Башкортостан по внешнеэкономическим связям</option>
+                          </select>
+          </div>
+        </div>
+        <div class="form__field">
+          <div class="form__field-label">Дата принятия:</div>
+          <div class="form__field-value">
+            <input type="text" class="input input--date js-date" name="filter_reg_date_from" value="01.01.2024">
+            &ndash;
+            <input type="text" class="input input--date js--date" name="filter_reg_date_to"  value="31.12.2024">
+          </div>
+        </div>
+        <div class="form__field">
+          <div class="form__field-label">Дата опубликования:</div>
+          <div class="form__field-value">
+            <input type="text" class="input input--date js-date" name="filter_pub_date_from" value="">
+            &ndash;
+            <input type="text" class="input input--date js--date" name="filter_pub_date_to"  value="">
+          </div>
+        </div>
+        <div class="form__field">
+          <div class="form__field-label">Номер правового акта:</div>
+          <div class="form__field-value"><input type="text" class="input" name="filter_reg_number" value=""></div>
+        </div>
+        <div class="form__field">
+          <div class="form__field-label"></div>
+          <div class="form__field-value">
+            <button type="submit" class="button button--blue">Поиск</button>
+            <a href="./" class="button button--white">Сбросить</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="document__calendar-outer">
+      <div class="document__calendar" data-template-uri="/local/templates/npa"></div>
+      <div class="document__calendar-buttons">
+        <button class="button button--blue button--today">За сегодня</button>
+        <button class="button button--blue button--week">За неделю</button>
+        <button class="button button--blue button--month">За месяц</button>
+      </div>
+    </div>
+  </div>
+  <div class="documents__list">
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="45064/">Указ Главы Республики Башкортостан от 28 декабря 2024 года №УГ-1413 «О внесении изменения в Указ Главы Республики Башкортостан
+от 23 сентября 2020 года № УГ-397 «О правовых актах
+Правительства Республики Башкортостан»»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 10 января 2025 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202501100014</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="45049/">Указ Главы Республики Башкортостан от 28 декабря 2024 года №УГ-1412 «О внесении изменений
+в состав Республиканского организационного комитета
+по подготовке и проведению 80-й годовщины Победы
+в Великой Отечественной войне 1941-1945 годов»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 9 января 2025 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202501090010</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="45039/">Указ Главы Республики Башкортостан от 28 декабря 2024 года №УГ-1411 «О внесении изменений в Указ Главы Республики Башкортостан от 26 апреля 2024 года № УГ-350 "О дополнительных мерах социальной поддержки отдельных категорий лиц, проходящих военную службу"»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 30 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412300001</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="45035/">Указ Главы Республики Башкортостан от 28 декабря 2024 года №УГ-1407 «О снятии
+ограничительных мероприятий (карантина)
+по бешенству животных с территории села Кусимовского Рудника
+сельского поселения Ташбулатовский сельсовет
+муниципального района Абзелиловский район
+Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 28 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412280096</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="45034/">Указ Главы Республики Башкортостан от 28 декабря 2024 года №УГ-1404 «О внесении изменения в Порядок дополнительного
+профессионального образования государственных гражданских
+служащих Республики Башкортостан на основании
+государственных образовательных сертификатов»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 28 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412280095</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44961/">Указ Главы Республики Башкортостан от 28 декабря 2024 года №УГ-1406 «Об исполняющем обязанности заместителя Премьер-министра Правительства Республики Башкортостан - министра спорта Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 28 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412280022</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44960/">Указ Главы Республики Башкортостан от 28 декабря 2024 года №УГ-1405 «О внесении изменений в пункт 1 Указа Главы Республики Башкортостан от 28 октября 2024 года № УГ-1113 "О составе Правительства Республики Башкортостан"»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 28 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412280021</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44844/">Указ Главы Республики Башкортостан от 24 декабря 2024 года №УГ-1388 «Об исполнении обязанностей председателя
+Государственного комитета Республики Башкортостан
+по жилищному и строительному надзору – главного государственного
+жилищного инспектора Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 26 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412260012</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44767/">Указ Главы Республики Башкортостан от 23 декабря 2024 года №УГ-1387 «О Давлетшине А.Р.»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 24 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412240012</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44768/">Указ Главы Республики Башкортостан от 23 декабря 2024 года №УГ-1385 «О снятии ограничительных мероприятий (карантина)
+по бешенству животных с территории села Камеево
+сельского поселения Камеевский сельсовет
+муниципального района Мишкинский район
+Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 24 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412240012</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44754/">Указ Главы Республики Башкортостан от 20 декабря 2024 года №УГ-1374 «О внесении изменений
+в состав Республиканского организационного комитета
+по подготовке и проведению 80-й годовщины Победы
+в Великой Отечественной войне 1941-1945 годов»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 23 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412230055</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44698/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1366 «Об установлении
+ограничительных мероприятий (карантина)
+по бешенству животных на территории городского поселения
+город Белебей муниципального района Белебеевский район
+Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 20 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412200050</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44648/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1353 «О председателе Государственного комитета
+Республики Башкортостан по надзору за техническим
+состоянием самоходных машин и других видов техники»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190040</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44645/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1357 «О руководителе Агентства по печати и средствам
+массовой информации Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190039</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44644/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1356 «О председателе Государственного комитета
+Республики Башкортостан по чрезвычайным ситуациям»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190038</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44643/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1355 «О председателе Государственного комитета
+Республики Башкортостан по тарифам»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190037</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44642/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1354 «О признании утратившим силу Указа Главы
+Республики Башкортостан от 23 сентября 2024 года № УГ-978
+«Об исполнении обязанностей председателя Государственного комитета
+Республики Башкортостан по тарифам»»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190036</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44641/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1352 «О председателе Государственного комитета
+Республики Башкортостан по молодежной политике»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190035</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44640/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1351 «О председателе Государственного комитета
+Республики Башкортостан по конкурентной политике»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190034</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44639/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1350 «О председателе Государственного комитета
+Республики Башкортостан по делам юстиции»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190033</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44638/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1349 «О председателе Государственного комитета
+Республики Башкортостан по ветеринарии»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190032</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44637/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1348 «О министре цифрового развития
+государственного управления Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190031</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44636/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1359 «О начальнике Управления
+по делам архивов Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190030</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44635/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1358 «О начальнике Управления по государственной охране
+объектов культурного наследия Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190029</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44634/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1345 «О министре спорта Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190028</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44633/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1344 «О министре семьи, труда и социальной защиты
+населения Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190027</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44632/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1343 «О министре природопользования и экологии
+Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190026</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44631/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1342 «О министре предпринимательства и туризма
+Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190025</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44630/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1341 «О министре образования и науки Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190024</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44629/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1340 «О министре лесного хозяйства Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190023</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44628/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1339 «О министре культуры Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190022</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44627/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1338 «О министре здравоохранения Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190021</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44626/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1337 «О министре жилищно-коммунального хозяйства
+Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190020</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44625/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1336 «О министре внешнеэкономических связей и конгрессной
+деятельности Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190019</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44624/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1335 «О заместителе Премьер - министра Правительства
+Республики Башкортостан - министре сельского хозяйства
+Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190018</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44623/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1334 «О заместителе Премьер - министра Правительства
+Республики Башкортостан - министре промышленности, энергетики
+и инноваций Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190017</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44622/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1333 «О заместителе Премьер-министра
+Правительства Республики Башкортостан - министре земельных
+и имущественных отношений Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190016</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44621/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1332 «О заместителе Премьер - министра Правительства
+Республики Башкортостан - Руководителе Аппарата
+Правительства Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190015</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44620/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1331 «О заместителе Премьер-министра
+Правительства Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190014</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44619/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1330 «О заместителе Премьер-министра
+Правительства Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190013</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44618/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1329 «О первом заместителе Премьер-министра
+Правительства Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190012</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44617/">Указ Главы Республики Башкортостан от 19 декабря 2024 года №УГ-1328 «О первом заместителе Премьер - министра Правительства
+Республики Башкортостан - министре экономического развития
+и инвестиционной политики Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 19 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412190011</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44560/">Указ Главы Республики Башкортостан от 16 декабря 2024 года №УГ-1312 «О Совете по развитию здравоохранения
+при Главе Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 16 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412160013</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44559/">Указ Главы Республики Башкортостан от 13 декабря 2024 года №УГ-1308 «О внесении изменений в составы
+призывных комиссий в Республике Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 16 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412160012</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44498/">Указ Главы Республики Башкортостан от 12 декабря 2024 года №УГ-1300 «О внесении изменений в пункт 1 Указа Главы Республики Башкортостан от 28 октября 2024 года № УГ-1113 "О составе Правительства Республики Башкортостан"»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 12 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412120025</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44497/">Указ Главы Республики Башкортостан от 12 декабря 2024 года №УГ-1301 «О Премьер - министре Правительства
+Республики Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 12 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412120024</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44406/">Указ Главы Республики Башкортостан от 6 декабря 2024 года №УГ-1271 «О внесении изменений
+в состав Совета при Главе Республики Башкортостан
+по вопросам развития культуры и искусства»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 6 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412060040</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44405/">Указ Главы Республики Башкортостан от 6 декабря 2024 года №УГ-1270 «О внесении изменений
+в состав Республиканской комиссии по присуждению грантов
+преподавателям, мастерам производственного обучения
+государственных образовательных организаций,
+расположенных на территории Республики Башкортостан
+и реализующих программы среднего
+профессионального образования»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 6 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412060039</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44404/">Указ Главы Республики Башкортостан от 6 декабря 2024 года №УГ-1269 «О праздновании Нового 2025 года
+в Республике Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 6 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412060038</div>
+                      </div>
+        </div>
+      </div>
+          <div class="documents__item">
+        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" class="documents__item-icon">
+          <use xlink:href="#icon-document"/>
+        </svg>
+        <div>
+          <a class="documents__item-name" href="44403/">Указ Главы Республики Башкортостан от 3 декабря 2024 года №УГ-1250 «О внесении изменений
+в состав межведомственной комиссии по формированию
+современной городской среды в Республике Башкортостан»</a>
+          <div class="documents__item-pub">
+                          <div class="documents__item-pub-date"><span class="documents__item-label">Дата официального опубликования:</span> 6 декабря 2024 года</div>
+                                      <div class="documents__item-pub-number"><span class="documents__item-label">Номер официального опубликования:</span> 202412060037</div>
+                      </div>
+        </div>
+      </div>
+      </div>
+</section>
+
+<div class="page-navigation-wrapper">
+    <div class="page-navigation modern-page-navigation">
+                    <span class="modern-page-title">Страницы:</span>
+                                    <span class="modern-page-first modern-page-current">1</span>
+                                            <a href="/?filter_name=&amp;filter_type=5&amp;filter_organization=92&amp;filter_reg_date_from=01.01.2024&amp;filter_reg_date_to=31.12.2024&amp;filter_pub_date_from=&amp;filter_pub_date_to=&amp;filter_reg_number=&amp;nav-documents=page-2"
+                           class="">2</a>
+                                            <a href="/?filter_name=&amp;filter_type=5&amp;filter_organization=92&amp;filter_reg_date_from=01.01.2024&amp;filter_reg_date_to=31.12.2024&amp;filter_pub_date_from=&amp;filter_pub_date_to=&amp;filter_reg_number=&amp;nav-documents=page-3"
+                           class="">3</a>
+                                            <a href="/?filter_name=&amp;filter_type=5&amp;filter_organization=92&amp;filter_reg_date_from=01.01.2024&amp;filter_reg_date_to=31.12.2024&amp;filter_pub_date_from=&amp;filter_pub_date_to=&amp;filter_reg_number=&amp;nav-documents=page-4"
+                           class="">4</a>
+                                            <a href="/?filter_name=&amp;filter_type=5&amp;filter_organization=92&amp;filter_reg_date_from=01.01.2024&amp;filter_reg_date_to=31.12.2024&amp;filter_pub_date_from=&amp;filter_pub_date_to=&amp;filter_reg_number=&amp;nav-documents=page-5"
+                           class="">5</a>
+                                        <a class="modern-page-next"
+                       href="/?filter_name=&amp;filter_type=5&amp;filter_organization=92&amp;filter_reg_date_from=01.01.2024&amp;filter_reg_date_to=31.12.2024&amp;filter_pub_date_from=&amp;filter_pub_date_to=&amp;filter_reg_number=&amp;nav-documents=page-2">След.</a>
+                            </div>
+    </div>
+  </main>
+  <section class="banners">
+  <a class="js banners__nav banners__nav--prev" href="javascript:void(0)">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="27" class="banners__icon">
+      <use xlink:href="#icon-chevron-left"></use>
+    </svg>
+  </a>
+  <div class="banners__slides">
+    <div>
+                        <a href="/?filter_organization=92" class="banners__item"><img src="/upload/uf/769/bn01.png"></a>
+                                <a href="/?filter_organization=54" class="banners__item"><img src="/upload/uf/7d5/bn02.png"></a>
+                                <a href="/?filter_organization=55" class="banners__item"><img src="/upload/uf/001/bn03.png"></a>
+                                <a href="/?filter_organization=91" class="banners__item"><img src="/upload/uf/52d/bn05.png"></a>
+                  </div>
+  </div>
+  <a class="js banners__nav banners__nav--next" href="javascript:void(0)">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="27" class="banners__icon">
+      <use xlink:href="#icon-chevron-right"></use>
+    </svg>
+  </a>
+</section>
+  <footer class="footer">
+    <a href="/" class="footer-title">&copy; 2018  - 2025 Официальный интернет-портал правовой информации Республики Башкортостан</a>
+    <nav class="footer-menu">
+      <ul class="footer-menu__list">
+        <li class="footer-menu__item"><a href="/about/" class="footer-menu__item-title">О портале</a></li>
+        <li class="footer-menu__item"><a href="/links/" class="footer-menu__item-title">Ссылки</a></li>
+        <li class="footer-menu__item"><a href="/contacts/" class="footer-menu__item-title">Контакты</a></li>
+      </ul>
+    </nav>
+    <!-- Yandex.Metrika counter -->
+        <noscript><div><img src="https://mc.yandex.ru/watch/86456445" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+          </footer>
+</div>
+<div class="cookie-warning cookie-warning--hidden">
+  <div class="cookie-warning__wrapper">
+    <div class="cookie-warning__text">
+      Программное обеспечение <a target="_blank" href="https://openregion.info/projects/">"Открытый регион"</a>,
+      на котором построен данный сайт, использует в своей работе файлы <a target="_blank" href="/privacy-policy/">cookies</a>.
+      Нажимая «Принять» или продолжая просмотр сайта, Вы даёте согласие на их использование.
+      Ознакомьтесь с <a target="_blank" href="/privacy-policy/">"Политикой конфиденциальности"</a>.
+    </div>
+    <button
+      type="button"
+      class="cookie-warning__button button button--blue js-cookie-accept"
+    >
+      Принять
+    </button>
+    <button
+      type="button"
+      class="cookie-warning__close js-cookie-accept"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="14" height="14">
+        <use xlink:href="#icon-cross"></use>
+        <symbol id="icon-cross" viewBox="0 0 19 19" fill="none">
+          <path fill-rule="nonzero" clip-rule="evenodd" d="M2 0L19 17L17 19L0 2ZM0 17L17 0L19 2L2 19Z" fill="currentColor"></path>
+        </symbol>
+      </svg>
+    </button>
+  </div>
+</div>
+<script>if(!window.BX)window.BX={};if(!window.BX.message)window.BX.message=function(mess){if(typeof mess==='object'){for(let i in mess) {BX.message[i]=mess[i];} return true;}};</script>
+<script>(window.BX||top.BX).message({"JS_CORE_LOADING":"Загрузка...","JS_CORE_NO_DATA":"- Нет данных -","JS_CORE_WINDOW_CLOSE":"Закрыть","JS_CORE_WINDOW_EXPAND":"Развернуть","JS_CORE_WINDOW_NARROW":"Свернуть в окно","JS_CORE_WINDOW_SAVE":"Сохранить","JS_CORE_WINDOW_CANCEL":"Отменить","JS_CORE_WINDOW_CONTINUE":"Продолжить","JS_CORE_H":"ч","JS_CORE_M":"м","JS_CORE_S":"с","JSADM_AI_HIDE_EXTRA":"Скрыть лишние","JSADM_AI_ALL_NOTIF":"Показать все","JSADM_AUTH_REQ":"Требуется авторизация!","JS_CORE_WINDOW_AUTH":"Войти","JS_CORE_IMAGE_FULL":"Полный размер"});</script><script src="/bitrix/js/main/core/core.min.js?1733949771225181"></script><script>BX.Runtime.registerExtension({"name":"main.core","namespace":"BX","loaded":true});</script>
+<script>BX.setJSList(["\/bitrix\/js\/main\/core\/core_ajax.js","\/bitrix\/js\/main\/core\/core_promise.js","\/bitrix\/js\/main\/polyfill\/promise\/js\/promise.js","\/bitrix\/js\/main\/loadext\/loadext.js","\/bitrix\/js\/main\/loadext\/extension.js","\/bitrix\/js\/main\/polyfill\/promise\/js\/promise.js","\/bitrix\/js\/main\/polyfill\/find\/js\/find.js","\/bitrix\/js\/main\/polyfill\/includes\/js\/includes.js","\/bitrix\/js\/main\/polyfill\/matches\/js\/matches.js","\/bitrix\/js\/ui\/polyfill\/closest\/js\/closest.js","\/bitrix\/js\/main\/polyfill\/fill\/main.polyfill.fill.js","\/bitrix\/js\/main\/polyfill\/find\/js\/find.js","\/bitrix\/js\/main\/polyfill\/matches\/js\/matches.js","\/bitrix\/js\/main\/polyfill\/core\/dist\/polyfill.bundle.js","\/bitrix\/js\/main\/core\/core.js","\/bitrix\/js\/main\/polyfill\/intersectionobserver\/js\/intersectionobserver.js","\/bitrix\/js\/main\/lazyload\/dist\/lazyload.bundle.js","\/bitrix\/js\/main\/polyfill\/core\/dist\/polyfill.bundle.js","\/bitrix\/js\/main\/parambag\/dist\/parambag.bundle.js"]);
+</script>
+<script>BX.Runtime.registerExtension({"name":"ui.design-tokens","namespace":"window","loaded":true});</script>
+<script>(window.BX||top.BX).message({"AMPM_MODE":false});(window.BX||top.BX).message({"MONTH_1":"Январь","MONTH_2":"Февраль","MONTH_3":"Март","MONTH_4":"Апрель","MONTH_5":"Май","MONTH_6":"Июнь","MONTH_7":"Июль","MONTH_8":"Август","MONTH_9":"Сентябрь","MONTH_10":"Октябрь","MONTH_11":"Ноябрь","MONTH_12":"Декабрь","MONTH_1_S":"января","MONTH_2_S":"февраля","MONTH_3_S":"марта","MONTH_4_S":"апреля","MONTH_5_S":"мая","MONTH_6_S":"июня","MONTH_7_S":"июля","MONTH_8_S":"августа","MONTH_9_S":"сентября","MONTH_10_S":"октября","MONTH_11_S":"ноября","MONTH_12_S":"декабря","MON_1":"янв","MON_2":"фев","MON_3":"мар","MON_4":"апр","MON_5":"мая","MON_6":"июн","MON_7":"июл","MON_8":"авг","MON_9":"сен","MON_10":"окт","MON_11":"ноя","MON_12":"дек","DAY_OF_WEEK_0":"Воскресенье","DAY_OF_WEEK_1":"Понедельник","DAY_OF_WEEK_2":"Вторник","DAY_OF_WEEK_3":"Среда","DAY_OF_WEEK_4":"Четверг","DAY_OF_WEEK_5":"Пятница","DAY_OF_WEEK_6":"Суббота","DOW_0":"Вс","DOW_1":"Пн","DOW_2":"Вт","DOW_3":"Ср","DOW_4":"Чт","DOW_5":"Пт","DOW_6":"Сб","FD_SECOND_AGO_0":"#VALUE# секунд назад","FD_SECOND_AGO_1":"#VALUE# секунду назад","FD_SECOND_AGO_10_20":"#VALUE# секунд назад","FD_SECOND_AGO_MOD_1":"#VALUE# секунду назад","FD_SECOND_AGO_MOD_2_4":"#VALUE# секунды назад","FD_SECOND_AGO_MOD_OTHER":"#VALUE# секунд назад","FD_SECOND_DIFF_0":"#VALUE# секунд","FD_SECOND_DIFF_1":"#VALUE# секунда","FD_SECOND_DIFF_10_20":"#VALUE# секунд","FD_SECOND_DIFF_MOD_1":"#VALUE# секунда","FD_SECOND_DIFF_MOD_2_4":"#VALUE# секунды","FD_SECOND_DIFF_MOD_OTHER":"#VALUE# секунд","FD_SECOND_SHORT":"#VALUE#с","FD_MINUTE_AGO_0":"#VALUE# минут назад","FD_MINUTE_AGO_1":"#VALUE# минуту назад","FD_MINUTE_AGO_10_20":"#VALUE# минут назад","FD_MINUTE_AGO_MOD_1":"#VALUE# минуту назад","FD_MINUTE_AGO_MOD_2_4":"#VALUE# минуты назад","FD_MINUTE_AGO_MOD_OTHER":"#VALUE# минут назад","FD_MINUTE_DIFF_0":"#VALUE# минут","FD_MINUTE_DIFF_1":"#VALUE# минута","FD_MINUTE_DIFF_10_20":"#VALUE# минут","FD_MINUTE_DIFF_MOD_1":"#VALUE# минута","FD_MINUTE_DIFF_MOD_2_4":"#VALUE# минуты","FD_MINUTE_DIFF_MOD_OTHER":"#VALUE# минут","FD_MINUTE_0":"#VALUE# минут","FD_MINUTE_1":"#VALUE# минуту","FD_MINUTE_10_20":"#VALUE# минут","FD_MINUTE_MOD_1":"#VALUE# минуту","FD_MINUTE_MOD_2_4":"#VALUE# минуты","FD_MINUTE_MOD_OTHER":"#VALUE# минут","FD_MINUTE_SHORT":"#VALUE#мин","FD_HOUR_AGO_0":"#VALUE# часов назад","FD_HOUR_AGO_1":"#VALUE# час назад","FD_HOUR_AGO_10_20":"#VALUE# часов назад","FD_HOUR_AGO_MOD_1":"#VALUE# час назад","FD_HOUR_AGO_MOD_2_4":"#VALUE# часа назад","FD_HOUR_AGO_MOD_OTHER":"#VALUE# часов назад","FD_HOUR_DIFF_0":"#VALUE# часов","FD_HOUR_DIFF_1":"#VALUE# час","FD_HOUR_DIFF_10_20":"#VALUE# часов","FD_HOUR_DIFF_MOD_1":"#VALUE# час","FD_HOUR_DIFF_MOD_2_4":"#VALUE# часа","FD_HOUR_DIFF_MOD_OTHER":"#VALUE# часов","FD_HOUR_SHORT":"#VALUE#ч","FD_YESTERDAY":"вчера","FD_TODAY":"сегодня","FD_TOMORROW":"завтра","FD_DAY_AGO_0":"#VALUE# дней назад","FD_DAY_AGO_1":"#VALUE# день назад","FD_DAY_AGO_10_20":"#VALUE# дней назад","FD_DAY_AGO_MOD_1":"#VALUE# день назад","FD_DAY_AGO_MOD_2_4":"#VALUE# дня назад","FD_DAY_AGO_MOD_OTHER":"#VALUE# дней назад","FD_DAY_DIFF_0":"#VALUE# дней","FD_DAY_DIFF_1":"#VALUE# день","FD_DAY_DIFF_10_20":"#VALUE# дней","FD_DAY_DIFF_MOD_1":"#VALUE# день","FD_DAY_DIFF_MOD_2_4":"#VALUE# дня","FD_DAY_DIFF_MOD_OTHER":"#VALUE# дней","FD_DAY_AT_TIME":"#DAY# в #TIME#","FD_DAY_SHORT":"#VALUE#д","FD_MONTH_AGO_0":"#VALUE# месяцев назад","FD_MONTH_AGO_1":"#VALUE# месяц назад","FD_MONTH_AGO_10_20":"#VALUE# месяцев назад","FD_MONTH_AGO_MOD_1":"#VALUE# месяц назад","FD_MONTH_AGO_MOD_2_4":"#VALUE# месяца назад","FD_MONTH_AGO_MOD_OTHER":"#VALUE# месяцев назад","FD_MONTH_DIFF_0":"#VALUE# месяцев","FD_MONTH_DIFF_1":"#VALUE# месяц","FD_MONTH_DIFF_10_20":"#VALUE# месяцев","FD_MONTH_DIFF_MOD_1":"#VALUE# месяц","FD_MONTH_DIFF_MOD_2_4":"#VALUE# месяца","FD_MONTH_DIFF_MOD_OTHER":"#VALUE# месяцев","FD_MONTH_SHORT":"#VALUE#мес","FD_YEARS_AGO_0":"#VALUE# лет назад","FD_YEARS_AGO_1":"#VALUE# год назад","FD_YEARS_AGO_10_20":"#VALUE# лет назад","FD_YEARS_AGO_MOD_1":"#VALUE# год назад","FD_YEARS_AGO_MOD_2_4":"#VALUE# года назад","FD_YEARS_AGO_MOD_OTHER":"#VALUE# лет назад","FD_YEARS_DIFF_0":"#VALUE# лет","FD_YEARS_DIFF_1":"#VALUE# год","FD_YEARS_DIFF_10_20":"#VALUE# лет","FD_YEARS_DIFF_MOD_1":"#VALUE# год","FD_YEARS_DIFF_MOD_2_4":"#VALUE# года","FD_YEARS_DIFF_MOD_OTHER":"#VALUE# лет","FD_YEARS_SHORT_0":"#VALUE#л","FD_YEARS_SHORT_1":"#VALUE#г","FD_YEARS_SHORT_10_20":"#VALUE#л","FD_YEARS_SHORT_MOD_1":"#VALUE#г","FD_YEARS_SHORT_MOD_2_4":"#VALUE#г","FD_YEARS_SHORT_MOD_OTHER":"#VALUE#л","CAL_BUTTON":"Выбрать","CAL_TIME_SET":"Установить время","CAL_TIME":"Время","FD_LAST_SEEN_TOMORROW":"завтра в #TIME#","FD_LAST_SEEN_NOW":"только что","FD_LAST_SEEN_TODAY":"сегодня в #TIME#","FD_LAST_SEEN_YESTERDAY":"вчера в #TIME#","FD_LAST_SEEN_MORE_YEAR":"более года назад"});</script>
+<script>BX.Runtime.registerExtension({"name":"main.date","namespace":"BX.Main","loaded":true});</script>
+<script>BX.Runtime.registerExtension({"name":"ui.fonts.opensans","namespace":"window","loaded":true});</script>
+<script>BX.Runtime.registerExtension({"name":"main.popup","namespace":"BX.Main","loaded":true});</script>
+<script>BX.Runtime.registerExtension({"name":"popup","namespace":"window","loaded":true});</script>
+<script>(window.BX||top.BX).message({"WEEK_START":1});</script>
+<script>BX.Runtime.registerExtension({"name":"date","namespace":"window","loaded":true});</script>
+<script>(window.BX||top.BX).message({"LANGUAGE_ID":"ru","FORMAT_DATE":"DD.MM.YYYY","FORMAT_DATETIME":"DD.MM.YYYY HH:MI:SS","COOKIE_PREFIX":"BITRIX_SM","SERVER_TZ_OFFSET":"18000","UTF_MODE":"Y","SITE_ID":"s1","SITE_DIR":"\/","USER_ID":"","SERVER_TIME":1736855239,"USER_TZ_OFFSET":0,"USER_TZ_AUTO":"Y","bitrix_sessid":"e151d7674829bf64f1f773425903112a"});</script><script  src="/bitrix/cache/js/s1/npa/kernel_main/kernel_main_v1.js?1733998205145576"></script>
+<script src="/bitrix/js/main/popup/dist/main.popup.bundle.min.js?173394977565924"></script>
+<script>BX.setJSList(["\/bitrix\/js\/main\/date\/main.date.js","\/bitrix\/js\/main\/core\/core_date.js","\/bitrix\/js\/main\/session.js","\/bitrix\/js\/main\/pageobject\/pageobject.js","\/bitrix\/js\/main\/core\/core_window.js","\/bitrix\/js\/main\/utils.js","\/local\/templates\/npa\/js\/chunk.min.js","\/local\/templates\/npa\/js\/helpers.js","\/local\/templates\/npa\/js\/select.js","\/local\/templates\/npa\/js\/calendar.min.js","\/local\/templates\/npa\/js\/special.js","\/local\/templates\/npa\/js\/common.js","\/local\/templates\/npa\/components\/openregion\/news.list\/banners\/script.js","\/local\/templates\/npa\/components\/openregion\/component\/cookie-warning\/script.js"]);</script>
+<script>BX.setCSSList(["\/bitrix\/js\/main\/core\/css\/core_date.css","\/local\/templates\/npa\/components\/openregion\/news\/documents\/openregion\/news.list\/.default\/style.css","\/local\/templates\/npa\/components\/bitrix\/main.pagenavigation\/.default\/style.css","\/local\/templates\/npa\/css\/font-roboto.css","\/local\/templates\/npa\/css\/adaptive.css","\/local\/templates\/npa\/css\/form.css","\/local\/templates\/npa\/components\/openregion\/news.list\/banners\/style.css","\/local\/templates\/npa\/components\/openregion\/component\/cookie-warning\/style.css","\/local\/templates\/npa\/template_styles.css"]);</script>
+
+
+<script  src="/bitrix/cache/js/s1/npa/template_36e275d18f841cfde3a1851474bc9135/template_36e275d18f841cfde3a1851474bc9135_v1.js?1733949891150176"></script>
+<script>var _ba = _ba || []; _ba.push(["aid", "dc0265600bb7c7b27dc146f4da6697e2"]); _ba.push(["host", "npa.bashkortostan.ru"]); (function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script>
+
+
+<script>
+    var siteTemplatePath = "/local/templates/npa";
+  </script>
+<script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(86456445, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true
+       });
+    </script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-6656048-4"></script>
+<script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-6656048-4');
+    </script>
+</body>
 </html>

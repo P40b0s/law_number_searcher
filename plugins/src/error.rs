@@ -1,4 +1,4 @@
-use std::num::ParseIntError;
+use std::{num::ParseIntError, string::FromUtf8Error};
 
 use thiserror::Error;
 
@@ -11,6 +11,8 @@ pub enum ExtractorError
         #[from]
         source: std::io::Error,
     },
+    #[error(transparent)]
+    UtilitesError(#[from] utilites::error::Error),
     #[error("Ошибка преобразования номера документа `{}` в число: `{}`", number, source)]
     ParseNumberError {number: String, #[source] source: ParseIntError},
     #[error("Ошибка, формат номера `{}` не поддерживается", .0)]
@@ -20,5 +22,7 @@ pub enum ExtractorError
     #[error("В текущем парсере остуствует тип документа: `{}`", .0)]
     ActTypeNotSupported(String),
     #[error("Для id подписанта: `{}` плагины не найдены", .0)]
-    PluginNotFound(String)
+    PluginNotFound(String),
+    #[error(transparent)]
+    Utf8ParseError(#[from] FromUtf8Error)
 }
