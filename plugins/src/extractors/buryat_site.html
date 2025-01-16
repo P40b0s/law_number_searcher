@@ -1,0 +1,555 @@
+ 
+
+
+<!DOCTYPE html>
+<html lang="ru">
+  <head><meta name='hmac-token-name' content='Ajax-Token'/>
+
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0"/>
+    <meta name="description" content="Опубликование нормативных правовых актов Республики Бурятия">
+    <link rel="stylesheet" href="/npa_template/css/fonts.css"/>
+    <link rel="stylesheet" href="/npa_template/css/index.lib.css"/>
+	<link rel="stylesheet" href="/npa_template/css/index.css"/>
+	<meta http-equiv="X-FRAME-OPTIONS" content="ALLOW">
+	<meta http-equiv="X-FRAME-OPTIONS" content="SAMEORIGIN">
+
+	
+
+    <title>Опубликование нормативных правовых актов Республики Бурятия</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="robots" content="Опубликование нормативных правовых актов Республики Бурятия" />
+<meta name="keywords" content="Опубликование нормативных правовых актов Республики Бурятия" />
+<meta name="description" content="Опубликование нормативных правовых актов Республики Бурятия" />
+<link href="/bitrix/cache/css/s1/npa_hural/page_43b576359d7117496b0550e68ecd0ba0/page_43b576359d7117496b0550e68ecd0ba0_v1.css?1736932404396" type="text/css"  rel="stylesheet" />
+<link href="/bitrix/cache/css/s1/npa_hural/template_5ab86403ef541b3e2f1a72a2446d856b/template_5ab86403ef541b3e2f1a72a2446d856b_v1.css?17369324041127" type="text/css"  data-template-style="true" rel="stylesheet" />
+<script charset="utf-8" src="/62d8ed86c2c19d3ccd5edac7.js?1707760795652"></script>
+<script>if(!window.BX)window.BX={};if(!window.BX.message)window.BX.message=function(mess){if(typeof mess==='object'){for(let i in mess) {BX.message[i]=mess[i];} return true;}};</script>
+<script>(window.BX||top.BX).message({'JS_CORE_LOADING':'Загрузка...','JS_CORE_NO_DATA':'- Нет данных -','JS_CORE_WINDOW_CLOSE':'Закрыть','JS_CORE_WINDOW_EXPAND':'Развернуть','JS_CORE_WINDOW_NARROW':'Свернуть в окно','JS_CORE_WINDOW_SAVE':'Сохранить','JS_CORE_WINDOW_CANCEL':'Отменить','JS_CORE_WINDOW_CONTINUE':'Продолжить','JS_CORE_H':'ч','JS_CORE_M':'м','JS_CORE_S':'с','JSADM_AI_HIDE_EXTRA':'Скрыть лишние','JSADM_AI_ALL_NOTIF':'Показать все','JSADM_AUTH_REQ':'Требуется авторизация!','JS_CORE_WINDOW_AUTH':'Войти','JS_CORE_IMAGE_FULL':'Полный размер'});</script>
+
+<script src="/bitrix/js/main/core/core.js?1736934599494198"></script>
+
+<script>BX.Runtime.registerExtension({'name':'main.core','namespace':'BX','loaded':true});</script>
+<script>BX.setJSList(['/bitrix/js/main/core/core_ajax.js','/bitrix/js/main/core/core_promise.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/loadext/loadext.js','/bitrix/js/main/loadext/extension.js','/bitrix/js/main/polyfill/promise/js/promise.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/includes/js/includes.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/ui/polyfill/closest/js/closest.js','/bitrix/js/main/polyfill/fill/main.polyfill.fill.js','/bitrix/js/main/polyfill/find/js/find.js','/bitrix/js/main/polyfill/matches/js/matches.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/core/core.js','/bitrix/js/main/polyfill/intersectionobserver/js/intersectionobserver.js','/bitrix/js/main/lazyload/dist/lazyload.bundle.js','/bitrix/js/main/polyfill/core/dist/polyfill.bundle.js','/bitrix/js/main/parambag/dist/parambag.bundle.js']);
+</script>
+<script>BX.Runtime.registerExtension({'name':'ui.dexie','namespace':'BX.Dexie3','loaded':true});</script>
+<script>BX.Runtime.registerExtension({'name':'ls','namespace':'window','loaded':true});</script>
+<script>BX.Runtime.registerExtension({'name':'fx','namespace':'window','loaded':true});</script>
+<script>BX.Runtime.registerExtension({'name':'fc','namespace':'window','loaded':true});</script>
+<script>(window.BX||top.BX).message({'LANGUAGE_ID':'ru','FORMAT_DATE':'DD.MM.YYYY','FORMAT_DATETIME':'DD.MM.YYYY HH:MI:SS','COOKIE_PREFIX':'BITRIX_SM','SERVER_TZ_OFFSET':'0','UTF_MODE':'Y','SITE_ID':'s1','SITE_DIR':'/','USER_ID':'','SERVER_TIME':'1736949471','USER_TZ_OFFSET':'0','USER_TZ_AUTO':'Y','bitrix_sessid':'87511a7b918dbcb3091fac5baa37d0d0'});</script>
+
+
+<script  src="/bitrix/js/main/core/core_fx.min.js?17369345979768"></script>
+<script src="/bitrix/js/ui/dexie/dist/dexie3.bundle.min.js?173693450788274"></script>
+<script src="/bitrix/js/main/core/core_ls.min.js?17369345937365"></script>
+<script src="/bitrix/js/main/core/core_frame_cache.js?173693459817037"></script>
+<script>BX.setJSList(['/bitrix/js/main/core/core_fx.js']);</script>
+<script>BX.setCSSList(['/local/templates/npa_hural/components/bitrix/news.list/izmeneniya_v_zakonodatelstve/style.css','/local/templates/npa_hural/styles.css']);</script>
+
+
+<script type="text/javascript">var _ba = _ba || []; _ba.push(["aid", "80e449881ebd45738529d5d3ac56f94a"]); _ba.push(["host", "egov-buryatia.ru"]); (function() {var ba = document.createElement("script"); ba.type = "text/javascript"; ba.async = true;ba.src = (document.location.protocol == "https:" ? "https://" : "http://") + "bitrix.info/ba.js";var s = document.getElementsByTagName("script")[0];s.parentNode.insertBefore(ba, s);})();</script>
+
+
+  </head>
+  <body><noscript><img src="/66e62fa9fdce224d8704b67e4e6ed9fa.gif" width="0" height="0" alt="" /></noscript>
+
+  <div id="panel">
+					</div>
+    <div class="page-app page-app--hide" data-is="page-app">
+      <!-- <div class="npa-header"> 
+		<h1 class="npa-header__heading page-desktop-header__logo">
+			<img class="page-desktop-header__logo-img" src="/upload/iblock/017/0170a5bc251fc6b518ace58306e5dcc3.png" width="68">
+			<a href="/npa_template/" style="text-decoration:none; color:#FFF;">Опубликование нормативных правовых актов Республики Бурятия</a>
+		</h1>
+      </div> -->
+	  <div class="npa-body">
+<div class="npa-section">
+ 
+<form class="npa-finder" action="/npa_template//search/index.php" method="POST" data-is="npa-finder">
+            <label class="npa-finder__search-field">
+              <input class="npa-finder__search" type="text" name="q" value = "" placeholder="Введите слово для поиска и нажмите Enter"/>
+            </label>
+            <input class="npa-finder__button" type="submit" name="s" value="Найти"/>
+          </form>          
+          <ul class="npa-head-list">
+		  <li class="npa-head-list__item"><a class="npa-head-list__link" href=""></a></li>          </ul>
+        </div>
+
+<!--script>
+
+	function chooseSiteLang(lang){
+		
+		var curDate = new Date();
+		var cookieDieDate = new Date(curDate.setFullYear(curDate.getFullYear() + 1))
+		document.cookie = "SITE_LANG="+lang+";expires="+cookieDieDate+";path=/npa_template/";
+		
+	}
+
+</script-->
+
+<div class="npa-list">
+	<div class="npa-list__header">
+	</div>
+	 	<div class="npa-section">
+		<form action="/npa_template/">
+		Дата документа:
+		от <input type="date" name="date_doc_from" value="2024-01-01"/> 
+		до <input type="date"  name="date_doc_to" value="2024-12-31"/><br><br>
+		Дата публикации:
+		от <input type="date" name="date_public_from" value=""/> 
+		до <input type="date"  name="date_public_to" value=""/><br><br>
+		Тип документа:
+
+			<select name="TIP_DOC">
+	    <option ></option>
+        <option  value="Апелляционное определение">Апелляционное определение</option>
+        <option  value="Закон">Закон</option>
+        <option  value="Постановление">Постановление</option>
+        <option  value="Приказ">Приказ</option>
+        <option  value="Распоряжение">Распоряжение</option>
+        <option  value="Решение">Решение</option>
+        <option  value="Соглашение">Соглашение</option>
+        <option selected value="Указ">Указ</option>
+        <option  value="Проект">Проект</option>
+        <option  value="Другое">Другое</option>
+			</select>
+			<br>
+			<br>
+			 Орган власти:
+			<select name="ORGAN_VLASTI" style="width: 85%;">
+		<option ></option>
+        <option selected value="Глава Республики Бурятия">Глава Республики Бурятия</option>
+        <option  value="Правительство Республики Бурятия">Правительство Республики Бурятия</option>
+        <option  value="Администрация Главы Республики Бурятия и Правительства Республики Бурятия">Администрация Главы Республики Бурятия и Правительства Республики Бурятия</option>
+        <option  value="Верховный суд Республики Бурятия">Верховный суд Республики Бурятия</option>
+        <option  value="Верховный суд Российской Федерации">Верховный суд Российской Федерации</option>
+        <option  value="Заместитель Председателя Правительства Республики Бурятия">Заместитель Председателя Правительства Республики Бурятия</option>
+        <option  value="Министерство здравоохранения">Министерство здравоохранения</option>
+        <option  value="Министерство имущественных и земельных отношений">Министерство имущественных и земельных отношений</option>
+        <option  value="Министерство культуры">Министерство культуры</option>
+        <option  value="Министерство образования и науки">Министерство образования и науки</option>
+        <option  value="Министерство по развитию транспорта, энергетики и дорожного хозяйства">Министерство по развитию транспорта, энергетики и дорожного хозяйства</option>
+        <option  value="Министерство природных ресурсов">Министерство природных ресурсов</option>
+        <option  value="Министерство промышленности и торговли">Министерство промышленности и торговли</option>
+        <option  value="Министерство сельского хозяйства и продовольствия">Министерство сельского хозяйства и продовольствия</option>
+        <option  value="Министерство социальной защиты населения">Министерство социальной защиты населения</option>
+        <option  value="Министерство спорта и молодежной политики Республики Бурятия">Министерство спорта и молодежной политики Республики Бурятия</option>
+        <option  value="Министерство строительства и модернизации жилищно-коммунального комплекса">Министерство строительства и модернизации жилищно-коммунального комплекса</option>
+        <option  value="Министерство туризма">Министерство туризма</option>
+        <option  value="Министерство финансов">Министерство финансов</option>
+        <option  value="Министерство экономики">Министерство экономики</option>
+        <option  value="Народный Хурал">Народный Хурал</option>
+        <option  value="Полномочное представительство Республики Бурятия при Президенте Российской Федерации">Полномочное представительство Республики Бурятия при Президенте Российской Федерации</option>
+        <option  value="Управление по обеспечению деятельности мировых судей в Республике Бурятия">Управление по обеспечению деятельности мировых судей в Республике Бурятия</option>
+        <option  value="Республиканская служба государственного строительного и жилищного надзора">Республиканская служба государственного строительного и жилищного надзора</option>
+        <option  value="Бурприроднадзор">Бурприроднадзор</option>
+        <option  value="Республиканская служба по тарифам">Республиканская служба по тарифам</option>
+        <option  value="Республиканское агентство ГОиЧС">Республиканское агентство ГОиЧС</option>
+        <option  value="Республиканское агентство занятости населения">Республиканское агентство занятости населения</option>
+        <option  value="Республиканское агентство лесного хозяйства">Республиканское агентство лесного хозяйства</option>
+        <option  value="Республиканское агентство по государственным закупкам">Республиканское агентство по государственным закупкам</option>
+        <option  value="Управление записи актов гражданского состояния Республики Бурятия">Управление записи актов гражданского состояния Республики Бурятия</option>
+        <option  value="Управление ветеринарии Республики Бурятия">Управление ветеринарии Республики Бурятия</option>
+        <option  value="Республиканская служба по охране, контролю и регулированию использования объектов животного мира, отнесенных к объектам охоты, контролю и надзору в сфере природопользования">Республиканская служба по охране, контролю и регулированию использования объектов животного мира, отнесенных к объектам охоты, контролю и надзору в сфере природопользования</option>
+        <option  value="Управление инспекции государственного надзора за техническим состоянием самоходных машин и других видов техники - Гостехнадзор Республики Бурятия ">Управление инспекции государственного надзора за техническим состоянием самоходных машин и других видов техники - Гостехнадзор Республики Бурятия </option>
+
+			</select>
+			<br>
+			<br>
+ <input class="knopki" type="submit" value="Показать"> <input class="knopki" name="clear" type="submit" value="Очистить">
+		</form>
+	</div>
+	<br>
+	<br>
+	    <table class="npa-docs" id="container14">
+		<tr class="npa-tr-title">
+				<td class="npa-td-title">
+					Дата документа
+				</td >
+				<td class="npa-td-title">
+					 Дата публикации
+				</td >
+				<td class="npa-td-title">
+					Дата&nbsp;гос. регистрации
+				</td >				
+				<td class="npa-td-title">
+					Номер документа
+				</td >
+				<td class="npa-td-title">
+					Номер&nbsp;гос. регистрации
+				</td >
+				<td class="npa-td-title">
+					Тип документа
+				</td >
+				<td class="npa-td-title">
+					Орган&nbsp;власти&nbsp;или должностное&nbsp;лицо
+				</td >
+		</tr>
+ 				<tr class="npa-tr">
+				<td class="npa-td">
+					26.12.2024				</td >
+				<td class="npa-td">
+					27.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						286				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('187415' , '278')" class="npa-name" href="/upload/iblock/252/3xvb8al6ir3olearbsyx6xd35tudv7fx.pdf">
+						О внесении изменений в указ Главы Республики Бурятия  от 21.01.2021 № 8 «О структуре исполнительных органов  государственной власти Республики Бурятия»					</a>
+				</td>
+			</tr>
+
+
+					 				<tr class="npa-tr">
+				<td class="npa-td">
+					26.12.2024				</td >
+				<td class="npa-td">
+					27.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						285				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('187413' , '278')" class="npa-name" href="/upload/iblock/d9a/aosfe9vk8l69hrtyu0z473rm1xc0mf6c.pdf">
+						О внесении изменений в указ Главы Республики  Бурятия от 13.03.2017 № 47 «О Совете по культуре  и искусству при Главе Республики Бурятия»					</a>
+				</td>
+			</tr>
+
+
+					 				<tr class="npa-tr">
+				<td class="npa-td">
+					26.12.2024				</td >
+				<td class="npa-td">
+					27.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						284				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('187412' , '278')" class="npa-name" href="/upload/iblock/b42/6clc27sci4qm5ktrlwvwd7gdyc8h9szo.pdf">
+						О присвоении классного чина государственной  гражданской службы Республики Бурятия  государственному гражданскому служащему  Республики Бурятия Республиканского агентства  гражданской обороны и чрезвычайных ситуаций					</a>
+				</td>
+			</tr>
+
+
+					 				<tr class="npa-tr">
+				<td class="npa-td">
+					26.12.2024				</td >
+				<td class="npa-td">
+					27.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						283				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('187408' , '278')" class="npa-name" href="/upload/iblock/da4/jf6zmerk1xovz41y1yvgoe4ajnvod0mb.pdf">
+						О внесении изменения в указ Главы Республики Бурятия от 07.11.2013 № 217 «О координационных и совещательных органах, образуемых Главой Республики Бурятия, Правительством Республики Бурятия, органами исполнительной власти Республики Бурятия»					</a>
+				</td>
+			</tr>
+
+
+					 				<tr class="npa-tr">
+				<td class="npa-td">
+					26.12.2024				</td >
+				<td class="npa-td">
+					27.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						278				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('187377' , '278')" class="npa-name" href="/upload/iblock/ba0/59st8oz1oq4xp0p97rl8vco25x9nb5ll.pdf">
+						О лауреатах государственных премий  Республики Бурятия 					</a>
+				</td>
+			</tr>
+
+
+					 				<tr class="npa-tr">
+				<td class="npa-td">
+					24.12.2024				</td >
+				<td class="npa-td">
+					25.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						276				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('187247' , '278')" class="npa-name" href="/upload/iblock/d95/nbfvmf1e2hje6u6ihrbiam3mfk9vvf9i.pdf">
+						О внесении изменения в указ Главы Республики Бурятия от 28.02.2017 № 43 «О Комиссии при Главе Республики Бурятия по обеспечению  реализации на территории Республики Бурятия федерального  проекта «Формирование комфортной городской среды»  и о внесении изменения в указ Главы Республики Бурятия  от 07.11.2013 № 217 «О координационных и совещательных  органах, образуемых Главой Республики Бурятия,  Правительством Республики Бурятия, органами  исполнительной власти Республики Бурятия»					</a>
+				</td>
+			</tr>
+
+
+					 				<tr class="npa-tr">
+				<td class="npa-td">
+					24.12.2024				</td >
+				<td class="npa-td">
+					25.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						273				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('187198' , '278')" class="npa-name" href="/upload/iblock/3fe/3dlaa7bfigw2nwma0acbizfbgvwk2dh1.pdf">
+						О внесении изменения в указ Главы  Республики Бурятия от 28.10.2024 № 203 «О внесении  изменений в указ Главы Республики Бурятия от 23.08.2022  № 176 «О дополнительных гарантиях отдельным категориям  граждан, принимающих участие в специальной военной операции на территориях Украины, Донецкой Народной  Республики, Луганской Народной Республики,  Запорожской области и Херсонской области»					</a>
+				</td>
+			</tr>
+
+
+					 				<tr class="npa-tr">
+				<td class="npa-td">
+					23.12.2024				</td >
+				<td class="npa-td">
+					24.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						272				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('187113' , '278')" class="npa-name" href="/upload/iblock/a2a/1rc0ih2p330ginz5x4j1z2q5905426l6.pdf">
+						О внесении изменения в указ  Главы Республики Бурятия от 01.04.2021 № 97  «Об образовании Президиума Правительства  Республики Бурятия»					</a>
+				</td>
+			</tr>
+
+
+					 				<tr class="npa-tr">
+				<td class="npa-td">
+					23.12.2024				</td >
+				<td class="npa-td">
+					24.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						271				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('187111' , '278')" class="npa-name" href="/upload/iblock/d6a/dzx4sz05wtov59ymp5j8k0opz8o8gqtt.pdf">
+						О внесении изменений в указ  Президента Республики Бурятия от 09.10.2007 № 589  «Об утверждении Положения и структуры Администрации Главы Республики Бурятия  и Правительства Республики Бурятия»					</a>
+				</td>
+			</tr>
+
+
+					 				<tr class="npa-tr">
+				<td class="npa-td">
+					18.12.2024				</td >
+				<td class="npa-td">
+					19.12.2024				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						263				</td>
+				<td class="npa-td">
+										</td>
+				<td class="npa-td">
+						Указ				</td>
+				<td class="npa-td">
+						Глава Республики Бурятия				</td>
+			</tr>
+							<tr class="npa-tr npa-tr-name">
+				<td colspan="7" class="npa-name-td" style="position: relative; width: 100%; height: 64px;margin-left: 25px;">
+					<a target="_blank" onclick = "downloaded_doc('186932' , '278')" class="npa-name" href="/upload/iblock/5a5/oofx8dolruaj7qr80jj6vuwvyq24m7lx.pdf">
+						О присвоении классного чина государственной  гражданской службы Республики Бурятия  государственному гражданскому служащему Республики  Бурятия Администрации Главы Республики Бурятия  и Правительства Республики Бурятия					</a>
+				</td>
+			</tr>
+
+
+						</table>
+	<div class="npa-nav npa-section"> 
+		
+<font class="text">Нормативные правовые акты 
+
+
+	1 - 10 из 128<br /></font>
+
+	<font class="text">
+
+			Начало&nbsp;|&nbsp;Пред.&nbsp;|
+	
+	
+					<b>1</b>
+					
+					<a href="/npa_template/?date_doc_from=2024-01-01&amp;date_doc_to=2024-12-31&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=2">2</a>
+					
+					<a href="/npa_template/?date_doc_from=2024-01-01&amp;date_doc_to=2024-12-31&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=3">3</a>
+					
+					<a href="/npa_template/?date_doc_from=2024-01-01&amp;date_doc_to=2024-12-31&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=4">4</a>
+					
+					<a href="/npa_template/?date_doc_from=2024-01-01&amp;date_doc_to=2024-12-31&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=5">5</a>
+						|
+
+			<a href="/npa_template/?date_doc_from=2024-01-01&amp;date_doc_to=2024-12-31&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=2">След.</a>&nbsp;|
+		<a href="/npa_template/?date_doc_from=2024-01-01&amp;date_doc_to=2024-12-31&amp;date_public_from=&amp;date_public_to=&amp;TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&amp;ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F&amp;PAGEN_1=13">Конец</a>
+	
+
+
+
+</font>	</div>
+ <br>
+	<br>
+	<div class="npa-section">
+ <a href="https://egov-buryatia.ru/npa_template_old/">Архив нормативных правовых актов (2009-2018 годы)</a>
+	</div>
+	 <script>
+function downloaded_doc(id, iblock_id){
+
+	BX.ajax.post(
+        "responds/downloaded_doc.php",
+        {
+			"id" : id,
+			"iblock_id" : iblock_id
+		},
+        function(){}
+    );
+}
+</script>
+</div>
+<br> </div></div>
+<footer class="page-footer">
+        <div class="page-footer__row">
+          <div class="page-footer__row-item">
+            <div class="page-footer__logo"><img class="page-footer__logo-img" src="/upload/iblock/017/0170a5bc251fc6b518ace58306e5dcc3.png" alt="" width="68"/>
+              <div class="page-footer__logo-text"><div style="font-size: 28px;font-family: PT Serif;">Опубликование нормативных правовых актов Республики Бурятия</div></div>
+            </div>
+			</div>
+          <div class="page-footer__row-item">
+            <div class="yandex_metrika_row">
+
+
+
+			</div>
+          </div>
+        </div>
+       </footer>
+
+  <div class="templates">
+      <template id="plate-riot-tag">
+        <virtual if="${ icoExist &amp;&amp; !textExist }">
+          <div class="plate__ico" riot-style="${ buildStyle() }"></div>
+        </virtual>
+        <virtual if="${ !icoExist &amp;&amp; textExist }">
+          <div class="plate__text">${params.content}</div>
+        </virtual>
+        <virtual if="${ icoExist &amp;&amp; textExist }">
+          <div class="plate__ico" riot-style="${ buildStyle() }"></div>
+          <div class="plate__text">${params.content}</div>
+        </virtual>
+      </template>
+      <template id="media-zoom-riot-tag">
+        <div class="media-zoom__background">
+          <div class="media-zoom__prev" onclick="${ prev }"></div>
+          <div class="media-zoom__next" onclick="${ next }"></div>
+        </div>
+        <div class="media-zoom__close" onclick="${ closePhotoZoom }"></div>
+        <virtual if="${mode == 'photo'}">
+          <div class="media-zoom__foreground" riot-style="${ backgroundImage }"></div>
+        </virtual>
+        <virtual if="${mode == 'video'}">
+          <video class="media-zoom__video" controls="controls">
+            <source each="${ source in videoSources} " riot-src="${ source.src }" type="${ source.type }"/>
+          </video>
+        </virtual>
+        <virtual if="${mode == 'off'}"></virtual>
+      </template>
+      <template id="contrast-panel-riot-tag">
+        <virtual if="${ visible }">
+          <div class="contrast-panel__row">
+            <div class="contrast-panel__cell">Размер шрифта
+              <div class="contrast-panel__font-size-list"> 
+                <div class="contrast-panel__font-size-item ${ fontSize == 'a' ? 'contrast-panel__font-size-item--active' : '' }" style="font-size:18px;" onclick="${ pickFontSize }" data-size="a">A </div>
+                <div class="contrast-panel__font-size-item ${ fontSize == 'aa' ? 'contrast-panel__font-size-item--active' : '' }" style="font-size:24px;" onclick="${ pickFontSize }" data-size="aa">A</div>
+                <div class="contrast-panel__font-size-item ${ fontSize == 'aaa' ? 'contrast-panel__font-size-item--active' : '' }" style="font-size:28px;" onclick="${ pickFontSize }" data-size="aaa">A</div>
+              </div>
+            </div>
+            <div class="contrast-panel__cell">Цвет сайта
+              <div class="contrast-panel__theme-color-list"> 
+                <div class="contrast-panel__theme-color-item ${ themeColor == 'noninvert' ? 'contrast-panel__theme-color-item--active' : '' }" style="font-size:28px;" onclick="${ pickThemeColor }" data-theme="noninvert">A </div>
+                <div class="contrast-panel__theme-color-item ${ themeColor == 'invert' ? 'contrast-panel__theme-color-item--active' : '' }" style="font-size:28px;" onclick="${ pickThemeColor }" data-theme="invert">A</div>
+              </div>
+            </div>
+            <div class="contrast-panel__cell"> 
+              <div class="contrast-panel__close" onclick="${ closeContrastPanel }"> 
+                <div class="contrast-panel__close-ico"> </div>Закрыть
+              </div>
+            </div>
+          </div>
+        </virtual>
+      </template>
+    </div>
+    <script src="/npa_template/js/index.lib.js" type="text/javascript"></script>
+    <script src="/npa_template/js/index.js" type="text/javascript"></script>
+    <script src="/npa_template/js/start-riot.js" type="text/javascript"></script>
+  </body>
+</html>
+

@@ -9,4 +9,5 @@ type Dictionary =
      * 
      */
     parserType: number,
+    numberExample?: string
 }

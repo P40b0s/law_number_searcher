@@ -14,7 +14,7 @@ pub struct Number
 }
 
 pub static CLEAR_NUMBER_RE: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^\d{1,4}").unwrap());
-pub trait NumberExtractorPlugin<'a> where Self: Send + Sync
+pub trait NumberExtractorPlugin<'a> : 'a where Self: Send + Sync
 {
     fn signatory_authority(&self) -> &'static str;
     ///url сайта где официально опубликовываются данные докуенты (кроме publication.pravo.gov.ru)

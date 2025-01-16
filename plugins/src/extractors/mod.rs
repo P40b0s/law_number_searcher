@@ -1,6 +1,7 @@
 mod prezident;
 pub mod plugin_trait;
 mod bash;
+mod burat;
 pub use plugin_trait::{NumberExtractorPlugin, OffSiteParser};
 pub mod number_extractors;
 pub mod types;

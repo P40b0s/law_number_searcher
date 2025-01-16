@@ -1,4 +1,4 @@
-import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, NProgress, type GlobalThemeOverrides, useThemeVars, type SelectGroupOption, type SelectOption } from "naive-ui";
+import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, NProgress, type GlobalThemeOverrides, useThemeVars, type SelectGroupOption, type SelectOption, NTag } from "naive-ui";
 import { CSSProperties, h, ref, RendererElement, RendererNode, VNode } from "vue";
 import { Result } from "../../tauri/abstract";
 import { SelectBaseOption, type Value } from "naive-ui/es/select/src/interface";
@@ -56,6 +56,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     name: o.name,
                     key: o.id,
                     parserType: o.parserType,
+                    numberExample: o.numberExample,
                     disabled: (o.parserType == -1 || o.parserType == 2)
                 } as SelectedValue
                 return org;
@@ -85,7 +86,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
         return exists;
     };
 
-    const label = (option: SelectOption): Node =>
+    const label = (option: SelectOption & Dictionary): Node =>
     {
         return h('div', 
             {
@@ -120,6 +121,14 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     } as CSSProperties
 
                 }),
+                option.numberExample ? h(NTooltip,
+                {
+
+                },
+                {
+                    trigger:() => h(NTag , {type: 'info'}, {default:()=> option.numberExample}),
+                    default:() => "Шаблон номера для текущего вида документа",
+                }): [],
                 h(NTooltip, {
                     placement: 'left'
                 },
@@ -212,7 +221,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                             }
                         }
                     }
-                }),
+                })
             ])
     }
 

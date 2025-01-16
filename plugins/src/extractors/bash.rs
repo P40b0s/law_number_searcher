@@ -121,13 +121,6 @@ async fn query(year: u32, page: u32, sa: &str, uri: &str) -> Result<String, supe
             ("nav-documents", &["page-", &page.to_string()].concat()),
         ]
     };
-    let params = &[
-        ("filter_type", "5"),
-        ("filter_organization", "92"),
-        ("filter_reg_date_from", &start_date),
-        ("filter_reg_date_to", &end_date),
-        ("nav-documents", &["page-", &page.to_string()].concat()),
-    ];
     let req = client.get_with_params(params).await?;
     let html = String::from_utf8(req.1.to_vec())?;
     Ok(html)

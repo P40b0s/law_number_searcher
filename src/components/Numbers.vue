@@ -8,7 +8,7 @@ import { RefreshOutlined } from "@vicons/material";
 import Loader from './loaders/Loader.vue'
 </script>
 <template lang="pug">
-n-tooltip(style="max-width:200px" v-if="props.alternative_publication_site")
+n-tooltip(style="max-width:200px" v-if="props.alternative_publication_site && props.numbers.length > 0")
   template(#trigger)
     n-button.refresh-button(@click="check_alternative" :loading="check_is_active" :disabled="check_btn_disabled" icon-placement="left" v-if="props.alternative_publication_site") Проверка
       template(#icon)

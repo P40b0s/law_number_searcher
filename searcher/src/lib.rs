@@ -17,7 +17,8 @@ pub struct Dictionary
     /// 1 - кастомная имлементация парсера под конкретный signatory_authority id 
     /// 2 - для проверки номера документ небыл найден, значит за год нет ни одного документа
     /// -1 - данный документ не поддерживается
-    pub parser_type: i8
+    pub parser_type: i8,
+    pub number_example: Option<String>
 }
 impl Into<Dictionary> for SignatoryAuthority
 {
@@ -27,7 +28,8 @@ impl Into<Dictionary> for SignatoryAuthority
         {
             id: self.id,
             name: self.name,
-            parser_type: 0
+            parser_type: 0,
+            number_example: None
         }
     }
 }
@@ -39,14 +41,17 @@ impl Into<Dictionary> for DocumentType
         {
             id: self.id,
             name: self.name,
-            parser_type: 0
+            parser_type: 0,
+            number_example: None
         }
     }
 }
+
 pub struct Searcher{}
 ///так как DocumentType и signatory authority одинаковые и идут с весами которые нам ненужны, но отсуствует поле что для них есть парсер которое нам как раз нужно, сделаем новую структуру и будет все конвертить в нее
 impl Searcher
 {
+    #[no_mangle]
     pub async fn get_signatory_authorites() -> Result<Vec<Dictionary>, SearcherError>
     {
         let organs = publication_api::PublicationApi::get_signatory_authorites().await?;
@@ -60,6 +65,7 @@ impl Searcher
         Ok(organs)
     }
 
+    #[no_mangle]
     pub async fn get_types(sa: &str, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<Dictionary>, SearcherError>
     {
         let types = publication_api::PublicationApi::get_documents_types_by_signatory_authority(sa).await?;
@@ -75,6 +81,7 @@ impl Searcher
             if let Some(f_n) = first_number
             {
                 let support = plugin.number_is_support(&f_n);
+               
                 if support
                 {
                     d.parser_type = organ_parser
@@ -83,6 +90,7 @@ impl Searcher
                 {
                     d.parser_type = -1;
                 }
+                d.number_example = Some(f_n);
             }
             else 
             {
@@ -106,6 +114,7 @@ impl Searcher
     //     Ok(ids)
     // }
 
+    #[no_mangle]
     fn organ_parser_type(sa: &str) -> i8
     {
         let plugin = PLUGINS.get_number_extractor_plugin(sa);
@@ -118,6 +127,7 @@ impl Searcher
             1
         }
     }
+    #[no_mangle]
     ///получаем все номера документов за текущий год
     pub async fn get_exists_numbers(signatory_authority: &str, doc_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<String>, SearcherError>
     {
@@ -144,7 +154,7 @@ impl Searcher
         let result: Vec<String> = docs.into_iter().map(|d| d.number).collect();
         Ok(result)
     }
-
+    #[no_mangle]
     /// получение всех пропущеных номеров
     pub async fn get_lost_numbers(signatory_authority: &str, doc_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<String>, SearcherError>
     {
@@ -154,6 +164,7 @@ impl Searcher
         let skipped = plugin.get_skip_numbers(doc_type, numbers)?;
         Ok(skipped)
     }
+    #[no_mangle]
     /// получение всех пропущеных номеров
     pub async fn get_alternative_site_numbers(signatory_authority: &str, doc_type: &str, year: u32, sender: Option<tokio::sync::mpsc::Sender<u32>>) -> Result<Vec<String>, SearcherError>
     {
@@ -163,13 +174,14 @@ impl Searcher
         let skipped = plugin.get_skip_numbers(doc_type, numbers)?;
         Ok(skipped)
     }
+    #[no_mangle]
     /// получение номера первого документа из списка
     pub async fn get_first_number(signatory_authority: &str, doc_type: &str) -> Result<Option<String>, SearcherError>
     {
         let first = publication_api::PublicationApi::get_first_document(signatory_authority, doc_type).await?;
         Ok(first.and_then(|n| Some(n.number)))
     }
-
+    #[no_mangle]
     pub fn get_alternative_publ_site(sa: &str) -> Option<&str>
     {
         let plugin = PLUGINS.get_off_site_parser(sa);
@@ -182,7 +194,7 @@ impl Searcher
             None
         }
     }
-
+    #[no_mangle]
     pub async fn check_alternative_publ_site_info(sa: &str, doc_type: &str, year: u32) -> Result<Vec<String>, SearcherError>
     {
         let plugin = PLUGINS.get_off_site_parser(sa);

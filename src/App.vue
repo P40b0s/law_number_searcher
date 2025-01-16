@@ -37,7 +37,7 @@ n-config-provider(:theme="theme" :theme-overrides="themeOverrides")
             theme-manager
         .main-content
           MainView
-        .footer footer
+        .footer
       n-global-style
 </template>
 

@@ -3,6 +3,9 @@ name = "searcher"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+crate-type = ["dylib", "rlib"]
+
 [dependencies]
 logger = {git = "https://github.com/P40b0s/logger.git"}
 utilites = {git = "https://github.com/P40b0s/help_utilites.git", package = "utilites"}
