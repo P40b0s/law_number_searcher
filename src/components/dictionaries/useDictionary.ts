@@ -123,7 +123,7 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                 }),
                 option.numberExample ? h(NTooltip,
                 {
-
+                    placement: 'left'
                 },
                 {
                     trigger:() => h(NTag , {type: 'info'}, {default:()=> option.numberExample}),

@@ -1,6 +1,6 @@
 use hashbrown::HashMap;
-use super::{default::DefaultPlugin, plugin_trait::NumberExtractorPlugin, prezident::PrezidentPlugin, OffSiteParser};
-use crate::{extractors::{bash::BashOffSiteParser, default::DefaultParser}, signatory_authorites, ExtractorError};
+use super::{default::DefaultPlugin, plugin_trait::NumberExtractorPlugin, OffSiteParser};
+use crate::{extractors::bash::BashOffSiteParser, signatory_authorites, ExtractorError};
 
 
 
@@ -142,26 +142,10 @@ impl<'a> ExtractorManager<'a>
         let mut registrator = PluginRegistrator::new();
         
         registrator.register_plugin("default", DefaultPlugin{});
-        registrator.register_plugin(signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, PrezidentPlugin{});
-        registrator.register_all(signatory_authorites::ГЛАВА_РЕСПУБЛИКИ_БАШКОРТОСТАН, super::bash::HeadPlugin::new(), BashOffSiteParser{});
-        registrator.register_all(signatory_authorites::РЕСПУБЛИКА_БАШКОРТОСТАН, super::bash::RegionPlugin::new(), BashOffSiteParser{});
-        // let mut hm = HashMap::new();
-        // let default_plugin = Box::new(DefaultPlugin{});
-        // let prez_plugin: Box<dyn NumberExtractorPlugin> = Box::new(PrezidentPlugin{});
-        // let bash_plugin = super::bash::CustomPlugin::get_plugin();
-        // hm.insert(prez_plugin.signatory_authority().to_owned(), prez_plugin);
-        // hm.insert(bash_plugin.signatory_authority().to_owned(), bash_plugin);
-        // hm.insert(default_plugin.signatory_authority().to_owned(), default_plugin);
-        // Self
-        // {
-        //     extractors: hm
-        // }
-        // add_plugins!(
-        //     ["default", DefaultPlugin{}, None::<DefaultParser>],
-        //     [signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, PrezidentPlugin{}, None::<DefaultParser>],
-        //     [signatory_authorites::ГЛАВА_РЕСПУБЛИКИ_БАШКОРТОСТАН, super::bash::HeadPlugin::new(), Some(BashOffSiteParser{})],
-        //     [signatory_authorites::РЕСПУБЛИКА_БАШКОРТОСТАН, super::bash::RegionPlugin::new(), Some(BashOffSiteParser{})]
-        // );
+        //registrator.register_plugin(signatory_authorites::ПРЕЗИДЕНТ_РОССИЙСКОЙ_ФЕДЕРАЦИИ, PrezidentPlugin{});
+        registrator.register_all(signatory_authorites::ГЛАВА_РЕСПУБЛИКИ_БАШКОРТОСТАН, super::bash::HeadPlugin::new(), BashOffSiteParser::new());
+        registrator.register_parser(signatory_authorites::РЕСПУБЛИКА_БАШКОРТОСТАН, BashOffSiteParser::new());
+        registrator.register_parser(signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ, super::burat::BuryatOffSiteParser::new());
         let extractor = registrator.into();
         extractor
         

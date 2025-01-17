@@ -10,18 +10,20 @@ pub struct Number
     pub number: u32,
     pub postfix: Option<String>,
     //хотел сделать ссылки, но если брать префикс и постфикс из регекса то малыми жертвами ссылки сделать не получится
+    //TODO попробовать заменить на Arc
     pub prefix: Option<String>
 }
 
-pub static CLEAR_NUMBER_RE: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^\d{1,4}").unwrap());
+
 pub trait NumberExtractorPlugin<'a> : 'a where Self: Send + Sync
 {
+    ///uid органа подписавшего документ
     fn signatory_authority(&self) -> &'static str;
-    ///url сайта где официально опубликовываются данные докуенты (кроме publication.pravo.gov.ru)
-    //fn official_publication_url(&self) -> Option<&'static str>;
+    ///чистый номер без букв и символов, для вычисления очередности
     fn get_raw_number<'b>(&'a self, act_type: &str,  number: &'b str) -> Result<Number, crate::error::ExtractorError>;
+    ///поддерживается ли данный номер текущим парсером
     fn number_is_support(&'a self, number: &str) -> bool;
-    //fn check_numbers_on_alternative_site(&'a self, year: u32) -> BoxFuture<'a, Result<Option<Vec<String>>, crate::error::ExtractorError>>;
+    ///получение списка пропущеных номеров
     fn get_skip_numbers<'b: 'a>(&'a self,  act_type: &str, numbers: Vec<String>) -> Result<Vec<String>, crate::error::ExtractorError>
     {
         if numbers.len() == 0
@@ -76,6 +78,9 @@ pub trait NumberExtractorPlugin<'a> : 'a where Self: Send + Sync
 
 pub trait OffSiteParser where Self: Send + Sync
 {
+    ///страница альтернативного сайта опубликования
     fn official_publication_url(&self) -> &'static str;
-    fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32) -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>;
+    ///проверка найденых пропущеных номеров на альтернативном сайте опубликования
+    fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32) 
+    -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>;
 }

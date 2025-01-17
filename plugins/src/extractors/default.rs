@@ -43,20 +43,3 @@ impl<'a> NumberExtractorPlugin<'a> for DefaultPlugin
         CLEAR_NUMBER_RE.find(number).is_some()
     }
 }
-
-///create for use as type in None statement
-pub struct DefaultParser {}
-impl OffSiteParser for DefaultParser
-{
-    fn official_publication_url(&self) -> &'static str
-    {
-        ""
-    }
-    fn check_numbers_on_alternative_site<'a>(& self, _sa: &'a str, _act_type: &'a str, _year: u32) -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>
-    {
-        Box::pin(async move 
-        {
-            Ok(Vec::new())
-        })
-    }
-}

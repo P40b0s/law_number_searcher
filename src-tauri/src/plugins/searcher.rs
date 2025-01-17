@@ -197,15 +197,52 @@ pub async fn check_alternative_publ_info<R: Runtime>(payload: Vec<Number>, app: 
             &first.signatory_authority.to_string(),
             &first.type_id.to_string(),
             first.year).await?;
+        let source: Option<(uuid::Uuid, uuid::Uuid, u32)> = payload
+            .first()
+            .and_then(|f| Some((f.signatory_authority.clone(), f.type_id.clone(), f.year)));
         let mut old_numbers = payload;
-        for n in old_numbers.iter_mut()
+        for n in &new_numbers
         {
-            if n.status == 0 && new_numbers.contains(&n.number)
+            if let Some(on) = old_numbers.iter_mut().find(|f| &f.number == n)
             {
-                n.status = 2;
-                let _ = db.repository.save_number(n.into()).await;
+                if on.status == 0
+                {
+                    on.status = 2;
+                    let _ = db.repository.save_number(on.into()).await;
+                }
+            }
+            else 
+            {
+                if let Some(s) = source
+                {
+                    old_numbers.push(Number 
+                        { 
+                            signatory_authority: s.0,
+                            type_id: s.1,
+                            year: s.2,
+                            number: n.to_owned(),
+                            note: None,
+                            status: 2 
+                        });    
+                } 
             }
         }
+        // for n in old_numbers.iter_mut()
+        // {
+        //     if new_numbers.contains(&n.number)
+        //     {
+        //         if n.status == 0
+        //         {
+        //             n.status = 2;
+        //             let _ = db.repository.save_number(n.into()).await;
+        //         }
+        //     }
+        //     //если на сайте есть такой номер а у нас нет
+        //     else 
+        //     {
+               
+        //     }
+        // }
         return Ok(old_numbers);
     }
     logger::info!("В запрос не передано ни одного номера, возват изначальной коллекции");

@@ -1,6 +1,6 @@
 [package]
 name = "number_searcher"
-version = "0.1.5"
+version = "0.1.7"
 description = "Document skipped numbers searcher"
 authors = ["Alex_Xar <P40b0s@gmail.com>"]
 edition = "2021"

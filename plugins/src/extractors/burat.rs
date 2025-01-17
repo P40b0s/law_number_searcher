@@ -1,76 +1,106 @@
 use std::cell::OnceCell;
+use std::sync::{Arc, LazyLock};
 use std::u32;
 use futures::future::BoxFuture;
 use logger::info;
-use regex::Match;
+use regex::{Match, Regex};
 use scraper::Selector;
-use utilites::http::{HyperClient, Uri};
-use crate::{create_plugin, ExtractorError};
+use utilites::http::{HeaderName, HyperClient, Uri, ACCEPT, ACCEPT_ENCODING, CONNECTION, CONTENT_TYPE, HOST, USER_AGENT};
+use crate::{create_parser, create_plugin, ExtractorError};
 use super::plugin_trait::Number;
 use super::{number_extractors, signatory_authorites, types, OffSiteParser};
 use super::NumberExtractorPlugin;
 
-//Some("https://npa.bashkortostan.ru"),
-
-create_plugin!(HeadPlugin,
-    signatory_authorites::ГЛАВА_РЕСПУБЛИКИ_БУРЯТИЯ,
-    r"(?<number>\d{1,4})(?<postfix>-р)",
-    r"(?<number>\d{1,4})");
-
-create_plugin!(RegionPlugin,
-    signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ,
-    r"(?<number>\d{1,4})(?<postfix>-[VIX]+)");
 
 
-pub struct BuryatOffSiteParser{}
-impl OffSiteParser for BuryatOffSiteParser
+create_parser!(BuryatOffSiteParser,
+    "https://egov-buryatia.ru",
+    "https://egov-buryatia.ru/npa_template",[],
+     parse);
+
+async fn parse(_regexes: Arc<LazyLock<Vec<Regex>>>, api_url: &str, sa: &str, act_type: &str, year: u32) 
+-> Result<Vec<String>, crate::error::ExtractorError>
 {
-    fn official_publication_url(&self) -> &'static str
+    let mut page = 1;
+    let mut html = query(year, page, sa, act_type, api_url).await?;
+    let mut numbers = Vec::new();
+    //при достижении последней страницы, все последующие страницы будут отображать первыую страницу, так что как только номер совпадет выходим из while
+    'wl: while let Some(items) = scrap(&html)
     {
-        "https://egov-buryatia.ru/npa_template"
-    }
-    fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32) 
-    -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>
-    {
-        Box::pin(async move 
+        for name in items
         {
-            let regexes: Option<std::sync::LazyLock<Vec<regex::Regex>>> = match sa
+            if !name.is_empty()
             {
-                signatory_authorites::ГЛАВА_РЕСПУБЛИКИ_БУРЯТИЯ => Some(HeadPlugin::get_regexes()),
-                signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ => Some(RegionPlugin::get_regexes()),
-                _ => None
-            };
-            if regexes.is_none()
-            {
-                return Err(ExtractorError::ActTypeNotSupported(["Не найден регекс к текущему органу: ", sa].concat()));
-            }
-            let regexes = regexes.unwrap();
-            let mut page = 1;
-            let mut html = query(year, page, sa, act_type, self.official_publication_url()).await?;
-            let mut numbers = Vec::new();
-            while let Some(items) = scrap(&html)
-            {
-                for name in items
+                if numbers.contains(&name)
                 {
-                    for re in regexes.iter()
-                    {
-                        if let Some(mch) = re.find(&name)
-                        {
-                            numbers.push(mch.as_str().to_owned());
-                        }
-                    }
+                    break 'wl;
                 }
-                page += 1;
-                html = query(year, page, sa, act_type, self.official_publication_url()).await?;
+                else 
+                {
+                    numbers.push(name);
+                }
             }
-            Ok(numbers)
-        })
+        }
+        page += 1;
+        html = query(year, page, sa, act_type, api_url).await?;
     }
+    Ok(numbers)
 }
+
+// create_plugin!(RegionPlugin,
+//     signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ,
+//     r"(?<number>\d{1,4})(?<postfix>-[VIX]+)");
+
+
+// pub struct B{}
+// impl OffSiteParser for B
+// {
+//     fn official_publication_url(&self) -> &'static str
+//     {
+//         "https://egov-buryatia.ru/npa_template"
+//     }
+//     fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, act_type: &'a str, year: u32) 
+//     -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>
+//     {
+//         Box::pin(async move 
+//         {
+//             let regexes: Option<std::sync::LazyLock<Vec<regex::Regex>>> = match sa
+//             {
+//                 signatory_authorites::ГЛАВА_РЕСПУБЛИКИ_БУРЯТИЯ => Some(HeadPlugin::get_regexes()),
+//                 signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ => Some(RegionPlugin::get_regexes()),
+//                 _ => None
+//             };
+//             if regexes.is_none()
+//             {
+//                 return Err(ExtractorError::ActTypeNotSupported(["Не найден регекс к текущему органу: ", sa].concat()));
+//             }
+//             let regexes = regexes.unwrap();
+//             let mut page = 1;
+//             let mut html = query(year, page, sa, act_type, self.official_publication_url()).await?;
+//             let mut numbers = Vec::new();
+//             while let Some(items) = scrap(&html)
+//             {
+//                 for name in items
+//                 {
+//                     numbers.push(mch.as_str().to_owned());
+//                 }
+//                 page += 1;
+//                 html = query(year, page, sa, act_type, self.official_publication_url()).await?;
+//             }
+//             Ok(numbers)
+//         })
+//     }
+// }
 fn client(uri: &str) -> HyperClient
 {
     let uri: Uri = uri.parse().unwrap();
-    utilites::http::HyperClient::new(uri)
+    let client = utilites::http::HyperClient::new(uri).with_headers(vec![
+        (ACCEPT_ENCODING, "gzip, deflate, br, zstd"),
+        (ACCEPT, "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"),
+        (HOST, "egov-buryatia.ru"),
+        (USER_AGENT, "Mozilla/5.0 (X11; Linux x86_64; rv:134.0) Gecko/20100101 Firefox/134.0")
+    ]);
+    client
 }
 
 fn scrap(html: &String) -> Option<Vec<String>>
@@ -150,8 +180,8 @@ mod tests
     async fn test_parser()
     {
         let _ = logger::StructLogger::new_custom(logger::LevelFilter::Debug, Some(&[("html5ever", logger::LevelFilter::Info), ("selectors::matching", logger::LevelFilter::Info)]));
-        let br = super::BuryatOffSiteParser{};
-        let res = br.check_numbers_on_alternative_site(signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ, types::ЗАКОН, 2025).await.unwrap();
+        let br = super::BuryatOffSiteParser::new();
+        let res = br.check_numbers_on_alternative_site(signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ, types::ЗАКОН, 2024).await.unwrap();
         for href in res
         {
             logger::debug!("документ: {}",  href);

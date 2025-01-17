@@ -2546,7 +2546,7 @@ dependencies = [
 
 [[package]]
 name = "number_searcher"
-version = "0.1.5"
+version = "0.1.7"
 dependencies = [
  "logger 0.1.2 (git+https://github.com/P40b0s/logger.git)",
  "searcher",
@@ -5208,7 +5208,7 @@ checksum = "b6c140620e7ffbb22c2dee59cafe6084a59b5ffc27a8859a5f0d494b5d52b6be"
 [[package]]
 name = "utilites"
 version = "0.1.0"
-source = "git+https://github.com/P40b0s/help_utilites.git#ecbf5e593f09a05cfe03dc4e68531a727a85161c"
+source = "git+https://github.com/P40b0s/help_utilites.git#8d28255c15b75b8bf4a0586a17ec2a79351f7b45"
 dependencies = [
  "base64ct",
  "blake2",

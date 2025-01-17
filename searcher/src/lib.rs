@@ -200,7 +200,7 @@ impl Searcher
         let plugin = PLUGINS.get_off_site_parser(sa);
         if let Some(p) = plugin
         {
-            let numbers = p.check_numbers_on_alternative_site(sa, doc_type, year).await?;
+            let mut numbers = p.check_numbers_on_alternative_site(sa, doc_type, year).await?;
             Ok(numbers)
         }
         else 
