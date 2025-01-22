@@ -2,10 +2,31 @@ use std::sync::{Arc, LazyLock};
 pub use error::SearcherError;
 use plugins::ExtractorManager;
 pub use publication_api::{SignatoryAuthority, PublicationApiError, DocumentType};
-use serde::{Deserialize, Serialize};
+use serde::{Deserialize, Serialize, Serializer};
 use utilites::Date;
 mod error;
 static PLUGINS: LazyLock<Arc<ExtractorManager>> = LazyLock::new(|| Arc::new(ExtractorManager::new()));
+
+#[derive(Deserialize, Debug)]
+pub enum DictionaryType
+{
+    Organ,
+    Type
+}
+
+impl serde::Serialize for DictionaryType
+{
+    fn serialize<S>(&self, s: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        match self
+        {
+            DictionaryType::Organ => s.serialize_str("organ"),
+            DictionaryType::Type => s.serialize_str("type")
+        }
+    }
+}
 #[derive(Deserialize, Debug, Serialize)]
 #[serde(rename_all="camelCase")]
 pub struct Dictionary
@@ -18,8 +39,11 @@ pub struct Dictionary
     /// 2 - для проверки номера документ небыл найден, значит за год нет ни одного документа
     /// -1 - данный документ не поддерживается
     pub parser_type: i8,
-    pub number_example: Option<String>
+    pub number_example: Option<String>,
+    pub data_type: DictionaryType,
+    pub alternative_site: Option<String>
 }
+
 impl Into<Dictionary> for SignatoryAuthority
 {
     fn into(self) -> Dictionary 
@@ -29,7 +53,9 @@ impl Into<Dictionary> for SignatoryAuthority
             id: self.id,
             name: self.name,
             parser_type: 0,
-            number_example: None
+            number_example: None,
+            data_type: DictionaryType::Organ,
+            alternative_site: None
         }
     }
 }
@@ -42,7 +68,9 @@ impl Into<Dictionary> for DocumentType
             id: self.id,
             name: self.name,
             parser_type: 0,
-            number_example: None
+            number_example: None,
+            data_type: DictionaryType::Type,
+            alternative_site: None
         }
     }
 }
@@ -58,7 +86,10 @@ impl Searcher
         let organs: Vec<Dictionary> = organs.into_iter().map(|o| 
             {
                 let mut d: Dictionary = o.into();
+                let parser = Self::get_alternative_publ_site(&d.id);
                 d.parser_type = Self::organ_parser_type(&d.id);
+                d.data_type = DictionaryType::Organ;
+                d.alternative_site = parser.as_ref().and_then(|p| Some(p.to_string()));
                 d
             }
         ).collect();
@@ -76,12 +107,12 @@ impl Searcher
         for (i, dt) in types.into_iter().enumerate()
         {
             let mut d: Dictionary = dt.into();
+            d.data_type = DictionaryType::Type;
             let first_number = Self::get_first_number(sa, &d.id).await?;
             let organ_parser = Self::organ_parser_type(sa);
             if let Some(f_n) = first_number
             {
                 let support = plugin.number_is_support(&f_n);
-               
                 if support
                 {
                     d.parser_type = organ_parser
@@ -218,6 +249,8 @@ mod tests
 {
     use regex::Regex;
 
+    use crate::Dictionary;
+
     #[tokio::test]
     async fn test_get_organs()
     {
@@ -291,9 +324,25 @@ mod tests
         { 
             logger::error!("ERROR!");
         };
-
         //let Some(caps) = RE.captures(text) else { return };
-       
+    } 
+
+    #[test]
+    /// получать карточку каждого документа это очень долго, есть вариант взять номер из полного наименования
+    fn test_serialize_dictionary()
+    {
+        let _ = logger::StructLogger::new_default();
+        let d = Dictionary
+        {
+            id: "123321".to_owned(),
+            name: "Закон".to_owned(),
+            parser_type: 2,
+            number_example: Some("123-AP".to_owned()),
+            data_type: crate::DictionaryType::Organ,
+            alternative_site: Some("www.rrr.ru".to_owned())
+        };
+        let string = serde_json::to_string(&d).unwrap();
+        logger::info!("{}", string);
     } 
 
     // 'Федеральный закон от 22.06.2024 № 160-ФЗ\n "О внесении изменений в статью 19 Федерального закона "О крестьянском (фермерском) хозяйстве" и Федеральный закон "О развитии сельского хозяйства"'

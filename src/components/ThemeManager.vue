@@ -54,7 +54,6 @@ watch(checked, (n, o) =>
 {
     if(n)
     {
-
         set_dark()
     }
     else

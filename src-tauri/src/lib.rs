@@ -24,7 +24,12 @@ pub mod types;
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub async fn run() 
 {
-    let _ = logger::StructLogger::new_custom(logger::LevelFilter::Debug, Some(&[("html5ever", logger::LevelFilter::Info), ("selectors::matching", logger::LevelFilter::Info)]));
+    
+    let _ = logger::StructLogger::new_custom(
+        logger::LevelFilter::Debug,
+        Some(&[("html5ever", logger::LevelFilter::Info),
+                                         ("selectors::matching", logger::LevelFilter::Info),
+                                         ("sqlx::query", logger::LevelFilter::Info)]));
     tauri::async_runtime::set(tokio::runtime::Handle::current());
     let repo = Arc::new(db::AppRepository {repository: Repository::new().await.expect("Возникли проблемы с инициализацией базы данных!")} );
     let app_state = Arc::new(AppState{});

@@ -78,8 +78,6 @@ async fn query(year: u32, page: u32, sa: &str, act_type: &str, uri: &str) -> Res
 {
     //https://npa.bashkortostan.ru/?filter_name=&filter_type=5&filter_organization=92&filter_reg_date_from=01.01.2024&filter_reg_date_to=31.12.2024&filter_pub_date_from=&filter_pub_date_to=&filter_reg_number=%D0%A3%D0%93-12
     let client = client(uri);
-    //date_doc_from=2024-01-01&date_doc_to=2024-12-31&date_public_from=&date_public_to=&TIP_DOC=%D0%A3%D0%BA%D0%B0%D0%B7&ORGAN_VLASTI=%D0%93%D0%BB%D0%B0%D0%B2%D0%B0+%D0%A0%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B8+%D0%91%D1%83%D1%80%D1%8F%D1%82%D0%B8%D1%8F
-    //nav-documents=page-2
     let start_date = [year.to_string(), "-01-01".to_owned()].concat();
     let end_date = [year.to_string(), "-12-31".to_owned()].concat();
     let doc_type = match act_type
@@ -92,7 +90,6 @@ async fn query(year: u32, page: u32, sa: &str, act_type: &str, uri: &str) -> Res
     };
     let signatory_authority = match sa
     {
-        //сцуко с + работает но + перобразуется в симолы url и уже не работает
         signatory_authorites::РЕСПУБЛИКА_БУРЯТИЯ => "Народный Хурал",
         signatory_authorites::ГЛАВА_РЕСПУБЛИКИ_БУРЯТИЯ => "Глава Республики Бурятия",
         _ => ""
@@ -114,7 +111,6 @@ async fn query(year: u32, page: u32, sa: &str, act_type: &str, uri: &str) -> Res
 mod tests
 {
     use scraper::Selector;
-
     use crate::{extractors::OffSiteParser, signatory_authorites, types};
 
     #[test]

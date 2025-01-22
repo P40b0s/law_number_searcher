@@ -9,5 +9,7 @@ type Dictionary =
      * 
      */
     parserType: number,
-    numberExample?: string
+    numberExample?: string,
+    dataType: 'organ' | 'type',
+    alternativeSite?: string
 }

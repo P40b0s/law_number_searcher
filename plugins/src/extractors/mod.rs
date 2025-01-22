@@ -147,13 +147,8 @@ mod tests
     {
         let _ = logger::StructLogger::new_default();
         //create_plugin2!("1", "2", "3", "4");
-        
         //create_plugin!(TestStuct, "asqwqweqweqwe", None, "1", "2", "3", |_| Box::pin(async move {Ok(None)}));
         //let ts = TestStuct::get_plugin();
-
         //logger::debug!("{:?}", ts.signatory_authority());
     }
 }
-
-
-

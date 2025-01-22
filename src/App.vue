@@ -7,15 +7,10 @@ import { invoke } from "@tauri-apps/api/core";
 import { darkTheme, lightTheme, NConfigProvider, NNotificationProvider, NModalProvider, type GlobalThemeOverrides, NGlobalStyle} from 'naive-ui';
 import { useTheme } from './composables/useTheme.ts';
 import { useSelectHeight } from './composables/useSelechtHeight.ts';
+import Searcher from './components/Searcher.vue';
 const greetMsg = ref("");
 const name = ref("");
 const { theme } = useTheme();
-const {height} = useSelectHeight();
-async function greet() 
-{
-  // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  greetMsg.value = await invoke("greet", { name: name.value });
-}
 const themeOverrides: GlobalThemeOverrides = {
     Scrollbar: {
         width: '8px',
@@ -30,43 +25,36 @@ const themeOverrides: GlobalThemeOverrides = {
 n-config-provider(:theme="theme" :theme-overrides="themeOverrides")
   n-notification-provider
     n-modal-provider
-      main.container
+      .container
         .header
           .header-left 
           .header-right
             theme-manager
         .main-content
-          MainView
-        .footer
+          searcher
       n-global-style
 </template>
 
 <style>
-/* .container 
-{
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  justify-items: center;
-  text-align: center;
-} */
+
 .container {
-  display: grid; 
-  grid-template-columns: 5px 1fr auto; 
-  grid-template-rows: minmax(30px 50px) 1fr min-content; 
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: 5px 1fr 10px 5px; 
+  grid-template-rows: minmax(30px 50px) 50vh; 
   gap: 0px 0px; 
   font-family: 'Source Code Pro';
   grid-template-areas: 
-    "header header header"
-    ". main-content right-content"
-    ". footer footer"; 
+    "header header header header"
+    ". main-content main-content ."
 }
 .header 
 {
   grid-area: header;
   background-color: var(--n-card-color);
   display: flex;
+  align-items: center;
   flex-direction: row;
   width: 100%;
   height: 100%;
@@ -78,39 +66,30 @@ n-config-provider(:theme="theme" :theme-overrides="themeOverrides")
 }
 .header-right
 {
-  height: 40px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 5px;
 }
-.footer { grid-area: footer; }
-.right-content { grid-area: right-content; }
-.main-content { grid-area: main-content; }
-
-#greet-input {
-  margin-right: 5px;
+.main-content 
+{ 
+  grid-area: main-content;
+  height: 100%;
+  width: 100%;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    color: #f6f6f6;
-    background-color: #2f2f2f;
-  }
-
-  a:hover {
-    color: #24c8db;
-  }
-
-  input,
-  button {
-    color: #ffffff;
-    background-color: #0f0f0f98;
-  }
-  button:active {
-    background-color: #0f0f0f69;
-  }
-} */
-/* #app 
+::-webkit-scrollbar 
 {
-  background-color: var(--background-color);
-  transition: background-color 2.3s ease, color 2.3s ease;
-} */
+  width: 10px;
+}
+ 
+::-webkit-scrollbar-thumb 
+{
+  border-radius: 3px;
+  background-color: var(--n-card-color);
+  background-color: #00FF01;
+  color: #00FF01;
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
 
 </style>

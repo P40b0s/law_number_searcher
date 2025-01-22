@@ -33,8 +33,8 @@ import { useSelectHeight } from '../composables/useSelechtHeight';
                         n-progress.progress( type="line" :height="15" :border-radius="4" :fill-border-radius="0" indicator-text-color="#874a0d" indicator-placement='inside' processing :percentage="process2")
                     div {{process_description2}}
         n-button(@click="start_search" :loading="search_in_process" :disabled="btn_disabled") Поиск
-n-divider
-numbers(v-model:numbers="numbers" :organ_name="selected_organ?.name" :type_name="selected_type?.name" :alternative_publication_site="alternative_publication_site")
+    n-divider
+    numbers(v-model:numbers="numbers" :organ_name="selected_organ?.name" :type_name="selected_type?.name" :alternative_publication_site="alternative_publication_site")
 </template>
 
 
@@ -58,6 +58,7 @@ const {height} = useSelectHeight();
 const select_organ = (org: Dictionary|null) =>
 {
     selected_organ.value = org;
+    numbers.value = [];
 }
 const select_type = (tp: Dictionary|null) =>
 {
@@ -138,6 +139,7 @@ const start_search = async () =>
     display: flex;
     flex-direction: column;
     gap: 5px;
+    height: 100%;
 }
 .progress-bar
 {

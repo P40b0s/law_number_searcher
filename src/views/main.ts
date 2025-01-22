@@ -15,85 +15,8 @@ import { searcher_commands } from '../tauri/commands';
 export default defineComponent({
     setup (props) 
     {
-    const tab_view = () =>
-    {
-        return h(NTabs,
-            {
-                justifyContent: 'space-evenly',
-                type: 'line',
-                size: 'large',
-                animated: true,
-                defaultValue: "searcher",
-                style:
-                {
-                      height: '100%'
-                }
-            },
-            {
-                default:() => [searcher_tab()]
-            }
-        )
-    }
-
-    const searcher_tab = () => 
-    {
-        return h(NTabPane,
-            {
-                tab: 'Поиск',
-                name: 'searcher',
-                style:
-                {
-                    height: '100%'
-                }
-            },
-            {
-                default:() => h(Searcher)
-            }
-        )
-    }
-
-    const search_view = () => h(Searcher);
-    const temp_tab = () => 
-        {
-            return h(NTabPane,
-                {
-                    tab: 'Отправители',
-                    name: 'temp',
-                    style:
-                    {
-                        height: '100%'
-                    }
-                },
-                {
-                    default:() =>
-                    h('div', "asdasd asdasd asd asd asd asd ")
-                }
-            )
-        }
-    // const settings_tab = () => 
-    // {
-    //     return h(NTabPane,
-    //         {
-    //             tab: 'Настройки',
-    //             name: 'set',
-    //             style:
-    //             {
-    //                 height: '100%'
-    //             }
-    //         },
-    //         {
-    //             default:() => 
-    //             h(Suspense, 
-    //             null,
-    //             {
-    //                 default:()=> h(SettingsEditor),
-    //                 fallback:() => h(Loader2)
-    //             })
-    //         }
-    //     )
-    // }
-
-    return {tab_view, search_view}
+        const search_view = () => h(Searcher);
+        return {search_view}
     },
     render ()
     {

@@ -50,57 +50,6 @@ async fn parse(regexes: Arc<LazyLock<Vec<Regex>>>, api_url: &str, sa: &str, _act
     }
     Ok(numbers)
 }
-
-// create_plugin!(RegionPlugin,
-//     signatory_authorites::РЕСПУБЛИКА_БАШКОРТОСТАН,
-//     r"(?<number>\d{1,4})(?<postfix>-з)");
-
-
-// pub struct BashOffSiteParser{}
-// impl OffSiteParser for BashOffSiteParser
-// {
-//     fn official_publication_url(&self) -> &'static str
-//     {
-//         "https://npa.bashkortostan.ru"
-//     }
-//     fn check_numbers_on_alternative_site<'a>(&'a self, sa: &'a str, _act_type: &'a str, year: u32) 
-//     -> BoxFuture<'a, Result<Vec<String>, crate::error::ExtractorError>>
-//     {
-//         Box::pin(async move 
-//         {
-//             let regexes: Option<std::sync::LazyLock<Vec<regex::Regex>>> = match sa
-//             {
-//                 signatory_authorites::ГЛАВА_РЕСПУБЛИКИ_БАШКОРТОСТАН => Some(HeadPlugin::get_regexes()),
-//                 signatory_authorites::РЕСПУБЛИКА_БАШКОРТОСТАН => Some(RegionPlugin::get_regexes()),
-//                 _ => None
-//             };
-//             if regexes.is_none()
-//             {
-//                 return Err(ExtractorError::ActTypeNotSupported(["Не найден регекс к текущему органу: ", sa].concat()));
-//             }
-//             let regexes = regexes.unwrap();
-//             let mut page = 1;
-//             let mut html = query(year, page, sa, self.official_publication_url()).await?;
-//             let mut numbers = Vec::new();
-//             while let Some(items) = scrap(&html)
-//             {
-//                 for name in items
-//                 {
-//                     for re in regexes.iter()
-//                     {
-//                         if let Some(mch) = re.find(&name)
-//                         {
-//                             numbers.push(mch.as_str().to_owned());
-//                         }
-//                     }
-//                 }
-//                 page += 1;
-//                 html = query(year, page, sa, self.official_publication_url()).await?;
-//             }
-//             Ok(numbers)
-//         })
-//     }
-// }
 fn client(uri: &str) -> HyperClient
 {
     let uri: Uri = uri.parse().unwrap();
@@ -165,8 +114,6 @@ async fn query(year: u32, page: u32, sa: &str, uri: &str) -> Result<String, supe
 mod tests
 {
     use scraper::Selector;
-
-   
     #[tokio::test]
     async fn test_raw_numbers()
     {

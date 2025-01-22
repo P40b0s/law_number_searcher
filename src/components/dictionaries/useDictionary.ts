@@ -2,7 +2,7 @@ import { NButton, NHighlight, NIcon, NSelect, NSkeleton, NTooltip, NProgress, ty
 import { CSSProperties, h, ref, RendererElement, RendererNode, VNode } from "vue";
 import { Result } from "../../tauri/abstract";
 import { SelectBaseOption, type Value } from "naive-ui/es/select/src/interface";
-import { BlockRound, ClearRound, CodeRound, DoneOutlineSharp, EmergencyRound, GradeOutlined, GradeRound, GradeSharp, NearbyErrorRound, PlaylistAddCheckCircleTwotone, RefreshOutlined } from "@vicons/material";
+import { AccountTreeRound, BlockRound, BuildCircleRound, ClearRound, CodeRound, DoneOutlineSharp, EmergencyRound, ErrorOutlineFilled, ForkRightRound, GradeOutlined, GradeRound, GradeSharp, NearbyErrorRound, PlaylistAddCheckCircleTwotone, RefreshOutlined } from "@vicons/material";
 import Loader from '../loaders/Loader1.vue';
 import {tauri_events} from '../../tauri/events';
 type Node =  VNode<RendererNode, RendererElement, {
@@ -57,7 +57,9 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     key: o.id,
                     parserType: o.parserType,
                     numberExample: o.numberExample,
-                    disabled: (o.parserType == -1 || o.parserType == 2)
+                    disabled: (o.parserType == -1 || o.parserType == 2),
+                    dataType: o.dataType,
+                    alternativeSite: o.alternativeSite
                 } as SelectedValue
                 return org;
             });
@@ -85,6 +87,204 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
             count.value++;
         return exists;
     };
+
+
+    const right_select_panel = (option: SelectOption & Dictionary) =>
+    {
+        const number_example = () =>
+        {
+            if(option.dataType == 'type' && option.numberExample)
+            {
+                return h(NTooltip,
+                    {
+                        placement: 'left'
+                    },
+                    {
+                        trigger:() => h(NTag , {type: 'info'}, {default:()=> option.numberExample}),
+                        default:() => "Шаблон номера для текущего вида документа",
+                    })
+            }
+        }
+
+        const parser_type = (type: number): [string, Node] =>
+        {
+            switch(type)
+            {
+                default:
+                case -1:
+                {
+                    return ["Формат номера не поддерживается", 
+                            h(NIcon,
+                                {
+                                    color: 'rgb(204,51,51)',
+                                    size: '25px',
+                                    style:
+                                    {
+                                        //filter: 'blur(1px)'
+                                    }   as CSSProperties
+                                },
+                                {
+                                    default: () => h(BlockRound)
+                                })
+                    ]
+                }
+                case 2:
+                {
+                    return ["Не найдено ни одного документа",
+                            h(NIcon,
+                                {
+                                    color: 'rgb(204,51,51)',
+                                    size: '25px',
+                                    style:
+                                    {
+                                        //filter: 'blur(1px)'
+                                    }   as CSSProperties
+                                },
+                                {
+                                    default: () => h(ErrorOutlineFilled)
+                                })
+                    ]
+                }
+            }
+        }
+        // const parser_type_for_types = (type: number): [string, Node] =>
+        // {
+        //     switch(type)
+        //     {
+        //         default:
+        //         case -1:
+        //         {
+        //             return ["Формат номера не поддерживается", 
+        //                     h(NIcon,
+        //                         {
+        //                             color: 'rgb(204,51,51)',
+        //                             size: '25px',
+        //                             style:
+        //                             {
+        //                                 //filter: 'blur(1px)'
+        //                             }   as CSSProperties
+        //                         },
+        //                         {
+        //                             default: () => h(BlockRound)
+        //                         })
+        //             ]
+        //         }
+        //         case 1:
+        //         {
+        //             return ["Используется специальный парсер",
+        //                     h(NIcon,
+        //                         {
+        //                             color: '#78e378',
+        //                             size: '25px',
+        //                             style:
+        //                             {
+        //                                 //filter: 'blur(1px)'
+        //                             }   as CSSProperties
+        //                         },
+        //                         {
+        //                             default: () => h(BuildCircleRound)
+        //                         })
+        //             ]
+        //         }
+        //         case 2:
+        //         {
+        //             return ["Не найдено ни одного документа",
+        //                     h(NIcon,
+        //                         {
+        //                             color: 'rgb(204,51,51)',
+        //                             size: '25px',
+        //                             style:
+        //                             {
+        //                                 //filter: 'blur(1px)'
+        //                             }   as CSSProperties
+        //                         },
+        //                         {
+        //                             default: () => h(ErrorOutlineFilled)
+        //                         })
+        //             ]
+        //         }
+        //     }
+        // }
+
+        const number_parser = () =>
+        {
+            if(option.dataType == 'organ' && option.parserType == 1)
+            {
+                return h(NTooltip, 
+                    {
+                        placement: 'left'
+                    },
+                    {
+                        default:() => "Используется специальный парсер для номера",
+                        trigger:() =>  h(NIcon,
+                            {
+                                color: '#78e378',
+                                size: '25px',
+                                style:
+                                {
+                                    //filter: 'blur(1px)'
+                                }   as CSSProperties
+                            },
+                            {
+                                default: () => h(BuildCircleRound)
+                            })
+                    })
+            }
+            if(option.dataType == 'type' && option.parserType != 0 && option.parserType != 1)
+            {
+                const ptype = parser_type(option.parserType);
+                return h(NTooltip, 
+                    {
+                        placement: 'left'
+                    },
+                    {
+                        default:() => ptype[0],
+                        trigger:() => ptype[1]
+                    })
+            }
+        }
+
+        const site_parser = () =>
+        {
+            if(option.dataType == 'organ' && option.alternativeSite)
+            {
+                return h(NTooltip, 
+                    {
+                        placement: 'left'
+                    },
+                    {
+                        default:() => "Есть парсер для альтернативного сайта опубликования " + option.alternativeSite,
+                        trigger:() =>  h(NIcon,
+                            {
+                                color: '#78e378',
+                                size: '25px',
+                                style:
+                                {
+                                }   as CSSProperties
+                            },
+                            {
+                                default: () => h(ForkRightRound)
+                            })
+                    })
+            }
+        }
+        // const panel = [];
+        // const ne = number_example();
+        // if(ne)
+        //     panel.push(ne);
+        // const np = number_parser();
+        // if(np)
+        //     panel.push(np);
+        // const sp = site_parser();
+        // if(sp)
+        //     panel.push
+        const panel =  [
+                number_example(),
+                number_parser(),
+                site_parser()  
+        ]
+        return panel.filter(f=>f != undefined);
+    }
 
     const label = (option: SelectOption & Dictionary): Node =>
     {
@@ -121,108 +321,8 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     } as CSSProperties
 
                 }),
-                option.numberExample ? h(NTooltip,
-                {
-                    placement: 'left'
-                },
-                {
-                    trigger:() => h(NTag , {type: 'info'}, {default:()=> option.numberExample}),
-                    default:() => "Шаблон номера для текущего вида документа",
-                }): [],
-                h(NTooltip, {
-                    placement: 'left'
-                },
-                {
-                    default:() => 
-                    {
-                        switch(option.parserType)
-                        {
-                            case -1:
-                            {
-                                return "Парсер не найден"
-                            }
-                            case 0:
-                            {
-                                return "Используется парсер по умолчанию"
-                            }
-                            case 1:
-                            {
-                                return "Используется специальный парсер"
-                            }
-                            case 2:
-                            {
-                                return "Не найдено ни одного документа"
-                            }
-                        }
-                    },
-                    trigger:() => 
-                    {
-                        switch(option.parserType)
-                        {
-                            case -1:
-                            {
-                                return  h(NIcon,
-                                    {
-                                        color: 'rgb(204,51,51)',
-                                        size: '25px',
-                                        style:
-                                        {
-                                            //filter: 'blur(1px)'
-                                        }   as CSSProperties
-                                    },
-                                    {
-                                        default: () => h(BlockRound)
-                                    })
-                            }
-                            case 0:
-                            {
-                                return  h(NIcon,
-                                    {
-                                        color: 'rgb(115,140,136)',
-                                        size: '25px',
-                                        style:
-                                        {
-                                            //filter: 'blur(1px)'
-                                        }   as CSSProperties
-                                    },
-                                    {
-                                        default: () => h(GradeRound)
-                                    })
-                            }
-                            case 1:
-                            {
-                                return  h(NIcon,
-                                    {
-                                        color: '#78e378',
-                                        size: '25px',
-                                        style:
-                                        {
-                                            //filter: 'blur(1px)'
-                                        }   as CSSProperties
-                                    },
-                                    {
-                                        default: () => h(GradeRound)
-                                    })
-                            }
-                            case 2:
-                            {
-                                return  h(NIcon,
-                                    {
-                                        color: 'rgb(204,51,51)',
-                                        size: '25px',
-                                        style:
-                                        {
-                                            //filter: 'blur(1px)'
-                                        }   as CSSProperties
-                                    },
-                                    {
-                                        default: () => h(ClearRound)
-                                    })
-                            }
-                        }
-                    }
-                })
-            ])
+                
+            ].concat(right_select_panel(option)))
     }
 
     const retry_button = () =>
