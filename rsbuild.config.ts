@@ -5,7 +5,7 @@ import { pluginSass } from '@rsbuild/plugin-sass';
 export default defineConfig({
     plugins: [pluginVue(), pluginPug(), pluginSass()],
     resolve: {
-        alias: { // 路径别名
+        alias: {
             '@/*': './src/*',
             '@styles': './src/styles',
             '@types': './src/@types',

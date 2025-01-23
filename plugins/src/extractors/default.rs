@@ -8,14 +8,12 @@ pub struct DefaultPlugin where Self: Send + Sync {}
 static CLEAR_NUMBER_RE: std::sync::LazyLock<Regex> = std::sync::LazyLock::new(|| Regex::new(r"^\d{1,4}").unwrap());
 impl<'a> NumberExtractorPlugin<'a> for DefaultPlugin
 {
-   // &DocumentTypes=&DocumentTypes=&PublishDateSearchType=0&NumberSearchType=0&DocumentDateSearchType=0&JdRegSearchType=0&SortedBy=6&SortDestination=1
     fn signatory_authority(&self) -> &'static str
     {
         "default"
     }
     fn get_raw_number<'b>(&'a self, act_type: &str,  number: &'b str) -> Result<Number, crate::error::ExtractorError>
     {
-        //указы распоряжения итд со всякими постфиксами точно пападут под этот регекс, поэтому обработать нужно будет только крайние случаи
         if let Some(mch) = CLEAR_NUMBER_RE.find(number)
         {
             let index = mch.end();

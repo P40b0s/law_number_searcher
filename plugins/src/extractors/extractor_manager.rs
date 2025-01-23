@@ -3,37 +3,6 @@ use super::{default::DefaultPlugin, plugin_trait::NumberExtractorPlugin, OffSite
 use crate::{extractors::bash::BashOffSiteParser, signatory_authorites};
 
 
-// macro_rules! add_plugins
-// {
-//     ($([$extractors:expr, $parsers:expr, $signatory_authority:expr, $extractor:expr, $parser:expr]),+) => 
-//     {{
-//         $(
-//             let plugin: Box<dyn NumberExtractorPlugin> = Box::new($extractor);
-//             $extractors.insert($signatory_authority.to_owned(), plugin);
-//             if $parser.is_some()
-//             {
-//                 let parser: Box<dyn OffSiteParser> = Box::new($parser.unwrap());
-//                 $parsers.insert($signatory_authority.to_owned(), parser);
-//             }
-//         )+
-//     }};
-//     ($([$signatory_authority:expr, $extractor:expr]),+) => 
-//     {{
-//         let mut extractors = HashMap::new();
-//         let mut parsers = HashMap::new();
-//         $(
-//             let plugin: Box<dyn NumberExtractorPlugin> = Box::new($extractor);
-//             extractors.insert($signatory_authority.to_owned(), plugin);
-//         )+
-//         return ExtractorManager 
-//         {
-//             extractors,
-//             parsers
-//         };
-//     }};
-// }
-
-
 struct PluginRegistrator<'a>
 {
     extractors: hashbrown::HashMap<String, Box<dyn NumberExtractorPlugin<'a>>>,
