@@ -10,7 +10,11 @@ members = ["plugins", "searcher",
 ]
 default-members = ["src-tauri"]
 
-
+#sudo dnf install mingw32-gcc mingw64-gcc
+#сломалась линковка по умолчанию - x86_64-w64-mingw32-gcc not found, указал явно вроде заработала
+# [target.x86_64-pc-windows-gnu]
+# linker = "x86_64-w64-mingw32-gcc"
+# ar = "x86_64-w64-mingw32-ar"
 
 [dependencies]
 

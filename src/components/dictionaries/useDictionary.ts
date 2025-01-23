@@ -268,16 +268,6 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     })
             }
         }
-        // const panel = [];
-        // const ne = number_example();
-        // if(ne)
-        //     panel.push(ne);
-        // const np = number_parser();
-        // if(np)
-        //     panel.push(np);
-        // const sp = site_parser();
-        // if(sp)
-        //     panel.push
         const panel =  [
                 number_example(),
                 number_parser(),
@@ -388,38 +378,12 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
             }
         }
     }
-    // const themeOverrides2: GlobalThemeOverrides = {
-    // Select: {
-    //     peers: {
-    //     InternalSelection: {
-    //         textColor: '#FF0000',
-    //         heightLarge: "60"
-    //     },
-    //     InternalSelectMenu: {
-    //         height: '1220',
-    //         paddingLarge: '100'
-    //     },
-    //     }
-    // },
-    // }
-    const themeOverrides: GlobalThemeOverrides = {
-        Select: {
-            peers: {
-            InternalSelection: {
-                textColor: '#FF0000',
-                heightLarge: "60"
-               
-            }
-            }
-        },
-        }
-
+    
     const select_element = () => 
     {
         return  h(
                 NSelect,
                 {
-                    id: "#orgsel",
                     value: selected.value,
                     options: options.value,
                     virtualScroll: true,
@@ -430,19 +394,6 @@ export const useDictionary = (placeholder: string, update_callback: (dict: Dicti
                     size: 'large',
                     filter: filter,
                     renderLabel: label,
-                    // themeOverrides:
-                    // {
-                    //     Select:
-                    //     {
-                    //         peers:
-                    //         {
-                    //             InternalSelection: {
-                    //                 textColor: '#FF0000',
-                    //                 heightLarge: "60"
-                    //             }
-                    //         }
-                    //     }
-                    // } as GlobalThemeOverrides,
                     onUpdateValue:(val: string, option: SelectBaseOption|null) =>
                     {
                         let s = options.value.findIndex(i=> i.value == val);

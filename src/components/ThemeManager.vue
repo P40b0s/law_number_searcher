@@ -29,6 +29,7 @@ const set_light = () =>
 {
     const body = document.body;
     body.setAttribute("class", "light");
+    body.setAttribute("class", "--vs-input-bg: #a22916;")
 	  theme_name.value = "светлая"
     light_theme();
     localStorage.setItem('theme', "light");

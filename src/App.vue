@@ -47,7 +47,8 @@ n-config-provider(:theme="theme" :theme-overrides="themeOverrides")
   font-family: 'Source Code Pro';
   grid-template-areas: 
     "header header header header"
-    ". main-content main-content ."
+    ". main-content main-content .";
+    
 }
 .header 
 {
