@@ -1,0 +1,6 @@
+brace_style = "AlwaysNextLine"
+combine_control_expr = false
+control_brace_style = "AlwaysNextLine"
+force_multiline_blocks = true
+hard_tabs = true
+unstable_features = true
