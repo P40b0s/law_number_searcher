@@ -15,20 +15,20 @@ name = "number_searcher_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "2.0.5", features = [] }
+tauri-build = { version = "2.0.6", features = [] }
 
 [dependencies]
-tauri = { version = "2.2.3", features = [] }
+tauri = { version = "2.3.1", features = [] }
 tauri-plugin-shell = "2.2.0"
-tokio = { version =  "1.43.0", features = ["rt-multi-thread", "macros"] }
+tokio = { version =  "1.44.0", features = ["rt-multi-thread", "macros"] }
 serde = { version = "1.0.216", features = ["derive"] }
 serde_json = "1.0.133"
-thiserror="2.0.6"
+thiserror="2.0.12"
 logger = {git = "https://github.com/P40b0s/logger.git"}
 utilites = {git = "https://github.com/P40b0s/help_utilites.git", package = "utilites"}
 searcher = {path = "../searcher", package = "searcher" }
-sqlx= {version = "0.8.2", features = ["sqlite", "runtime-tokio"] }
-uuid= {version="1.12.1", features = ["v7"] }
+sqlx= {version = "0.8.3", features = ["sqlite", "runtime-tokio"] }
+uuid= {version="1.15.1", features = ["v7"] }
 tauri-plugin-process = "2.2.0"
 rust_xlsxwriter = "0.81.0"
 [dev-dependencies]
